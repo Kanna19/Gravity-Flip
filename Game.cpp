@@ -8,42 +8,46 @@ Game::Game()
 {
     scene = new QGraphicsScene(this);
     setScene(scene);
-    scene->setSceneRect(0,0,800,600);
-    setFixedSize(800,600);
+    scene->setSceneRect(0,0,1000,400);
+    setFixedSize(1000,400);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QGraphicsPixmapItem* bottomTiles[10];
-    QPixmap tile_image = QPixmap(":res/objects/tile2.png").scaled(80,80);
+    QGraphicsPixmapItem* bottomTiles[20];
+    QPixmap tile_image = QPixmap(":res/objects/tile2.png").scaled(50,50);
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 20; i++)
     {
         bottomTiles[i] = new QGraphicsPixmapItem();
         bottomTiles[i]->setPixmap(tile_image);
-        bottomTiles[i]->setPos(i*80,scene->height() - bottomTiles[i]->pixmap().height());
+        bottomTiles[i]->setPos(i*50,scene->height() - bottomTiles[i]->pixmap().height());
         scene->addItem(bottomTiles[i]);
     }
 
-    QGraphicsPixmapItem* topTiles[10];
+    QGraphicsPixmapItem* topTiles[20];
     tile_image = tile_image.transformed(QTransform().rotate(180));
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 20; i++)
     {
         topTiles[i] = new QGraphicsPixmapItem();
         topTiles[i]->setPixmap(tile_image);
-        topTiles[i]->setPos(i*80,0);
+        topTiles[i]->setPos(i*50,0);
         scene->addItem(topTiles[i]);
     }
 
     //create and add player
     player = new Player();
     scene->addItem(player);
-    player->setPos(0,scene->height()-80-120+10);
+    player->setPos(0,scene->height()-50-120+10);
+
+    //make player focusable
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
 
     QTimer* timer = new QTimer();
     QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
 
-    timer->start(50);
+    timer->start(60);
 
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
