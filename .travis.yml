@@ -10,5 +10,5 @@ before_install:
 
 script:
  - qmake -project
- - qmake Ultron.pro
+ - qmake Gravity_Flip.pro
  - make
