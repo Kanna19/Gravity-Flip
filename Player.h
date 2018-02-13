@@ -4,12 +4,15 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QKeyEvent>
+#include <QPolygonF>
+#include <QGraphicsItem>
+
 class Player: public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
 public:
     //functions
-    Player();
+    Player(QGraphicsItem* parent = 0);
     void flipPlayer();
     void keyPressEvent(QKeyEvent* event);
 
@@ -17,6 +20,9 @@ public:
     QPixmap run[8];
     int pixmapIndex;
     bool isFlipped;
+    QGraphicsPolygonItem* topArea;
+    QGraphicsPolygonItem* bottomArea;
+    QGraphicsPolygonItem* rightArea;
 
 public slots:
     void runPlayer();

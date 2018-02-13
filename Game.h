@@ -3,11 +3,12 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QWidget>
 #include "Player.h"
 class Game : public QGraphicsView
 {
 public:
-    Game();
+    Game(QWidget* parent = 0);
 
     QGraphicsScene* scene;
     Player* player;

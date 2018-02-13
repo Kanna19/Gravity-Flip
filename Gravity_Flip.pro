@@ -26,11 +26,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     Game.cpp \
-    Player.cpp
+    Player.cpp \
+    Obstacle.cpp \
+    ObjectCreator.cpp
 
 HEADERS += \
     Game.h \
-    Player.h
+    Player.h \
+    Obstacle.h \
+    ObjectCreator.h
 
 RESOURCES += \
     res.qrc

@@ -3,8 +3,9 @@
 #include <QDebug>
 #include <QObject>
 #include <QTimer>
+#include "ObjectCreator.h"
 
-Game::Game()
+Game::Game(QWidget* parent): QGraphicsView(parent)
 {
     scene = new QGraphicsScene(this);
     setScene(scene);
@@ -13,7 +14,7 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QGraphicsPixmapItem* bottomTiles[20];
+    /*QGraphicsPixmapItem* bottomTiles[20];
     QPixmap tile_image = QPixmap(":res/objects/tile2.png").scaled(50,50);
 
     for(int i = 0; i < 20; i++)
@@ -33,21 +34,30 @@ Game::Game()
         topTiles[i]->setPixmap(tile_image);
         topTiles[i]->setPos(i*50,0);
         scene->addItem(topTiles[i]);
-    }
+    }*/
+
+    //call Object Creator
+    ObjectCreator* objectCreator = new ObjectCreator();
+    QTimer* objectTimer = new QTimer();
+    QObject::connect(objectTimer,SIGNAL(timeout()),objectCreator,SLOT(createObject()));
+
+    objectTimer->start(1000);
 
     //create and add player
     player = new Player();
     scene->addItem(player);
-    player->setPos(0,scene->height()-50-120+10);
+    player->setPos(300,scene->height()-50-120+10);
 
     //make player focusable
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
-
     QTimer* timer = new QTimer();
-    QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
 
-    timer->start(60);
+
+    QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
+    QObject::connect(timer,SIGNAL(timeout()),objectCreator,SLOT(updateObjects()));
+
+    timer->start(10);
 
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
