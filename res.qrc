@@ -11,5 +11,8 @@
         <file>res/player/run7.png</file>
         <file>res/player/run8.png</file>
         <file>res/player/idle1.png</file>
+        <file>res/objects/acid2.png</file>
+        <file>res/objects/bgtile3.png</file>
+        <file>res/objects/box.png</file>
     </qresource>
 </RCC>

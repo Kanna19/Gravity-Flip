@@ -21,7 +21,7 @@ void ObjectCreator::createObject()
 
     int yPos = rand()%250;
     yPos += 50;
-    obstacle->setPos(game->scene->width() - obstacle->rect().width(), yPos);
+    obstacle->setPos(game->scene->width(), yPos);
 }
 
 void ObjectCreator::updateObjects()

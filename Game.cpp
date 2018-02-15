@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include "ObjectCreator.h"
+#include "BackgroundUpdater.h"
 
 Game::Game(QWidget* parent): QGraphicsView(parent)
 {
@@ -43,6 +44,9 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
 
     objectTimer->start(1000);
 
+    //create backgroundUpdater
+    BackgroundUpdater* backgroundUpadter = new BackgroundUpdater;
+
     //create and add player
     player = new Player();
     scene->addItem(player);
@@ -56,6 +60,7 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
 
     QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),objectCreator,SLOT(updateObjects()));
+    QObject::connect(timer,SIGNAL(timeout()),backgroundUpadter,SLOT(update()));
 
     timer->start(10);
 
