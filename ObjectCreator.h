@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include "Obstacle.h"
+#include "Set1.h"
 
 class ObjectCreator: public QObject
 {
@@ -12,6 +13,7 @@ public:
     ObjectCreator();
 
     QList<Obstacle*> objectsList;
+    Set1* set;
 
 public slots:
     void createObject();

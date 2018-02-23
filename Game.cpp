@@ -5,13 +5,14 @@
 #include <QTimer>
 #include "ObjectCreator.h"
 #include "BackgroundUpdater.h"
+#include "Set1.h"
 
 Game::Game(QWidget* parent): QGraphicsView(parent)
 {
     scene = new QGraphicsScene(this);
     setScene(scene);
-    scene->setSceneRect(0,0,1000,400);
-    setFixedSize(1000,400);
+    scene->setSceneRect(0,0,1000,500);
+    setFixedSize(1000,500);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -37,12 +38,22 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
         scene->addItem(topTiles[i]);
     }*/
 
-    //call Object Creator
+    /*call Object Creator
     ObjectCreator* objectCreator = new ObjectCreator();
     QTimer* objectTimer = new QTimer();
-    QObject::connect(objectTimer,SIGNAL(timeout()),objectCreator,SLOT(createObject()));
+    objectCreator->createObject();*/
 
-    objectTimer->start(1000);
+    Set1* set = new Set1();
+
+    for(int i=0; i<set->objects.size(); i++)
+    {
+       scene->addItem(set->objects[i]);
+       set->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40,40)));
+    }
+
+    //QObject::connect(objectTimer,SIGNAL(timeout()),objectCreator,SLOT(createObject()));
+
+    //objectTimer->start(1000);
 
     //create backgroundUpdater
     BackgroundUpdater* backgroundUpadter = new BackgroundUpdater;
@@ -50,7 +61,7 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
     //create and add player
     player = new Player();
     scene->addItem(player);
-    player->setPos(300,scene->height()-50-120+10);
+    player->setPos(300,scene->height()-50-120+40);
 
     //make player focusable
     player->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -59,7 +70,7 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
 
 
     QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
-    QObject::connect(timer,SIGNAL(timeout()),objectCreator,SLOT(updateObjects()));
+    QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpadter,SLOT(update()));
 
     timer->start(10);
