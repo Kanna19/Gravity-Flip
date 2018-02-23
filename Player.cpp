@@ -7,10 +7,11 @@
 
 extern Game* game;
 
-Player::Player(QGraphicsItem* parent)
+Player::Player(int index, QGraphicsItem* parent)
 {
+    playerIndex = index;
     int scaleFactor = 80;
-    setPixmap(QPixmap(":res/player/idle1.png").scaled(scaleFactor,scaleFactor,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    setPixmap(QPixmap(":res/player/" + QString::number(playerIndex) + "idle1.png").scaled(scaleFactor,scaleFactor,Qt::KeepAspectRatio,Qt::SmoothTransformation));
     pixmapIndex = 0;
 
     isFlipped = false;
@@ -35,7 +36,7 @@ Player::Player(QGraphicsItem* parent)
 
     for(int i = 1; i <= 8; i++)
     {
-        run[i-1] = QPixmap(":/res/player/run" + QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        run[i-1] = QPixmap(":/res/player/" + QString::number(playerIndex) + "run" + QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
 

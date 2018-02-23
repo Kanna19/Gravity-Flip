@@ -12,11 +12,12 @@ class Player: public QObject, public QGraphicsPixmapItem
 Q_OBJECT
 public:
     //functions
-    Player(QGraphicsItem* parent = 0);
+    Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
     void keyPressEvent(QKeyEvent* event);
 
     //variables
+    int playerIndex;
     QPixmap run[8];
     int pixmapIndex;
     bool isFlipped;

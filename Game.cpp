@@ -58,18 +58,25 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
     //create backgroundUpdater
     BackgroundUpdater* backgroundUpadter = new BackgroundUpdater;
 
-    //create and add player
-    player = new Player();
-    scene->addItem(player);
-    player->setPos(300,scene->height()-50-120+40);
+    //make game focusable
+    setFocus();
 
-    //make player focusable
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
+    //create and add player
+    player1 = new Player(1);
+    scene->addItem(player1);
+    player1->setPos(300,scene->height()-50-120+40);
+
+    //player 2
+    player2 = new Player(2);
+    scene->addItem(player2);
+    player2->setPos(400,scene->height()-50-120+40);
+
+
     QTimer* timer = new QTimer();
 
 
-    QObject::connect(timer,SIGNAL(timeout()),player,SLOT(runPlayer()));
+    QObject::connect(timer,SIGNAL(timeout()),player1,SLOT(runPlayer()));
+    QObject::connect(timer,SIGNAL(timeout()),player2,SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpadter,SLOT(update()));
 
@@ -78,3 +85,10 @@ Game::Game(QWidget* parent): QGraphicsView(parent)
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
 }
+
+void Game::keyPressEvent(QKeyEvent *event)
+{
+   if(event->key() == Qt::Key_C) player1->flipPlayer();
+   if(event->key() == Qt::Key_M) player2->flipPlayer();
+}
+

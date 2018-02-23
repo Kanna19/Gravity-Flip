@@ -11,7 +11,10 @@ public:
     Game(QWidget* parent = 0);
 
     QGraphicsScene* scene;
-    Player* player;
+    Player* player1;
+    Player* player2;
+
+    void keyPressEvent(QKeyEvent* event);
 
 };
 

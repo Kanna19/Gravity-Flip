@@ -2,17 +2,26 @@
     <qresource prefix="/">
         <file>res/objects/tile1.png</file>
         <file>res/objects/tile2.png</file>
-        <file>res/player/run1.png</file>
-        <file>res/player/run2.png</file>
-        <file>res/player/run3.png</file>
-        <file>res/player/run4.png</file>
-        <file>res/player/run5.png</file>
-        <file>res/player/run6.png</file>
-        <file>res/player/run7.png</file>
-        <file>res/player/run8.png</file>
-        <file>res/player/idle1.png</file>
         <file>res/objects/acid2.png</file>
         <file>res/objects/bgtile3.png</file>
         <file>res/objects/box.png</file>
+        <file>res/player/1idle1.png</file>
+        <file>res/player/1run1.png</file>
+        <file>res/player/1run2.png</file>
+        <file>res/player/1run3.png</file>
+        <file>res/player/1run4.png</file>
+        <file>res/player/1run5.png</file>
+        <file>res/player/1run6.png</file>
+        <file>res/player/1run7.png</file>
+        <file>res/player/1run8.png</file>
+        <file>res/player/2idle1.png</file>
+        <file>res/player/2run1.png</file>
+        <file>res/player/2run2.png</file>
+        <file>res/player/2run3.png</file>
+        <file>res/player/2run4.png</file>
+        <file>res/player/2run5.png</file>
+        <file>res/player/2run6.png</file>
+        <file>res/player/2run7.png</file>
+        <file>res/player/2run8.png</file>
     </qresource>
 </RCC>
