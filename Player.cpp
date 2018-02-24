@@ -108,7 +108,13 @@ void Player::runPlayer()
 
 void Player::flipPlayer()
 {
-    setPixmap(pixmap().transformed(QTransform().rotate(180,Qt::XAxis)));
+    // DONOT flip if player is in air
+    if(topArea->collidingItems().isEmpty() && bottomArea->collidingItems().isEmpty())
+    {
+        return;
+    }
+
+    setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
 
     // change isFlipped
     isFlipped = (isFlipped +1) % 2;
