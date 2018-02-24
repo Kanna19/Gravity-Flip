@@ -9,6 +9,7 @@
 
 Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
 {
+    isFinished = false;
     player_cnt = cnt;
 
     scene = new QGraphicsScene(this);

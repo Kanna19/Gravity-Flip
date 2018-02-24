@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 void MainWindow::display()
 {
     this->resize(1000, 500);
+    this->move(0, 0);
     this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
     this->show();
 }

@@ -30,7 +30,8 @@ SOURCES += \
     ObjectCreator.cpp \
     BackgroundUpdater.cpp \
     Set1.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    GameOverWindow.cpp
 
 HEADERS += \
     Game.h \
@@ -38,7 +39,8 @@ HEADERS += \
     ObjectCreator.h \
     BackgroundUpdater.h \
     Set1.h \
-    MainWindow.h
+    MainWindow.h \
+    GameOverWindow.h
 
 RESOURCES += \
     res.qrc

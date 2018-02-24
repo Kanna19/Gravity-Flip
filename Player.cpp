@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <Game.h>
 #include <QDebug>
+#include "GameOverWindow.h"
 
 extern Game* game;
 
@@ -53,8 +54,21 @@ Player::Player(int index, QGraphicsItem* parent)
 
 void Player::runPlayer()
 {
-    if(x() > 900)
+    // Do nothing if game is already over
+    if(game->isFinished)
     {
+        return;
+    }
+
+    // Check these values
+    if(x() > 900 || x() +100 < 0 || y() > 500 || y() +100 < 0)
+    {
+        game->isFinished = true;
+
+        GameOverWindow* gameOverWindow = new GameOverWindow;
+        gameOverWindow->display(playerIndex);
+
+        game->close();
         return;
     }
 

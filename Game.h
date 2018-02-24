@@ -20,6 +20,7 @@ public:
     // member variables
     QGraphicsScene* scene;
 
+    bool isFinished;
     int player_cnt;
     std::vector <Player*> player;
 };
