@@ -27,7 +27,6 @@ SOURCES += \
         main.cpp \
     Game.cpp \
     Player.cpp \
-    Obstacle.cpp \
     ObjectCreator.cpp \
     BackgroundUpdater.cpp \
     Set1.cpp
@@ -35,7 +34,6 @@ SOURCES += \
 HEADERS += \
     Game.h \
     Player.h \
-    Obstacle.h \
     ObjectCreator.h \
     BackgroundUpdater.h \
     Set1.h

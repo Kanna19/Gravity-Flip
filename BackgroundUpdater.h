@@ -7,11 +7,17 @@
 class BackgroundUpdater: public QObject
 {
 Q_OBJECT
+
 public:
+
+    // member functions
     BackgroundUpdater();
+
+    // member variables
     QBrush brush;
 
 public slots:
+
     void update();
 };
 

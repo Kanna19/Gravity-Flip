@@ -11,12 +11,13 @@ class Player: public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
 public:
-    //functions
+
+    // member functions
     Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
     void keyPressEvent(QKeyEvent* event);
 
-    //variables
+    // member variables
     int playerIndex;
     QPixmap run[8];
     int pixmapIndex;
@@ -26,6 +27,7 @@ public:
     QGraphicsPolygonItem* rightArea;
 
 public slots:
+
     void runPlayer();
 };
 

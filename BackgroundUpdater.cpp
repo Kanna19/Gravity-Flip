@@ -1,5 +1,6 @@
 #include "BackgroundUpdater.h"
 #include "Game.h"
+
 extern Game* game;
 
 BackgroundUpdater::BackgroundUpdater()
@@ -9,6 +10,7 @@ BackgroundUpdater::BackgroundUpdater()
 
 void BackgroundUpdater::update()
 {
-    brush.setTransform(brush.transform().translate(-2,0));
+    // Shift the background to the left by 2 pixels
+    brush.setTransform(brush.transform().translate(-2, 0));
     game->setBackgroundBrush(brush);
 }
