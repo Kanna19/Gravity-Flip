@@ -10,14 +10,16 @@
 class Player: public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
+
 public:
 
     // member functions
+
     Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
-   // void keyPressEvent(QKeyEvent* event);
 
     // member variables
+
     int playerIndex;
     QPixmap run[8];
     int pixmapIndex;

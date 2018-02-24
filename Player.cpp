@@ -4,6 +4,7 @@
 #include <QPointF>
 #include <QGraphicsScene>
 #include <Game.h>
+#include <QDebug>
 
 extern Game* game;
 
@@ -119,13 +120,3 @@ void Player::flipPlayer()
     // change isFlipped
     isFlipped = (isFlipped +1) % 2;
 }
-
-/*
-void Player::keyPressEvent(QKeyEvent *event)
-{
-    if(event->key() == Qt::Key_Space)
-    {
-        flipPlayer();
-    }
-}
-*/

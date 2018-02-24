@@ -11,10 +11,13 @@ Q_OBJECT
 public:
 
     // member functions
+
     MainWindow(QWidget *parent = 0);
     void display();
 
 private slots:
+
+    // slots to handle key press events
 
     void handleSinglePlayer();
     void handleMultiPlayer();

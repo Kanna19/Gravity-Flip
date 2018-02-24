@@ -5,6 +5,7 @@ extern Game* game;
 
 BackgroundUpdater::BackgroundUpdater()
 {
+    // Set the Background Image
     brush = QBrush(QImage(":/res/objects/acid2.png"));
 }
 

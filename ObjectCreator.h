@@ -12,9 +12,11 @@ Q_OBJECT
 public:
 
     // member functions
+
     ObjectCreator();
 
     // member variables
+
     Set1* set;
 
 public slots:

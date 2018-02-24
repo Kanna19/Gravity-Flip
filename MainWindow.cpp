@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     m_multiPlayer->setGeometry(QRect(QPoint(350, 200), QSize(200, 50)));
     m_exitGame->setGeometry(QRect(QPoint(350, 300), QSize(200, 50)));
 
-    // TODO: connect the slots
     // connect the buttons to the appropriate slots
     connect(m_singlePlayer, SIGNAL(released()), this, SLOT(handleSinglePlayer()));
     connect(m_multiPlayer, SIGNAL(released()), this, SLOT(handleMultiPlayer()));

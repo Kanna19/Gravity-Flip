@@ -45,7 +45,6 @@ void Game::keyPressEvent(QKeyEvent *event)
     }
 
     // The Game Type is Multi Player
-
     if(event->key() == Qt::Key_C)
     {
        player[0]->flipPlayer();
@@ -57,7 +56,12 @@ void Game::keyPressEvent(QKeyEvent *event)
     }
 }
 
-// player[0] represents the player
+/*
+ * In Single Player Game:
+ *
+ *      player[0] represents the player
+*/
+
 void Game::startSinglePlayerGame()
 {
     Set1* set = new Set1();
@@ -91,8 +95,13 @@ void Game::startSinglePlayerGame()
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
 }
 
-// player[0] represents the 1st player
-// player[1] represents the 2nd player
+/*
+ * In Multiplayer Game:
+ *
+ *      player[0] represents the 1st player
+ *      player[1] represents the 2nd player
+*/
+
 void Game::startMultiPlayerGame()
 {
     Set1* set = new Set1();

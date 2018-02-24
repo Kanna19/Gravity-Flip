@@ -11,9 +11,11 @@ Q_OBJECT
 public:
 
     // member functions
+
     Set1();
 
     // member variables
+
     QList<QGraphicsRectItem*> objects;
 
 public slots:
