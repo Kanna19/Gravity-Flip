@@ -59,7 +59,7 @@ void Game::keyPressEvent(QKeyEvent *event)
        player1->flipPlayer();
     }
 
-    else if(event->key() == Qt::Key_M)
+    if(event->key() == Qt::Key_M)
     {
         player2->flipPlayer();
     }

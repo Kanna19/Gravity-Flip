@@ -29,14 +29,16 @@ SOURCES += \
     Player.cpp \
     ObjectCreator.cpp \
     BackgroundUpdater.cpp \
-    Set1.cpp
+    Set1.cpp \
+    MainWindow.cpp
 
 HEADERS += \
     Game.h \
     Player.h \
     ObjectCreator.h \
     BackgroundUpdater.h \
-    Set1.h
+    Set1.h \
+    MainWindow.h
 
 RESOURCES += \
     res.qrc
