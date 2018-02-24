@@ -5,19 +5,22 @@
 #include <QGraphicsScene>
 #include <QWidget>
 #include "Player.h"
+#include <vector>
 
 class Game : public QGraphicsView
 {
 public:
 
     // member functions
-    Game(QWidget* parent = 0);
+    Game(int cnt, QWidget* parent = 0);
     void keyPressEvent(QKeyEvent* event);
+    void startSinglePlayerGame();
+    void startMultiPlayerGame();
 
     // member variables
     QGraphicsScene* scene;
-    Player* player1;
-    Player* player2;
+    int player_cnt;
+    std::vector <Player*> player;
 };
 
 #endif // GAME_H

@@ -15,7 +15,7 @@ public:
     // member functions
     Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
-    void keyPressEvent(QKeyEvent* event);
+   // void keyPressEvent(QKeyEvent* event);
 
     // member variables
     int playerIndex;

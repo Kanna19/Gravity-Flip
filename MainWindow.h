@@ -16,14 +16,16 @@ public:
 
 private slots:
 
-    void handleStartGame();
+    void handleSinglePlayer();
+    void handleMultiPlayer();
     void handleExitGame();
 
 private:
 
     // private member variables
 
-    QPushButton* m_startGame;
+    QPushButton* m_singlePlayer;
+    QPushButton* m_multiPlayer;
     QPushButton* m_exitGame;
 };
 

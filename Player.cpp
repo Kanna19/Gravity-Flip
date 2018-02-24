@@ -120,6 +120,7 @@ void Player::flipPlayer()
     isFlipped = (isFlipped +1) % 2;
 }
 
+/*
 void Player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Space)
@@ -127,3 +128,4 @@ void Player::keyPressEvent(QKeyEvent *event)
         flipPlayer();
     }
 }
+*/
