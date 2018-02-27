@@ -6,6 +6,8 @@
 #include "ObjectCreator.h"
 #include "BackgroundUpdater.h"
 #include "Set1.h"
+#include "BackgroundMusic.h"
+#include <thread>
 
 Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
 {
@@ -18,6 +20,11 @@ Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
     setFixedSize(1000, 500);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Start background music
+    qWarning() << this->thread()->currentThreadId();
+    backgroundMusic = new BackgroundMusic();
+    backgroundMusic->start();
 
     // Start single or multiplayer game depending on the input
 
@@ -90,6 +97,7 @@ void Game::startSinglePlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),player[0],SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
+    QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
 
     timer->start(10);
 
@@ -139,6 +147,8 @@ void Game::startMultiPlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),player[1],SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
+    QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
+    QObject::connect(player[1],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
 
     timer->start(10);
 

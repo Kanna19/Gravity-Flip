@@ -19,6 +19,7 @@ Player::Player(int index, QGraphicsItem* parent)
 
     pixmapIndex = 0;
     isFlipped = false;
+    isInAir = false;
 
     // Describe a closed rectangle
     QPolygonF topRect;
@@ -26,6 +27,9 @@ Player::Player(int index, QGraphicsItem* parent)
     topRect.append(QPointF(70, 0));
     topRect.append(QPointF(70, 5));
     topRect.append(QPointF(0, 5));
+
+    //connect to BackGroundmusic
+    //connect(this,SIGNAL(makeSound()),game->backgroundMusic,SLOT(playSound()));
 
     // Add the rectangles to the scene
     topArea = new QGraphicsPolygonItem(topRect, this);
@@ -79,10 +83,17 @@ void Player::runPlayer()
         if(bottomArea->collidingItems().isEmpty())
         {
             setPos(x(), y() +3);
+            isInAir = true;
         }
 
         else
         {
+            if(isInAir)
+            {
+                emit makeSound();
+            }
+
+            isInAir = false;
             setPixmap(run[(pixmapIndex % 48) /6]);
 
             if(rightArea->collidingItems().isEmpty())
@@ -102,10 +113,17 @@ void Player::runPlayer()
         if(topArea->collidingItems().isEmpty())
         {
             setPos(x(), y() -3);
+            isInAir = true;
         }
 
         else
         {
+            if(isInAir)
+            {
+                emit makeSound();
+            }
+            isInAir = false;
+
             setPixmap(run[(pixmapIndex % 48) /6].transformed(QTransform().rotate(180, Qt::XAxis)));
 
             if(rightArea->collidingItems().isEmpty())

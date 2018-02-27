@@ -6,6 +6,7 @@
 #include <QWidget>
 #include "Player.h"
 #include <vector>
+#include "BackgroundMusic.h"
 
 class Game : public QGraphicsView
 {
@@ -19,7 +20,7 @@ public:
 
     // member variables
     QGraphicsScene* scene;
-
+    BackgroundMusic* backgroundMusic;
     bool isFinished;
     int player_cnt;
     std::vector <Player*> player;

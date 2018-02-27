@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,8 @@ SOURCES += \
     BackgroundUpdater.cpp \
     Set1.cpp \
     MainWindow.cpp \
-    GameOverWindow.cpp
+    GameOverWindow.cpp \
+    BackgroundMusic.cpp
 
 HEADERS += \
     Game.h \
@@ -40,7 +42,8 @@ HEADERS += \
     BackgroundUpdater.h \
     Set1.h \
     MainWindow.h \
-    GameOverWindow.h
+    GameOverWindow.h \
+    BackgroundMusic.h
 
 RESOURCES += \
     res.qrc

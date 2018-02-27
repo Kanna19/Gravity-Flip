@@ -24,6 +24,7 @@ public:
     QPixmap run[8];
     int pixmapIndex;
     bool isFlipped;
+    bool isInAir;
     QGraphicsPolygonItem* topArea;
     QGraphicsPolygonItem* bottomArea;
     QGraphicsPolygonItem* rightArea;
@@ -31,6 +32,9 @@ public:
 public slots:
 
     void runPlayer();
+
+signals:
+    void makeSound();
 };
 
 #endif // PLAYER_H
