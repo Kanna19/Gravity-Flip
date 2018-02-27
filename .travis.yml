@@ -9,6 +9,6 @@ before_install:
  - sudo apt-get install qt5-default qttools5-dev-tools
 
 script:
- - qmake-qt4 -project
- - qmake-qt4 Gravity_Flip.pro
+ - qmake -project
+ - qmake Gravity_Flip.pro
  - make
