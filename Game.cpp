@@ -7,7 +7,6 @@
 #include "BackgroundUpdater.h"
 #include "Set1.h"
 #include "BackgroundMusic.h"
-#include <thread>
 
 Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
 {
