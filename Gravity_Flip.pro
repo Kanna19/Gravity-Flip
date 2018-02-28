@@ -34,7 +34,8 @@ SOURCES += \
     Set1.cpp \
     MainWindow.cpp \
     GameOverWindow.cpp \
-    BackgroundMusic.cpp
+    BackgroundMusic.cpp \
+    SelectPlayersWindow.cpp
 
 HEADERS += \
     Game.h \
@@ -44,7 +45,8 @@ HEADERS += \
     Set1.h \
     MainWindow.h \
     GameOverWindow.h \
-    BackgroundMusic.h
+    BackgroundMusic.h \
+    SelectPlayersWindow.h
 
 RESOURCES += \
     res.qrc

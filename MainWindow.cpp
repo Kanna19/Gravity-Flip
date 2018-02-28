@@ -1,8 +1,5 @@
 #include "MainWindow.h"
-#include "Game.h"
-#include <QCoreApplication>
-
-Game *game;
+#include "SelectPlayersWindow.h"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
@@ -35,9 +32,9 @@ void MainWindow::handleSinglePlayer()
     // close the main window
     this->close();
 
-    // open the game
-    game = new Game(1);
-    game->show();
+    // create a new window to select the players
+    SelectPlayersWindow *selectPlayersWindow = new SelectPlayersWindow(1, this);
+    selectPlayersWindow->display();
 }
 
 void MainWindow::handleMultiPlayer()
@@ -45,9 +42,9 @@ void MainWindow::handleMultiPlayer()
     // close the main window
     this->close();
 
-    // open the game
-    game = new Game(2);
-    game->show();
+    // create a new window to select the players
+    SelectPlayersWindow *selectPlayersWindow = new SelectPlayersWindow(2, this);
+    selectPlayersWindow->display();
 }
 
 void MainWindow::handleExitGame()

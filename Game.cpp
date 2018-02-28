@@ -9,10 +9,11 @@
 #include "BackgroundMusic.h"
 #include <thread>
 
-Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
+Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
     isFinished = false;
     player_cnt = cnt;
+    playerID = playerIDMapping;
 
     scene = new QGraphicsScene(this);
     setScene(scene);
@@ -25,18 +26,6 @@ Game::Game(int cnt, QWidget* parent): QGraphicsView(parent)
     qWarning() << this->thread()->currentThreadId();
     backgroundMusic = new BackgroundMusic();
     backgroundMusic->start();
-
-    // Start single or multiplayer game depending on the input
-
-    if(player_cnt == 1)
-    {
-        startSinglePlayerGame();
-    }
-
-    else
-    {
-        startMultiPlayerGame();
-    }
 }
 
 void Game::keyPressEvent(QKeyEvent *event)
@@ -87,10 +76,14 @@ void Game::startSinglePlayerGame()
     setFocus();
 
     // player
-    player.resize(1);
+
     player[0] = new Player(1);
     scene->addItem(player[0]);
-    player[0]->setPos(100, scene->height() -50 -120 +40);
+    player[0]->setPos(200, scene->height() -50 -120 +40);
+
+    player[1] = new Player(2);
+    scene->addItem(player[1]);
+    player[1]->setPos(100, scene->height() -50 -120 +40);
 
     QTimer* timer = new QTimer();
 
@@ -128,8 +121,6 @@ void Game::startMultiPlayerGame()
     setFocus();
 
     // add players
-
-    player.resize(2);
 
     // player 1
     player[0] = new Player(1);

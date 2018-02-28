@@ -25,5 +25,14 @@
         <file>res/player/2run8.png</file>
         <file>res/sounds/background.mp3</file>
         <file>res/sounds/bullet.wav</file>
+        <file>res/player/3run8.png</file>
+        <file>res/player/3run7.png</file>
+        <file>res/player/3run6.png</file>
+        <file>res/player/3run5.png</file>
+        <file>res/player/3run4.png</file>
+        <file>res/player/3run3.png</file>
+        <file>res/player/3run2.png</file>
+        <file>res/player/3run1.png</file>
+        <file>res/player/3idle1.png</file>
     </qresource>
 </RCC>

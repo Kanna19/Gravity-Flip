@@ -13,7 +13,7 @@ Player::Player(int index, QGraphicsItem* parent)
 {
     playerIndex = index;
     int scaleFactor = 80;
-    setPixmap(QPixmap(":res/player/" + QString::number(playerIndex) +
+    setPixmap(QPixmap(":res/player/" + QString::number(game->playerID[playerIndex]) +
                       "idle1.png").scaled(scaleFactor,scaleFactor,
                         Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -50,7 +50,7 @@ Player::Player(int index, QGraphicsItem* parent)
     // Set the corresponding running images
     for(int i = 1; i <= 8; i++)
     {
-        run[i -1] = QPixmap(":/res/player/" + QString::number(playerIndex) + "run" +
+        run[i -1] = QPixmap(":/res/player/" + QString::number(game->playerID[playerIndex]) + "run" +
                             QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,
                             Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
