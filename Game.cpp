@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QObject>
 #include <QTimer>
+#include <QMediaPlayer>
 #include "ObjectCreator.h"
 #include "BackgroundUpdater.h"
 #include "Set1.h"
