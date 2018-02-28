@@ -34,5 +34,23 @@
         <file>res/player/3run2.png</file>
         <file>res/player/3run1.png</file>
         <file>res/player/3idle1.png</file>
+        <file>res/player/4run8.png</file>
+        <file>res/player/4run7.png</file>
+        <file>res/player/4run6.png</file>
+        <file>res/player/4run5.png</file>
+        <file>res/player/4run4.png</file>
+        <file>res/player/4run3.png</file>
+        <file>res/player/4run2.png</file>
+        <file>res/player/4run1.png</file>
+        <file>res/player/4idle1.png</file>
+        <file>res/player/5run8.png</file>
+        <file>res/player/5run7.png</file>
+        <file>res/player/5run6.png</file>
+        <file>res/player/5run5.png</file>
+        <file>res/player/5run4.png</file>
+        <file>res/player/5run3.png</file>
+        <file>res/player/5run2.png</file>
+        <file>res/player/5run1.png</file>
+        <file>res/player/5idle1.png</file>
     </qresource>
 </RCC>

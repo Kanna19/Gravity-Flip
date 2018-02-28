@@ -30,10 +30,12 @@ private:
     int m_cnt;
     QLabel* m_label;
 
-    QPushButton* m_images[3];
+    const int m_imageCount;
     std::vector <int> m_playerID;
+    std::vector <QPushButton*> m_images;
 
     QSignalMapper* m_mapper;
+
 };
 
 #endif // SELECTPLAYERSWINDOW_H

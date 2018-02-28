@@ -5,7 +5,8 @@
 
 Game* game;
 
-SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent): QMainWindow(parent)
+SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent):
+    QMainWindow(parent), m_imageCount (4)
 {
     // Indicates whether the game is singleplayer or multiplayer
     m_cnt = cnt;
@@ -28,8 +29,10 @@ SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent): QMainWindow(
     m_label->setGeometry(QRect(QPoint(250, 100), QSize(400, 100)));
     m_label->show();
 
-    m_playerID.resize(3);
-    for(int i = 0; i < 3; i++)
+    m_images.resize(m_imageCount);
+    m_playerID.resize(m_imageCount);
+
+    for(int i = 0; i < m_imageCount; i++)
         m_playerID[i] = 0;
 
     // Map the signals to the appropriate slots
@@ -40,25 +43,32 @@ SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent): QMainWindow(
      * and also set their parents
      */
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < m_imageCount; i++)
     {
         m_images[i] = new QPushButton(this);
         m_images[i]->setIcon(QIcon(":res/player/" +QString::number(i +1) +"idle1.png"));
-        m_images[i]->setIconSize(QSize(100, 200));
+        m_images[i]->setIconSize(QSize(100, 100));
 
         connect(m_images[i], SIGNAL(released()), m_mapper, SLOT(map()));
         m_mapper->setMapping(m_images[i], i +1);
     }
 
     // Set the positions and sizes of the push buttons
-    m_images[0]->setGeometry(QRect(QPoint(250, 250), QSize(100, 200)));
-    m_images[1]->setGeometry(QRect(QPoint(400, 250), QSize(100, 200)));
-    m_images[2]->setGeometry(QRect(QPoint(550, 250), QSize(100, 200)));
+
+    const int yPos = 200;
+    const int xPosOfFirstImage = 200;
+
+    for(int i = 0; i < m_imageCount; i++)
+    {
+        m_images[i]->setGeometry(QRect(QPoint(xPosOfFirstImage +(150 *i), yPos), QSize(100, 200)));
+    }
 
     // Show the player images
-    m_images[0]->show();
-    m_images[1]->show();
-    m_images[2]->show();
+
+    for(int i = 0; i < m_imageCount; i++)
+    {
+        m_images[i]->show();
+    }
 
     connect(m_mapper, SIGNAL(mapped(int)), this, SLOT(setPlayer1ID(int)));
 }
@@ -102,7 +112,7 @@ void SelectPlayersWindow::updateDisplay()
     // Hide the label and Change the text to be displayed
     m_label->hide();
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < m_imageCount; i++)
     {
         m_images[i]->hide();
         disconnect(m_images[i], SIGNAL(released()), m_mapper, SLOT(map()));
@@ -126,7 +136,7 @@ void SelectPlayersWindow::updateDisplay()
     * connect their signals to appropriate slots
     */
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < m_imageCount; i++)
     {
         if(i +1 == m_playerID[1])
             continue;
