@@ -43,7 +43,7 @@ void MainWindow::handleMultiPlayer()
     this->close();
 
     // create a new window for instructions
-    InstructionWindow *instructionWindow = new  InstructionWindow(2,this);
+    InstructionWindow *instructionWindow = new InstructionWindow(2,this);
     instructionWindow->display();
 }
 

@@ -11,9 +11,11 @@ Q_OBJECT
 public:
 
     // member functions
+
     BackgroundUpdater();
 
     // member variables
+
     QBrush brush;
 
 public slots:

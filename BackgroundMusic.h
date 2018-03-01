@@ -11,11 +11,15 @@ Q_OBJECT
 
 public:
 
+    // member functions
+
     BackgroundMusic();
     void run();
     void exec();
 
 private:
+
+    // private member variables
 
     QMediaPlaylist* playlist;
     QMediaPlayer* musicPlayer;

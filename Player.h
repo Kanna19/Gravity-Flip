@@ -22,9 +22,11 @@ public:
 
     int playerIndex;
     QPixmap run[8];
+
     int pixmapIndex;
     bool isFlipped;
     bool isInAir;
+
     QGraphicsPolygonItem* topArea;
     QGraphicsPolygonItem* bottomArea;
     QGraphicsPolygonItem* rightArea;

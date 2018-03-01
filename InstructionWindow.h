@@ -26,11 +26,12 @@ private slots:
 private:
 
     // private member variables
-    QPushButton* m_enterGame;
 
     int m_cnt;
     QLabel* m_label1;
     QLabel* m_label2;
+
+    QPushButton* m_enterGame;
 };
 
 #endif // INSTRUCTIONWINDOW_H

@@ -8,19 +8,33 @@
 #include "Set1.h"
 #include "BackgroundMusic.h"
 #include "StepSound.h"
+#include <QLabel>
 
 Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
-    isFinished = false;
     player_cnt = cnt;
+    isFinished = false;
     playerID = playerIDMapping;
 
     scene = new QGraphicsScene(this);
-    setScene(scene);
     scene->setSceneRect(0, 0, 1000, 500);
+    setScene(scene);
     setFixedSize(1000, 500);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Show score if the game is single player
+    if(player_cnt == 1)
+    {
+        scoreUpdater = new ScoreUpdater;
+        scene->addItem(scoreUpdater);
+        scoreUpdater->setPos(50, 10);
+    }
+
+    else
+    {
+        scoreUpdater = NULL;
+    }
 
     // Start step Sound
     stepSound[0] = new StepSound();
@@ -95,13 +109,25 @@ void Game::startSinglePlayerGame()
     scene->addItem(player[1]);
     player[1]->setPos(100, scene->height() -50 -120 +40);
 
+    QPixmap image(":res/player/" + QString::number(playerID[1]) +"idle1.png");
+
+    QLabel* displayImage = new QLabel(this);
+    displayImage->setPixmap(image.scaled(60, 60,
+                                        Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    displayImage->setGeometry(QRect(QPoint(0, 0), QSize(60, 60)));
+    displayImage->show();
+
     QTimer* timer = new QTimer();
 
-    QObject::connect(timer,SIGNAL(timeout()),player[0],SLOT(runPlayer()));
-    QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
-    QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
+    QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
+    QObject::connect(timer, SIGNAL(timeout()), set, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
+    QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
     timer->start(10);
+
+    // connect scoreUpdater to its timer
+    scoreUpdater->connectStepIncrementTimer();
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
 }
@@ -143,12 +169,11 @@ void Game::startMultiPlayerGame()
 
     QTimer* timer = new QTimer();
 
-    QObject::connect(timer,SIGNAL(timeout()),player[0],SLOT(runPlayer()));
-    QObject::connect(timer,SIGNAL(timeout()),player[1],SLOT(runPlayer()));
-    QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
-    QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
+    QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
+    QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
+    QObject::connect(timer, SIGNAL(timeout()), set, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
 
     timer->start(10);
-
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
 }

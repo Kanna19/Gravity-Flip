@@ -40,12 +40,12 @@ InstructionWindow::InstructionWindow(int cnt, QWidget *parent):
 
     if(cnt==1)
     {
-        m_label2->setText("RULES:\n\n1.YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
-                          "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n\n2.THE COMPUTER SHOULD NOT CATCH YOU\n");
+        m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
+                          "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n\n2. THE COMPUTER SHOULD NOT CATCH YOU\n");
     }
     else
     {
-        m_label2->setText("RULES:\n\n1.YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
+        m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
                           "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n");
     }
 
@@ -54,6 +54,7 @@ InstructionWindow::InstructionWindow(int cnt, QWidget *parent):
     m_label2->setGeometry(QRect(QPoint(50, 175), QSize(900, 200)));
     m_label2->show();
 }
+
 void InstructionWindow::display()
 {
     // Set the position
@@ -62,6 +63,7 @@ void InstructionWindow::display()
     this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
     this->show();
 }
+
 void InstructionWindow::handleEnterGame()
 {
     if(m_cnt == 1)

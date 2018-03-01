@@ -15,9 +15,6 @@ public:
     GameOverWindow(QWidget *parent = 0);
     void display(int loser);
 
-    // public member variables
-
-
 private slots:
 
     // slots to handle key press event

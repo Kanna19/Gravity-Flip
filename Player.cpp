@@ -8,6 +8,7 @@
 #include <QWaitCondition>
 #include <QMutex>
 #include "GameOverWindow.h"
+#include <QLabel>
 
 extern Game* game;
 extern QWaitCondition soundWait;
@@ -17,9 +18,12 @@ Player::Player(int index, QGraphicsItem* parent)
 {
     playerIndex = index;
     int scaleFactor = 80;
-    setPixmap(QPixmap(":res/player/" + QString::number(game->playerID[playerIndex]) +
-                      "idle1.png").scaled(scaleFactor,scaleFactor,
-                        Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    QPixmap image(":res/player/" + QString::number(game->playerID[playerIndex]) +
+                         "idle1.png");
+
+    setPixmap(image.scaled(scaleFactor,scaleFactor,
+                          Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     pixmapIndex = 0;
     isFlipped = false;

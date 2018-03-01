@@ -9,10 +9,11 @@
 
 class SelectPlayersWindow: public QMainWindow
 {
-
 Q_OBJECT
 
 public:
+
+    // member functions
 
     SelectPlayersWindow(int cnt, QWidget* parent = 0);
     void display();
@@ -27,6 +28,8 @@ private:
     void updateDisplay();
     void createNewGame();
 
+    // private member variables
+
     int m_cnt;
     QLabel* m_label;
 
@@ -35,7 +38,6 @@ private:
     std::vector <QPushButton*> m_images;
 
     QSignalMapper* m_mapper;
-
 };
 
 #endif // SELECTPLAYERSWINDOW_H
