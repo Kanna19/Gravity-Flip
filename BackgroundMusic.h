@@ -12,6 +12,7 @@ Q_OBJECT
 public:
     BackgroundMusic();
     void run();
+    void exec();
 
 public slots:
     void playMusic();

@@ -35,7 +35,8 @@ SOURCES += \
     GameOverWindow.cpp \
     BackgroundMusic.cpp \
     SelectPlayersWindow.cpp \
-    instructionwindow.cpp
+    instructionwindow.cpp \
+    StepSound.cpp
 
 HEADERS += \
     Game.h \
@@ -47,7 +48,8 @@ HEADERS += \
     GameOverWindow.h \
     BackgroundMusic.h \
     SelectPlayersWindow.h \
-    instructionwindow.h
+    instructionwindow.h \
+    StepSound.h
 
 RESOURCES += \
     res.qrc
