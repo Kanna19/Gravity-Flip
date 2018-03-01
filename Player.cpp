@@ -90,7 +90,8 @@ void Player::runPlayer()
 
     if(!isFlipped)
     {
-        if(bottomArea->collidingItems().isEmpty())
+        //if(bottomArea->collidingItems().isEmpty())
+        if(isNotColliding(bottomArea))
         {
             setPos(x(), y() +3);
             isInAir = true;
@@ -108,7 +109,8 @@ void Player::runPlayer()
             isInAir = false;
             setPixmap(run[(pixmapIndex % 48) /6]);
 
-            if(rightArea->collidingItems().isEmpty())
+            //if(rightArea->collidingItems().isEmpty())
+            if(isNotColliding(rightArea))
             {
                 setPos(x(), y());
             }
@@ -122,7 +124,8 @@ void Player::runPlayer()
 
     else
     {
-        if(topArea->collidingItems().isEmpty())
+        //if(topArea->collidingItems().isEmpty())
+        if(isNotColliding(topArea))
         {
             setPos(x(), y() -3);
             isInAir = true;
@@ -137,11 +140,13 @@ void Player::runPlayer()
                 //mutex.unlock();
                 soundWait.wakeOne();
             }
+
             isInAir = false;
 
             setPixmap(run[(pixmapIndex % 48) /6].transformed(QTransform().rotate(180, Qt::XAxis)));
 
-            if(rightArea->collidingItems().isEmpty())
+            //if(rightArea->collidingItems().isEmpty())
+            if(isNotColliding(rightArea))
             {
                 setPos(x(), y());
             }
@@ -166,4 +171,24 @@ void Player::flipPlayer()
 
     // change isFlipped
     isFlipped = (isFlipped +1) % 2;
+}
+
+bool Player::isNotColliding(QGraphicsPolygonItem* area)
+{
+    if(area->collidingItems().empty())
+        return true;
+
+    /*
+     * There is no scoreboard in case of a multiplayer game
+     * hence collision with it is not possible
+    */
+
+    if(game->player_cnt == 2)
+        return false;
+
+    // Ignore collisions with the score
+    if(area->collidesWithItem(game->scoreUpdater))
+        return true;
+
+    return false;
 }

@@ -9,6 +9,7 @@
 #include "StepSound.h"
 #include <vector>
 #include "ScoreUpdater.h"
+#include <QLabel>
 
 class Game : public QGraphicsView
 {
@@ -33,6 +34,7 @@ public:
 
     std::vector <int> playerID;
 
+    QLabel* displayImage;
     ScoreUpdater* scoreUpdater;
 };
 

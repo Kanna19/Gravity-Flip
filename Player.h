@@ -17,6 +17,7 @@ public:
 
     Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
+    bool isNotColliding(QGraphicsPolygonItem* area);
 
     // member variables
 

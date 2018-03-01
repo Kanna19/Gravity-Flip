@@ -34,6 +34,7 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     else
     {
         scoreUpdater = NULL;
+        displayImage = NULL;
     }
 
     // Start step Sound
@@ -109,9 +110,10 @@ void Game::startSinglePlayerGame()
     scene->addItem(player[1]);
     player[1]->setPos(100, scene->height() -50 -120 +40);
 
+    // add image to show next to the score
     QPixmap image(":res/player/" + QString::number(playerID[1]) +"idle1.png");
 
-    QLabel* displayImage = new QLabel(this);
+    displayImage = new QLabel(this);
     displayImage->setPixmap(image.scaled(60, 60,
                                         Qt::KeepAspectRatio, Qt::SmoothTransformation));
     displayImage->setGeometry(QRect(QPoint(0, 0), QSize(60, 60)));
