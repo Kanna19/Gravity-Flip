@@ -52,5 +52,6 @@
         <file>res/player/5run2.png</file>
         <file>res/player/5run1.png</file>
         <file>res/player/5idle1.png</file>
+        <file>res/sounds/30sec.mp3</file>
     </qresource>
 </RCC>

@@ -6,6 +6,7 @@
 #include <QWidget>
 #include "Player.h"
 #include "BackgroundMusic.h"
+#include "StepSound.h"
 #include <vector>
 
 class Game : public QGraphicsView
@@ -22,6 +23,7 @@ public:
     // member variables
     QGraphicsScene* scene;
     BackgroundMusic* backgroundMusic;
+    StepSound* stepSound[2];
 
     bool isFinished;
     int player_cnt;

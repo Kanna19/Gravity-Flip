@@ -5,9 +5,13 @@
 #include <QGraphicsScene>
 #include <Game.h>
 #include <QDebug>
+#include <QWaitCondition>
+#include <QMutex>
 #include "GameOverWindow.h"
 
 extern Game* game;
+extern QWaitCondition soundWait;
+extern QMutex mutex;
 
 Player::Player(int index, QGraphicsItem* parent)
 {
@@ -72,6 +76,11 @@ void Player::runPlayer()
         GameOverWindow* gameOverWindow = new GameOverWindow;
         gameOverWindow->display(playerIndex);
 
+        game->backgroundMusic->requestInterruption();
+        game->stepSound[0]->requestInterruption();
+        game->stepSound[1]->requestInterruption();
+        soundWait.wakeAll();
+
         game->close();
         return;
     }
@@ -90,7 +99,9 @@ void Player::runPlayer()
         {
             if(isInAir)
             {
-                emit makeSound();
+                //mutex.lock();
+                soundWait.wakeOne();
+                //mutex.unlock();
             }
 
             isInAir = false;
@@ -120,7 +131,10 @@ void Player::runPlayer()
         {
             if(isInAir)
             {
-                emit makeSound();
+                //emit makeSound();
+                //mutex.lock();
+                //mutex.unlock();
+                soundWait.wakeOne();
             }
             isInAir = false;
 

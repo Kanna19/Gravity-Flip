@@ -7,6 +7,7 @@
 #include "BackgroundUpdater.h"
 #include "Set1.h"
 #include "BackgroundMusic.h"
+#include "StepSound.h"
 
 Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
@@ -21,9 +22,19 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    //STart step Sound
+    stepSound[0] = new StepSound();
+    stepSound[0]->moveToThread(stepSound[0]);
+    stepSound[0]->start();
+
+    stepSound[1] = new StepSound();
+    stepSound[1]->moveToThread(stepSound[1]);
+    stepSound[1]->start();
+
     // Start background music
     qWarning() << this->thread()->currentThreadId();
     backgroundMusic = new BackgroundMusic();
+    backgroundMusic->moveToThread(backgroundMusic);
     backgroundMusic->start();
 }
 
@@ -89,7 +100,8 @@ void Game::startSinglePlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),player[0],SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
-    QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
+
+    //QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
 
     timer->start(10);
 
@@ -137,8 +149,9 @@ void Game::startMultiPlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),player[1],SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
-    QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
-    QObject::connect(player[1],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
+
+    //QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
+    //QObject::connect(player[1],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
 
     timer->start(10);
 

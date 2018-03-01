@@ -35,6 +35,7 @@ public slots:
 
 signals:
     void makeSound();
+    void stopThreads();
 };
 
 #endif // PLAYER_H
