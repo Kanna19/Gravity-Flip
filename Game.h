@@ -34,6 +34,7 @@ public:
 
     std::vector <int> playerID;
 
+    QPixmap images[2];
     QLabel* displayImage;
     ScoreUpdater* scoreUpdater;
 };

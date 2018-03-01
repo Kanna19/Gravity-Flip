@@ -23,42 +23,27 @@ void GameOverWindow::display(int loser)
     // make the game window invisible
     game->setVisible(false);
 
-    QLabel* label = new QLabel(this);
+    int winner = 1;
 
-    // Set the display text appropriately
-    if(game->player_cnt == 1)
+    if(loser == 1)
     {
-        if(loser == 1)
-        {
-            label->setText("YOU LOSE");
-        }
-
-        else
-        {
-            label->setText("YOU WIN");
-        }
+        winner = 2;
     }
 
-    else
-    {
-        if(loser == 1)
-        {
-            label->setText("Player 2 Wins");
-        }
+    // set the image of the winner
+    QLabel* displayWinner = new QLabel(this);
+    displayWinner->setPixmap(game->images[winner -1].
+            scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    displayWinner->setGeometry(QRect(QPoint(370, 200), QSize(80, 100)));
+    displayWinner->show();
 
-        else
-        {
-            label->setText("Player 1 Wins");
-        }
-    }
-
-    // Set the Properties of the Display Text
-
-    //label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    label->setStyleSheet("font: 25px; color: blue");
-    label->setAlignment(Qt::AlignCenter);
-    label->setGeometry(QRect(QPoint(250, 200), QSize(400, 100)));
-    label->show();
+    // set the properties of the text to be displayed
+    QLabel* displayText = new QLabel(this);
+    displayText->setText(" WINS");
+    displayText->setStyleSheet("font: 25px; color: blue");
+    displayText->setAlignment(Qt::AlignCenter);
+    displayText->setGeometry(QRect(QPoint(450, 200), QSize(75, 100)));
+    displayText->show();
 
     this->resize(1000, 500);
     this->move(0, 0);
