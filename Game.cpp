@@ -22,7 +22,7 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    //STart step Sound
+    // Start step Sound
     stepSound[0] = new StepSound();
     stepSound[0]->moveToThread(stepSound[0]);
     stepSound[0]->start();
@@ -101,8 +101,6 @@ void Game::startSinglePlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
 
-    //QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
-
     timer->start(10);
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
@@ -149,9 +147,6 @@ void Game::startMultiPlayerGame()
     QObject::connect(timer,SIGNAL(timeout()),player[1],SLOT(runPlayer()));
     QObject::connect(timer,SIGNAL(timeout()),set,SLOT(updateObjects()));
     QObject::connect(timer,SIGNAL(timeout()),backgroundUpdater,SLOT(update()));
-
-    //QObject::connect(player[0],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
-    //QObject::connect(player[1],SIGNAL(makeSound()),backgroundMusic, SLOT(playSound()));
 
     timer->start(10);
 

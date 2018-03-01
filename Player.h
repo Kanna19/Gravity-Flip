@@ -32,10 +32,6 @@ public:
 public slots:
 
     void runPlayer();
-
-signals:
-    void makeSound();
-    void stopThreads();
 };
 
 #endif // PLAYER_H

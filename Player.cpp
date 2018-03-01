@@ -32,9 +32,6 @@ Player::Player(int index, QGraphicsItem* parent)
     topRect.append(QPointF(70, 5));
     topRect.append(QPointF(0, 5));
 
-    //connect to BackGroundmusic
-    //connect(this,SIGNAL(makeSound()),game->backgroundMusic,SLOT(playSound()));
-
     // Add the rectangles to the scene
     topArea = new QGraphicsPolygonItem(topRect, this);
     topArea->setPos(x(), y() -10);

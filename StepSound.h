@@ -6,6 +6,7 @@
 class StepSound: public QThread
 {
 public:
+
     StepSound();
     void run();
     void exec();
@@ -13,6 +14,7 @@ public:
     QMediaPlayer* musicPlayer;
 
 public slots:
+
     void playSound();
 };
 
