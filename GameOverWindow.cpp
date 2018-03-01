@@ -23,7 +23,7 @@ void GameOverWindow::display(int loser)
     // make the game window invisible
     game->setVisible(false);
 
-    QLabel *label = new QLabel(this);
+    QLabel* label = new QLabel(this);
 
     // Set the display text appropriately
     if(game->player_cnt == 1)

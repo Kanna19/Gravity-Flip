@@ -162,7 +162,8 @@ void Player::runPlayer()
 void Player::flipPlayer()
 {
     // DONOT flip if player is in air
-    if(topArea->collidingItems().isEmpty() && bottomArea->collidingItems().isEmpty())
+    //if(topArea->collidingItems().isEmpty() && bottomArea->collidingItems().isEmpty())
+    if(isNotColliding(topArea) && isNotColliding(bottomArea))
     {
         return;
     }
