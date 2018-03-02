@@ -10,6 +10,7 @@
 #include <vector>
 #include "ScoreUpdater.h"
 #include <QLabel>
+#include <QCloseEvent>
 
 class Game : public QGraphicsView
 {
@@ -19,6 +20,7 @@ public:
 
     Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent = 0);
     void keyPressEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent* event);
     void startSinglePlayerGame();
     void startMultiPlayerGame();
 

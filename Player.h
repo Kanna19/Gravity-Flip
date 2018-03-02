@@ -19,6 +19,7 @@ public:
     void flipPlayer();
     bool isNotColliding(QGraphicsPolygonItem* area);
 
+
     // member variables
 
     int playerIndex;

@@ -77,11 +77,6 @@ void Player::runPlayer()
         GameOverWindow* gameOverWindow = new GameOverWindow;
         gameOverWindow->display(playerIndex);
 
-        game->backgroundMusic->requestInterruption();
-        game->stepSound[0]->requestInterruption();
-        game->stepSound[1]->requestInterruption();
-        soundWait.wakeAll();
-
         game->close();
         return;
     }

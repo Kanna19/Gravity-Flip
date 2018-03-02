@@ -9,6 +9,9 @@
 #include "BackgroundMusic.h"
 #include "StepSound.h"
 #include <QLabel>
+#include <QWaitCondition>
+
+extern QWaitCondition soundWait;
 
 Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
@@ -80,6 +83,16 @@ void Game::keyPressEvent(QKeyEvent *event)
     {
         player[1]->flipPlayer();
     }
+}
+
+// This function is called when user clicks the X button while the game is running
+void Game::closeEvent(QCloseEvent *event)
+{
+    // Close all running threads
+    backgroundMusic->requestInterruption();
+    stepSound[0]->requestInterruption();
+    stepSound[1]->requestInterruption();
+    soundWait.wakeAll();
 }
 
 /*
