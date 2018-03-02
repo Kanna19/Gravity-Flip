@@ -9,6 +9,7 @@
 #include <QMutex>
 #include "GameOverWindow.h"
 #include <QLabel>
+#include "Trail.h"
 
 extern Game* game;
 extern QWaitCondition soundWait;
@@ -168,7 +169,14 @@ void Player::flipPlayer()
     setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
 
     // change isFlipped
-    isFlipped = (isFlipped +1) % 2;
+    isFlipped = !isFlipped;
+    if(game->player_cnt == 1 && this != game->player[1])
+    {
+        Trail* trail = new Trail(x()+75,y());
+        QObject::connect(game->timer,SIGNAL(timeout()),trail,SLOT(updatePos()));
+        game->scene->addItem(trail);
+    }
+
 }
 
 bool Player::isNotColliding(QGraphicsPolygonItem* area)
@@ -188,5 +196,11 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
     if(area->collidesWithItem(game->scoreUpdater))
         return true;
 
-    return false;
+    QList<QGraphicsItem*> list = area->collidingItems();
+    for(int i=0; i<list.size(); i++)
+    {
+        if(typeid(*list[i]) != typeid(Trail)) return false;
+    }
+
+    return true;
 }

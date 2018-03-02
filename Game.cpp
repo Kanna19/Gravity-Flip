@@ -143,9 +143,10 @@ void Game::startSinglePlayerGame()
     displayImage->setGeometry(QRect(QPoint(0, 0), QSize(60, 60)));
     displayImage->show();
 
-    QTimer* timer = new QTimer();
+    timer = new QTimer();
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
+    QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), set, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
     QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
