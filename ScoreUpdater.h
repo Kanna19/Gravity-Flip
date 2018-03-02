@@ -15,6 +15,7 @@ public:
     ScoreUpdater(QGraphicsItem* parent = 0);
     int getScore();
     void connectStepIncrementTimer();
+    void disconnectStepIncrementTimer();
 
 private slots:
 
