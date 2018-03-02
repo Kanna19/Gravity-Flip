@@ -9,6 +9,7 @@
 #include <QMutex>
 #include "GameOverWindow.h"
 #include <QLabel>
+#include <typeinfo>
 #include "Trail.h"
 
 extern Game* game;
