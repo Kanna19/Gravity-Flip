@@ -93,6 +93,14 @@ void Game::closeEvent(QCloseEvent *event)
     stepSound[0]->requestInterruption();
     stepSound[1]->requestInterruption();
     soundWait.wakeAll();
+
+    /*
+     * Set the setAccepted variable to true to
+     * indicate that this function wants the event.
+     * (Event doesn't propagate to parent widget)
+     */
+
+    event->accept();
 }
 
 /*
