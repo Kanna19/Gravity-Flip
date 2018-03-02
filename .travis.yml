@@ -9,6 +9,6 @@ before_install:
  - sudo apt-get install qt5-default qttools5-dev-tools qtmultimedia5-dev libqt5multimedia5-plugins
 
 script:
- - qmake -project "QT += widgets multimedia"
+ - qmake -project "QT += widgets multimedia testlib"
  - qmake Gravity_Flip.pro
  - make
