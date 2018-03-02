@@ -32,9 +32,9 @@ Player::Player(int index, QGraphicsItem* parent)
     // Describe a closed rectangle
     QPolygonF topRect;
     topRect.append(QPointF(0, 0));
-    topRect.append(QPointF(70, 0));
-    topRect.append(QPointF(70, 5));
-    topRect.append(QPointF(0, 5));
+    topRect.append(QPointF(65, 0));
+    topRect.append(QPointF(65, 2));
+    topRect.append(QPointF(0, 2));
 
     // Add the rectangles to the scene
     topArea = new QGraphicsPolygonItem(topRect, this);
@@ -93,7 +93,8 @@ void Player::runPlayer()
         //if(bottomArea->collidingItems().isEmpty())
         if(isNotColliding(bottomArea))
         {
-            setPos(x(), y() +3);
+            if(!isNotColliding(rightArea)) setPos(x()-2, y() +3);
+            else setPos(x(), y() +3);
             isInAir = true;
         }
 
@@ -127,7 +128,8 @@ void Player::runPlayer()
         //if(topArea->collidingItems().isEmpty())
         if(isNotColliding(topArea))
         {
-            setPos(x(), y() -3);
+            if(!isNotColliding(rightArea)) setPos(x()-2, y() -3);
+            else setPos(x(), y() -3);
             isInAir = true;
         }
 
