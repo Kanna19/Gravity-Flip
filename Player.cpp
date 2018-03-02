@@ -71,6 +71,20 @@ void Player::runPlayer()
         return;
     }
 
+    if(game->player_cnt == 1)
+    {
+        if(isCaught())
+        {
+            game->isFinished = true;
+
+            GameOverWindow* gameOverWindow = new GameOverWindow;
+            gameOverWindow->display(1);
+
+            game->close();
+            return;
+        }
+    }
+
     // Check these values
     if(x() > 900 || x() +100 < 0 || y() > 500 || y() +100 < 0)
     {
@@ -204,4 +218,14 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
     }
 
     return true;
+}
+
+bool Player::isCaught()
+{
+    if(game->player[1]->rightArea->collidesWithItem(game->player[0]))
+    {
+        return true;
+    }
+
+    return false;
 }
