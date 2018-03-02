@@ -23,16 +23,16 @@ void GameOverWindow::display(int loser)
     // make the game window invisible
     game->setVisible(false);
 
-    int winner = 1;
+    /*
+     * 0 is loser -> 1 is winner
+     * 1 is loser -> 0 is winner
+    */
 
-    if(loser == 1)
-    {
-        winner = 2;
-    }
+    int winner = 1 -loser;
 
     // set the image of the winner
     QLabel* displayWinner = new QLabel(this);
-    displayWinner->setPixmap(game->images[winner -1].
+    displayWinner->setPixmap(game->images[winner].
             scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     displayWinner->setGeometry(QRect(QPoint(370, 200), QSize(80, 100)));
     displayWinner->show();

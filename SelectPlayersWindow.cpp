@@ -29,10 +29,10 @@ SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent):
     m_label->setGeometry(QRect(QPoint(250, 100), QSize(400, 100)));
     m_label->show();
 
+    m_playerID.resize(2);
     m_images.resize(m_imageCount);
-    m_playerID.resize(m_imageCount);
 
-    for(int i = 0; i < m_imageCount; i++)
+    for(int i = 0; i < 2; i++)
         m_playerID[i] = 0;
 
     // Map the signals to the appropriate slots
@@ -87,7 +87,7 @@ void SelectPlayersWindow::setPlayer1ID(int id)
     // Map the selected option to playerIndex = 1
     // Used to represent the character chosen by player 1
 
-    m_playerID[1] = id;
+    m_playerID[0] = id;
 
     // Update the display to show the options to select for the 2nd player
     updateDisplay();
@@ -98,7 +98,7 @@ void SelectPlayersWindow::setPlayer2ID(int id)
     // Map the selected option to playerIndex = 2
     // Used to represent the character chosen by player 2
 
-    m_playerID[2] = id;
+    m_playerID[1] = id;
 
     // All choices have been made. Start new Game.
     createNewGame();
@@ -138,7 +138,7 @@ void SelectPlayersWindow::updateDisplay()
 
     for(int i = 0; i < m_imageCount; i++)
     {
-        if(i +1 == m_playerID[1])
+        if(i +1 == m_playerID[0])
             continue;
 
         m_images[i]->show();

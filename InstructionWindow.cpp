@@ -29,7 +29,7 @@ InstructionWindow::InstructionWindow(int cnt, QWidget *parent):
 
     else
     {
-        m_label1->setText("INSTRUCTIONS:\n\nUSE C FOR FLIPPING GRAVITY OF PLAYER 1\n USE M FOR FLIPPING GRAVITY OF PLAYER 2");
+        m_label1->setText("INSTRUCTIONS:\n\nUSE M FOR FLIPPING GRAVITY OF PLAYER 1\n USE C FOR FLIPPING GRAVITY OF PLAYER 2");
     }
 
     m_label1->setStyleSheet("font: 25px; color: blue");

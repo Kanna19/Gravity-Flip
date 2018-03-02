@@ -90,7 +90,7 @@ void Player::runPlayer()
             QTest::qWait(2000);
 
             GameOverWindow* gameOverWindow = new GameOverWindow;
-            gameOverWindow->display(1);
+            gameOverWindow->display(0);
 
             game->close();
             return;
@@ -246,7 +246,7 @@ bool Player::isCaught()
 
 void Player::killPlayer()
 {
-    QPixmap deadImage(":res/player/" + QString::number(game->playerID[1]) +
+    QPixmap deadImage(":res/player/" + QString::number(game->playerID[0]) +
                       "dead1.png");
 
     // Set the player's image to dead

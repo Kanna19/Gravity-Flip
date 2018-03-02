@@ -41,8 +41,8 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     }
 
     // Store the idle images of both the players
-    images[0] = QPixmap(":res/player/" + QString::number(playerID[1]) +"idle1.png");
-    images[1] = QPixmap(":res/player/" + QString::number(playerID[2]) +"idle1.png");
+    images[0] = QPixmap(":res/player/" + QString::number(playerID[0]) +"idle1.png");
+    images[1] = QPixmap(":res/player/" + QString::number(playerID[1]) +"idle1.png");
 
     // Start step Sound
     stepSound[0] = new StepSound();
@@ -74,12 +74,12 @@ void Game::keyPressEvent(QKeyEvent *event)
     }
 
     // The Game Type is Multi Player
-    if(event->key() == Qt::Key_C)
+    if(event->key() == Qt::Key_M)
     {
        player[0]->flipPlayer();
     }
 
-    if(event->key() == Qt::Key_M)
+    if(event->key() == Qt::Key_C)
     {
         player[1]->flipPlayer();
     }
@@ -107,6 +107,7 @@ void Game::closeEvent(QCloseEvent *event)
  * In Single Player Game:
  *
  *      player[0] represents the player
+ *      player[1] represents the computer
 */
 
 void Game::startSinglePlayerGame()
@@ -127,11 +128,11 @@ void Game::startSinglePlayerGame()
 
     // player
 
-    player[0] = new Player(1);
+    player[0] = new Player(0);
     scene->addItem(player[0]);
     player[0]->setPos(200, scene->height() -50 -120 +40);
 
-    player[1] = new Player(2);
+    player[1] = new Player(1);
     scene->addItem(player[1]);
     player[1]->setPos(100, scene->height() -50 -120 +40);
 
@@ -185,14 +186,14 @@ void Game::startMultiPlayerGame()
     // add players
 
     // player 1
-    player[0] = new Player(1);
+    player[0] = new Player(0);
     scene->addItem(player[0]);
-    player[0]->setPos(100, scene->height() -50 -120 +40);
+    player[0]->setPos(200, scene->height() -50 -120 +40);
 
     // player 2
-    player[1] = new Player(2);
+    player[1] = new Player(1);
     scene->addItem(player[1]);
-    player[1]->setPos(200, scene->height() -50 -120 +40);
+    player[1]->setPos(100, scene->height() -50 -120 +40);
 
     QTimer* timer = new QTimer();
 
