@@ -27,10 +27,10 @@ public:
 
     // member variables
 
+    QTimer* timer;
     QGraphicsScene* scene;
     BackgroundMusic* backgroundMusic;
     StepSound* stepSound[2];
-    QTimer* timer;
 
     bool isFinished;
     int player_cnt;

@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui \
-            multimedia
+            multimedia \
+            testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

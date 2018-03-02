@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <typeinfo>
 #include "Trail.h"
+#include <QTest>
 
 extern Game* game;
 extern QWaitCondition soundWait;
@@ -73,9 +74,20 @@ void Player::runPlayer()
 
     if(game->player_cnt == 1)
     {
+        // Check if computer catches the player
         if(isCaught())
         {
+            // Player was caught, game over.
             game->isFinished = true;
+
+            // Disconnect the timer from players, sets, backgroundupdater, score
+            game->timer->disconnect();
+
+            // Kill the player if computer catches him/her
+            killPlayer();
+
+            // Show the game window for 2 seconds before displaying gameoverwindow
+            QTest::qWait(2000);
 
             GameOverWindow* gameOverWindow = new GameOverWindow;
             gameOverWindow->display(1);
@@ -220,12 +232,43 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
     return true;
 }
 
+// This function will only be called in a single player game
 bool Player::isCaught()
 {
+    // Check for collision between player and bot
     if(game->player[1]->rightArea->collidesWithItem(game->player[0]))
     {
         return true;
     }
 
     return false;
+}
+
+void Player::killPlayer()
+{
+    QPixmap deadImage(":res/player/" + QString::number(game->playerID[1]) +
+                      "dead1.png");
+
+    // Set the player's image to dead
+    game->player[0]->setPixmap(deadImage.scaled(70, 70, Qt::KeepAspectRatio,
+                                                Qt::SmoothTransformation));
+
+    // Flip the image depending on the direction of gravity
+    if(game->player[0]->isFlipped)
+    {
+        game->player[0]->setPixmap(game->player[0]->pixmap().
+                transformed(QTransform().rotate(180, Qt::XAxis)));
+    }
+
+    // Set the computer's image to idle
+    QPixmap idleImage(game->images[1]);
+    game->player[1]->setPixmap(idleImage.scaled(80, 80, Qt::KeepAspectRatio,
+                                                Qt::SmoothTransformation));
+
+    // Flip the image depending on the direction of gravity
+    if(game->player[1]->isFlipped)
+    {
+        game->player[1]->setPixmap(game->player[1]->pixmap().
+                transformed(QTransform().rotate(180, Qt::XAxis)));
+    }
 }

@@ -53,5 +53,10 @@
         <file>res/player/5run1.png</file>
         <file>res/player/5idle1.png</file>
         <file>res/sounds/30sec.mp3</file>
+        <file>res/player/5dead1.png</file>
+        <file>res/player/4dead1.png</file>
+        <file>res/player/3dead1.png</file>
+        <file>res/player/2dead1.png</file>
+        <file>res/player/1dead1.png</file>
     </qresource>
 </RCC>
