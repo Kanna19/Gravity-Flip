@@ -1,11 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+class PlayerState;
+
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QKeyEvent>
 #include <QPolygonF>
 #include <QGraphicsItem>
+#include "PlayerState.h"
+#include <QMediaPlayer>
 
 class Player: public QObject, public QGraphicsPixmapItem
 {
@@ -25,6 +29,7 @@ public:
 
     int playerIndex;
     QPixmap run[8];
+    QImage images[8];
 
     int pixmapIndex;
     bool isFlipped;
@@ -34,9 +39,12 @@ public:
     QGraphicsPolygonItem* bottomArea;
     QGraphicsPolygonItem* rightArea;
 
+    QMediaPlayer* stepSoundPlayer;
+
 public slots:
 
     void runPlayer();
+    //void doneProcessing(PlayerState state);
 };
 
 #endif // PLAYER_H

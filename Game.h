@@ -6,7 +6,6 @@
 #include <QWidget>
 #include "Player.h"
 #include "BackgroundMusic.h"
-#include "StepSound.h"
 #include <vector>
 #include "ScoreUpdater.h"
 #include <QLabel>
@@ -33,7 +32,6 @@ public:
     QTimer* timer;
     QGraphicsScene* scene;
     BackgroundMusic* backgroundMusic;
-    StepSound* stepSound[2];
     Set2* set[2];
 
     bool isFinished;

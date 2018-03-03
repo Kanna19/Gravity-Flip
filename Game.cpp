@@ -12,8 +12,6 @@
 #include <QLabel>
 #include <QWaitCondition>
 
-extern QWaitCondition soundWait;
-
 Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
     player_cnt = cnt;
@@ -44,15 +42,6 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     // Store the idle images of both the players
     images[0] = QPixmap(":res/player/" + QString::number(playerID[0]) +"idle1.png");
     images[1] = QPixmap(":res/player/" + QString::number(playerID[1]) +"idle1.png");
-
-    // Start step Sound
-    stepSound[0] = new StepSound();
-    stepSound[0]->moveToThread(stepSound[0]);
-    stepSound[0]->start();
-
-    stepSound[1] = new StepSound();
-    stepSound[1]->moveToThread(stepSound[1]);
-    stepSound[1]->start();
 
     // Start background music
     qWarning() << this->thread()->currentThreadId();
@@ -98,9 +87,6 @@ void Game::closeEvent(QCloseEvent *event)
 {
     // Close all running threads
     backgroundMusic->requestInterruption();
-    stepSound[0]->requestInterruption();
-    stepSound[1]->requestInterruption();
-    soundWait.wakeAll();
 
     /*
      * Set the setAccepted variable to true to

@@ -36,11 +36,11 @@ SOURCES += \
     GameOverWindow.cpp \
     BackgroundMusic.cpp \
     SelectPlayersWindow.cpp \
-    StepSound.cpp \
     InstructionWindow.cpp \
     ScoreUpdater.cpp \
     Trail.cpp \
-    Set2.cpp
+    Set2.cpp \
+    PlayerState.cpp
 
 HEADERS += \
     Game.h \
@@ -52,11 +52,11 @@ HEADERS += \
     GameOverWindow.h \
     BackgroundMusic.h \
     SelectPlayersWindow.h \
-    StepSound.h \
     InstructionWindow.h \
     ScoreUpdater.h \
     Trail.h \
-    Set2.h
+    Set2.h \
+    PlayerState.h
 
 RESOURCES += \
     res.qrc

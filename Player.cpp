@@ -14,8 +14,6 @@
 #include <QTest>
 
 extern Game* game;
-extern QWaitCondition soundWait;
-extern QMutex mutex;
 
 Player::Player(int index, QGraphicsItem* parent)
 {
@@ -61,7 +59,16 @@ Player::Player(int index, QGraphicsItem* parent)
         run[i -1] = QPixmap(":/res/player/" + QString::number(game->playerID[playerIndex]) + "run" +
                             QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,
                             Qt::KeepAspectRatio,Qt::SmoothTransformation);
+
+        images[i -1] = QImage(":/res/player/" + QString::number(game->playerID[playerIndex]) + "run" +
+                              QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,
+                                Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
+
+    // Start step Sound
+
+    stepSoundPlayer = new QMediaPlayer;
+    stepSoundPlayer->setMedia(QUrl("qrc:/res/sounds/bullet.wav"));
 }
 
 void Player::runPlayer()
@@ -133,9 +140,7 @@ void Player::runPlayer()
         {
             if(isInAir)
             {
-                //mutex.lock();
-                soundWait.wakeOne();
-                //mutex.unlock();
+                stepSoundPlayer->play();
             }
 
             isInAir = false;
@@ -176,10 +181,7 @@ void Player::runPlayer()
         {
             if(isInAir)
             {
-                //emit makeSound();
-                //mutex.lock();
-                //mutex.unlock();
-                soundWait.wakeOne();
+                stepSoundPlayer->play();
             }
 
             isInAir = false;
