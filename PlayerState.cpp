@@ -13,6 +13,8 @@ PlayerState::PlayerState(const PlayerState &state)
 
     isInAir = state.isInAir;
     isFlipped = state.isFlipped;
+
+    isUpdateToPixMapNeeded = state.isUpdateToPixMapNeeded;
 }
 
 PlayerState::PlayerState(Player* player)
@@ -24,4 +26,6 @@ PlayerState::PlayerState(Player* player)
 
     isInAir = player->isInAir;
     isFlipped = player->isFlipped;
+
+    isUpdateToPixMapNeeded = false;
 }

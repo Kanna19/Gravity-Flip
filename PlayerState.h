@@ -21,6 +21,8 @@ public:
 
     bool isInAir;
     bool isFlipped;
+
+    bool isUpdateToPixMapNeeded;
 };
 
 #endif // PLAYERSTATE_H
