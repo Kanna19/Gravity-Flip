@@ -77,12 +77,12 @@ void Game::keyPressEvent(QKeyEvent *event)
     // The Game Type is Multi Player
     if(event->key() == Qt::Key_M)
     {
-       player[0]->flipPlayer();
+        emit requestFlipPlayerUpdateForPlayer1(player[0]);
     }
 
     if(event->key() == Qt::Key_C)
     {
-        player[1]->flipPlayer();
+        emit requestFlipPlayerUpdateForPlayer2(player[1]);
     }
 }
 
@@ -184,8 +184,6 @@ void Game::startSinglePlayerGame()
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), set[0], SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), set[1], SLOT(updateObjects()));
-    //QObject::connect(set[0], SIGNAL(killMe(int)), this, SLOT(reincarnateSet(int)));
-    //QObject::connect(set[1], SIGNAL(killMe(int)), this, SLOT(reincarnateSet(int)));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
     QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
@@ -236,9 +234,13 @@ void Game::startMultiPlayerGame()
 
     QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
             workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool)));
-
     QObject::connect(workerForPlayer1, SIGNAL(doneUpdating(PlayerState)), player[0],
             SLOT(doneProcessing(PlayerState)));
+
+    QObject::connect(this, SIGNAL(requestFlipPlayerUpdateForPlayer1(Player*)),
+                     workerForPlayer1, SLOT(updateFlipPlayerState(Player*)));
+    QObject::connect(workerForPlayer1, SIGNAL(doneFlipping(PlayerState)),
+                     player[0], SLOT(doneFlipping(PlayerState)));
 
     threadForPlayer2 = new QThread;
     workerForPlayer2 = new RunPlayerWorker;
@@ -247,9 +249,13 @@ void Game::startMultiPlayerGame()
 
     QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
             workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool)));
-
     QObject::connect(workerForPlayer2, SIGNAL(doneUpdating(PlayerState)), player[1],
             SLOT(doneProcessing(PlayerState)));
+
+    QObject::connect(this, SIGNAL(requestFlipPlayerUpdateForPlayer2(Player*)),
+                     workerForPlayer2, SLOT(updateFlipPlayerState(Player*)));
+    QObject::connect(workerForPlayer2, SIGNAL(doneFlipping(PlayerState)),
+                     player[1], SLOT(doneFlipping(PlayerState)));
 
     threadForPlayer1->start();
     threadForPlayer2->start();
@@ -267,7 +273,7 @@ void Game::startMultiPlayerGame()
 
 void Game::reincarnateSet(int idx)
 {
-    int nextIdx = (idx+1)%2;
+    int nextIdx = (idx +1) % 2;
     qWarning() << "I am dead";
     delete set[idx];
     set[idx] = new Set2(set[nextIdx]->objects[0]->rect().x()+1500);

@@ -59,6 +59,8 @@ public slots:
 signals:
 
     void requestFlipPlayerUpdate(Player* player);
+    void requestFlipPlayerUpdateForPlayer1(Player* player);
+    void requestFlipPlayerUpdateForPlayer2(Player* player);
 };
 
 #endif // GAME_H
