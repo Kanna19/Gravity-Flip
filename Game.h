@@ -12,6 +12,8 @@
 #include <QCloseEvent>
 #include <QTimer>
 #include "Set2.h"
+#include <QThread>
+#include "RunPlayerWorker.h"
 
 class Game : public QGraphicsView
 {
@@ -44,9 +46,19 @@ public:
     QLabel* displayImage;
     ScoreUpdater* scoreUpdater;
 
+    QThread* threadForPlayer1;
+    QThread* threadForPlayer2;
+
+    RunPlayerWorker* workerForPlayer1;
+    RunPlayerWorker* workerForPlayer2;
+
 public slots:
 
     void reincarnateSet(int);
+
+signals:
+
+    void requestFlipPlayerUpdate(Player* player);
 };
 
 #endif // GAME_H

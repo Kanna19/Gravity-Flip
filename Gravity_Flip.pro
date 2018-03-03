@@ -40,7 +40,8 @@ SOURCES += \
     ScoreUpdater.cpp \
     Trail.cpp \
     Set2.cpp \
-    PlayerState.cpp
+    PlayerState.cpp \
+    RunPlayerWorker.cpp
 
 HEADERS += \
     Game.h \
@@ -56,7 +57,8 @@ HEADERS += \
     ScoreUpdater.h \
     Trail.h \
     Set2.h \
-    PlayerState.h
+    PlayerState.h \
+    RunPlayerWorker.h
 
 RESOURCES += \
     res.qrc

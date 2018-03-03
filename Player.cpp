@@ -15,6 +15,28 @@
 
 extern Game* game;
 
+Player::Player()
+{
+}
+
+Player::Player(const Player &player) : QObject(), QGraphicsPixmapItem()
+{
+    playerIndex = player.playerIndex;
+
+    for(int i = 0; i < 8; i++)
+    {
+        run[i] = player.run[i];
+    }
+
+    pixmapIndex = player.pixmapIndex;
+    isFlipped = player.isFlipped;
+    isInAir = player.isInAir;
+
+    topArea = player.topArea;
+    bottomArea = player.bottomArea;
+    rightArea = player.rightArea;
+}
+
 Player::Player(int index, QGraphicsItem* parent)
 {
     playerIndex = index;
@@ -59,10 +81,6 @@ Player::Player(int index, QGraphicsItem* parent)
         run[i -1] = QPixmap(":/res/player/" + QString::number(game->playerID[playerIndex]) + "run" +
                             QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,
                             Qt::KeepAspectRatio,Qt::SmoothTransformation);
-
-        images[i -1] = QImage(":/res/player/" + QString::number(game->playerID[playerIndex]) + "run" +
-                              QString::number(i) + ".png").scaled(scaleFactor,scaleFactor,
-                                Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
     // Start step Sound
@@ -116,89 +134,49 @@ void Player::runPlayer()
         return;
     }
 
-    pixmapIndex++;
+    // Donot emit request until all previous requests were handled
 
-    if(!isFlipped)
+    emit requestUpdatePlayerState(this, isNotColliding(topArea),
+                    isNotColliding(bottomArea), isNotColliding(rightArea));
+
+    disconnect(game->timer, SIGNAL(timeout()), this, SLOT(runPlayer()));
+}
+
+void Player::doneProcessing(PlayerState state)
+{
+    // qWarning() << playerIndex << ' ' << state.xPos << ' ' << state.yPos;
+    setPos(state.xPos, state.yPos);
+    pixmapIndex = state.pixmapIndex;
+    isInAir = state.isInAir;
+    isFlipped = state.isFlipped;
+
+    if(state.isUpdateToPixMapNeeded)
     {
-        //if(bottomArea->collidingItems().isEmpty())
-        if(isNotColliding(bottomArea))
+        if(!state.isFlipped)
         {
-            if(!isNotColliding(rightArea))
-            {
-                setPos(x() -2, y() +3);
-            }
-
-            else
-            {
-                setPos(x(), y() +3);
-            }
-
-            isInAir = true;
+            setPixmap(run[(pixmapIndex % 48) /6]);
         }
 
         else
         {
-            if(isInAir)
-            {
-                stepSoundPlayer->play();
-            }
-
-            isInAir = false;
-            setPixmap(run[(pixmapIndex % 48) /6]);
-
-            //if(rightArea->collidingItems().isEmpty())
-            if(isNotColliding(rightArea))
-            {
-                setPos(x(), y());
-            }
-
-            else
-            {
-                setPos(x() -2, y());
-            }
+            setPixmap(run[(pixmapIndex % 48) /6].transformed(QTransform().
+                                                             rotate(180, Qt::XAxis)));
         }
     }
 
-    else
+    connect(game->timer, SIGNAL(timeout()), this, SLOT(runPlayer()));
+}
+
+void Player::doneFlipping(PlayerState state)
+{
+    setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
+    isFlipped = state.isFlipped;
+
+    if(game->player_cnt == 1 && this != game->player[1])
     {
-        //if(topArea->collidingItems().isEmpty())
-        if(isNotColliding(topArea))
-        {
-            if(!isNotColliding(rightArea))
-            {
-                setPos(x() -2, y() -3);
-            }
-
-            else
-            {
-                setPos(x(), y() -3);
-            }
-
-            isInAir = true;
-        }
-
-        else
-        {
-            if(isInAir)
-            {
-                stepSoundPlayer->play();
-            }
-
-            isInAir = false;
-
-            setPixmap(run[(pixmapIndex % 48) /6].transformed(QTransform().rotate(180, Qt::XAxis)));
-
-            //if(rightArea->collidingItems().isEmpty())
-            if(isNotColliding(rightArea))
-            {
-                setPos(x(), y());
-            }
-
-            else
-            {
-                setPos(x() -2, y());
-            }
-        }
+        Trail* trail = new Trail(x() +75, y());
+        QObject::connect(game->timer, SIGNAL(timeout()), trail, SLOT(updatePos()));
+        game->scene->addItem(trail);
     }
 }
 

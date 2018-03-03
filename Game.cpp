@@ -8,7 +8,6 @@
 #include "Set1.h"
 #include "Set2.h"
 #include "BackgroundMusic.h"
-#include "StepSound.h"
 #include <QLabel>
 #include <QWaitCondition>
 
@@ -43,6 +42,10 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     images[0] = QPixmap(":res/player/" + QString::number(playerID[0]) +"idle1.png");
     images[1] = QPixmap(":res/player/" + QString::number(playerID[1]) +"idle1.png");
 
+
+    qRegisterMetaType < Player > ("Player");
+    qRegisterMetaType < PlayerState > ("PlayerState");
+
     // Start background music
     qWarning() << this->thread()->currentThreadId();
     backgroundMusic = new BackgroundMusic();
@@ -64,7 +67,8 @@ void Game::keyPressEvent(QKeyEvent *event)
     {
         if(event->key() == Qt::Key_Space)
         {
-            player[0]->flipPlayer();
+            // emit signal to worker thread
+            emit requestFlipPlayerUpdate(player[0]);
         }
 
         return;
@@ -127,8 +131,6 @@ void Game::startSinglePlayerGame()
     // make game focusable
     setFocus();
 
-    // player
-
     player[0] = new Player(0);
     scene->addItem(player[0]);
     player[0]->setPos(200, scene->height() -50 -120 +40);
@@ -136,6 +138,37 @@ void Game::startSinglePlayerGame()
     player[1] = new Player(1);
     scene->addItem(player[1]);
     player[1]->setPos(50, scene->height() -50 -120 +40);
+
+    threadForPlayer1 = new QThread;
+    workerForPlayer1 = new RunPlayerWorker;
+
+    workerForPlayer1->moveToThread(threadForPlayer1);
+
+    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
+            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+
+    QObject::connect(workerForPlayer1, SIGNAL(doneUpdating(PlayerState)), player[0],
+            SLOT(doneProcessing(PlayerState)));
+
+    QObject::connect(this, SIGNAL(requestFlipPlayerUpdate(Player*)),
+                     workerForPlayer1, SLOT(updateFlipPlayerState(Player*)));
+
+    QObject::connect(workerForPlayer1, SIGNAL(doneFlipping(PlayerState)),
+                     player[0], SLOT(doneFlipping(PlayerState)));
+
+    threadForPlayer2 = new QThread;
+    workerForPlayer2 = new RunPlayerWorker;
+
+    workerForPlayer2->moveToThread(threadForPlayer2);
+
+    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
+            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+
+    QObject::connect(workerForPlayer2, SIGNAL(doneUpdating(PlayerState)), player[1],
+            SLOT(doneProcessing(PlayerState)));
+
+    threadForPlayer1->start();
+    threadForPlayer2->start();
 
     // add image to show next to the score
 
@@ -188,18 +221,40 @@ void Game::startMultiPlayerGame()
     setFocus();
 
     // add players
-
-    // player 1
     player[0] = new Player(0);
     scene->addItem(player[0]);
     player[0]->setPos(200, scene->height() -50 -120 +40);
 
-    // player 2
     player[1] = new Player(1);
     scene->addItem(player[1]);
-    player[1]->setPos(100, scene->height() -50 -120 +40);
+    player[1]->setPos(50, scene->height() -50 -120 +40);
 
-    QTimer* timer = new QTimer();
+    threadForPlayer1 = new QThread;
+    workerForPlayer1 = new RunPlayerWorker;
+
+    workerForPlayer1->moveToThread(threadForPlayer1);
+
+    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
+            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+
+    QObject::connect(workerForPlayer1, SIGNAL(doneUpdating(PlayerState)), player[0],
+            SLOT(doneProcessing(PlayerState)));
+
+    threadForPlayer2 = new QThread;
+    workerForPlayer2 = new RunPlayerWorker;
+
+    workerForPlayer2->moveToThread(threadForPlayer2);
+
+    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
+            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+
+    QObject::connect(workerForPlayer2, SIGNAL(doneUpdating(PlayerState)), player[1],
+            SLOT(doneProcessing(PlayerState)));
+
+    threadForPlayer1->start();
+    threadForPlayer2->start();
+
+    timer = new QTimer();
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));

@@ -19,6 +19,8 @@ public:
 
     // member functions
 
+    Player();
+    Player(const Player &player);
     Player(int index, QGraphicsItem* parent = 0);
     void flipPlayer();
     bool isNotColliding(QGraphicsPolygonItem* area);
@@ -29,7 +31,6 @@ public:
 
     int playerIndex;
     QPixmap run[8];
-    QImage images[8];
 
     int pixmapIndex;
     bool isFlipped;
@@ -44,7 +45,13 @@ public:
 public slots:
 
     void runPlayer();
-    //void doneProcessing(PlayerState state);
+    void doneProcessing(PlayerState state);
+    void doneFlipping(PlayerState state);
+
+signals:
+
+    void requestUpdatePlayerState(Player* player, bool isNotCollidingWithTop,
+                                  bool isNotCollidingWithBottom, bool isNotCollidingWithRight);
 };
 
 #endif // PLAYER_H
