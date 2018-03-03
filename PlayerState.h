@@ -12,7 +12,7 @@ public:
 
     PlayerState();
     PlayerState(const PlayerState& state);
-    PlayerState(Player* player, bool topCollision, bool bottomCollision, bool rightCollision);
+    PlayerState(Player* player);
 
     qreal xPos;
     qreal yPos;
@@ -21,10 +21,6 @@ public:
 
     bool isInAir;
     bool isFlipped;
-
-    bool isNotCollidingWithTop;
-    bool isNotCollidingWithBottom;
-    bool isNotCollidingWithRight;
 };
 
 #endif // PLAYERSTATE_H

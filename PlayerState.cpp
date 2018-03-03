@@ -13,14 +13,9 @@ PlayerState::PlayerState(const PlayerState &state)
 
     isInAir = state.isInAir;
     isFlipped = state.isFlipped;
-
-    isNotCollidingWithTop = state.isNotCollidingWithTop;
-    isNotCollidingWithRight = state.isNotCollidingWithRight;
-    isNotCollidingWithBottom = state.isNotCollidingWithBottom;
 }
 
-PlayerState::PlayerState(Player* player, bool topCollision,
-                         bool bottomCollision, bool rightCollision)
+PlayerState::PlayerState(Player* player)
 {
     xPos = player->x();
     yPos = player->y();
@@ -29,8 +24,4 @@ PlayerState::PlayerState(Player* player, bool topCollision,
 
     isInAir = player->isInAir;
     isFlipped = player->isFlipped;
-
-    isNotCollidingWithTop = topCollision;
-    isNotCollidingWithBottom = bottomCollision;
-    isNotCollidingWithRight = rightCollision;
 }
