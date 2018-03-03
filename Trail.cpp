@@ -7,7 +7,7 @@ Trail::Trail(qreal xPos, qreal yPos)
 {
     setRect(0, 0, 40, 40);
     setPos(xPos, yPos);
-    setVisible(false);
+    //setVisible(false);
 }
 
 void Trail::updatePos()

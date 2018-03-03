@@ -12,9 +12,12 @@
 #include <QLabel>
 #include <QCloseEvent>
 #include <QTimer>
+#include "Set2.h"
 
 class Game : public QGraphicsView
 {
+Q_OBJECT
+
 public:
 
     // member functions
@@ -31,6 +34,7 @@ public:
     QGraphicsScene* scene;
     BackgroundMusic* backgroundMusic;
     StepSound* stepSound[2];
+    Set2* set[2];
 
     bool isFinished;
     int player_cnt;
@@ -41,6 +45,10 @@ public:
     QPixmap images[2];
     QLabel* displayImage;
     ScoreUpdater* scoreUpdater;
+
+public slots:
+
+    void reincarnateSet(int);
 };
 
 #endif // GAME_H

@@ -16,7 +16,7 @@ void BackgroundMusic::run()
 
 void BackgroundMusic::exec()
 {
-    qWarning() << "BackMusic: " << thread()->currentThreadId();
+    //qWarning() << "BackMusic: " << thread()->currentThreadId();
     //run event loop till interrupted
     while(!thread()->isInterruptionRequested())
     {
@@ -27,7 +27,7 @@ void BackgroundMusic::exec()
         }
     }
 
-    qWarning() << "Stopping thread";
+    //qWarning() << "Stopping thread";
     musicPlayer->stop();
     return;
 }

@@ -39,7 +39,8 @@ SOURCES += \
     StepSound.cpp \
     InstructionWindow.cpp \
     ScoreUpdater.cpp \
-    Trail.cpp
+    Trail.cpp \
+    Set2.cpp
 
 HEADERS += \
     Game.h \
@@ -54,7 +55,8 @@ HEADERS += \
     StepSound.h \
     InstructionWindow.h \
     ScoreUpdater.h \
-    Trail.h
+    Trail.h \
+    Set2.h
 
 RESOURCES += \
     res.qrc

@@ -22,12 +22,12 @@ void StepSound::exec()
 {
     while(!thread()->isInterruptionRequested())
     {
-        qWarning() << "Starting loop";
+        //qWarning() << "Starting loop";
         mutex.lock();
         soundWait.wait(&mutex);
         playSound();
         mutex.unlock();
-        qWarning() << "Ending Loop";
+        //qWarning() << "Ending Loop";
     }
 
     qWarning() << "Exiting sound step" ;

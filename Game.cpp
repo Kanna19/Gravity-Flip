@@ -6,6 +6,7 @@
 #include "ObjectCreator.h"
 #include "BackgroundUpdater.h"
 #include "Set1.h"
+#include "Set2.h"
 #include "BackgroundMusic.h"
 #include "StepSound.h"
 #include <QLabel>
@@ -119,12 +120,19 @@ void Game::closeEvent(QCloseEvent *event)
 
 void Game::startSinglePlayerGame()
 {
-    Set1* set = new Set1();
+    set[0] = new Set2(0);
+    set[1] = new Set2(1500);
 
-    for(int i = 0; i < set->objects.size(); i++)
+    for(int i = 0; i < set[0]->objects.size(); i++)
     {
-       scene->addItem(set->objects[i]);
-       set->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set[0]->objects[i]);
+       set[0]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+    }
+
+    for(int i = 0; i < set[1]->objects.size(); i++)
+    {
+       scene->addItem(set[1]->objects[i]);
+       set[1]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
     // create backgroundUpdater
@@ -141,7 +149,7 @@ void Game::startSinglePlayerGame()
 
     player[1] = new Player(1);
     scene->addItem(player[1]);
-    player[1]->setPos(100, scene->height() -50 -120 +40);
+    player[1]->setPos(50, scene->height() -50 -120 +40);
 
     // add image to show next to the score
 
@@ -155,7 +163,10 @@ void Game::startSinglePlayerGame()
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-    QObject::connect(timer, SIGNAL(timeout()), set, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set[0], SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set[1], SLOT(updateObjects()));
+    //QObject::connect(set[0], SIGNAL(killMe(int)), this, SLOT(reincarnateSet(int)));
+    //QObject::connect(set[1], SIGNAL(killMe(int)), this, SLOT(reincarnateSet(int)));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
     QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
@@ -211,4 +222,20 @@ void Game::startMultiPlayerGame()
 
     timer->start(10);
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
+}
+
+void Game::reincarnateSet(int idx)
+{
+    int nextIdx = (idx+1)%2;
+    qWarning() << "I am dead";
+    delete set[idx];
+    set[idx] = new Set2(set[nextIdx]->objects[0]->rect().x()+1500);
+
+    for(int i = 0; i < set[idx]->objects.size(); i++)
+    {
+       scene->addItem(set[idx]->objects[i]);
+       set[idx]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+    }
+
+    QObject::connect(timer, SIGNAL(timeout()), set[idx], SLOT(updateObjects()));
 }
