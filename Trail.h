@@ -9,9 +9,13 @@ class Trail : public QObject, public QGraphicsRectItem
 Q_OBJECT
 
 public:
+
+    // member functions
+
     Trail(qreal, qreal);
 
 public slots:
+
     void updatePos();
 };
 

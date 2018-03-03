@@ -62,6 +62,13 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
+    // DONOT flip the player after the game is finished
+    if(isFinished)
+    {
+        event->accept();
+        return;
+    }
+
     // The Game Type is Single Player
     if(player_cnt == 1)
     {

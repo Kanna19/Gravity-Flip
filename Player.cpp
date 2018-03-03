@@ -44,7 +44,7 @@ Player::Player(int index, QGraphicsItem* parent)
     topArea->setPos(x(), y() -10);
 
     bottomArea = new QGraphicsPolygonItem(topRect, this);
-    bottomArea->setPos(x(), y()+scaleFactor);
+    bottomArea->setPos(x(), y() +scaleFactor);
 
     rightArea = new QGraphicsPolygonItem(topRect, this);
     rightArea->setRotation(90);
@@ -116,8 +116,16 @@ void Player::runPlayer()
         //if(bottomArea->collidingItems().isEmpty())
         if(isNotColliding(bottomArea))
         {
-            if(!isNotColliding(rightArea)) setPos(x()-2, y() +3);
-            else setPos(x(), y() +3);
+            if(!isNotColliding(rightArea))
+            {
+                setPos(x() -2, y() +3);
+            }
+
+            else
+            {
+                setPos(x(), y() +3);
+            }
+
             isInAir = true;
         }
 
@@ -151,8 +159,16 @@ void Player::runPlayer()
         //if(topArea->collidingItems().isEmpty())
         if(isNotColliding(topArea))
         {
-            if(!isNotColliding(rightArea)) setPos(x()-2, y() -3);
-            else setPos(x(), y() -3);
+            if(!isNotColliding(rightArea))
+            {
+                setPos(x() -2, y() -3);
+            }
+
+            else
+            {
+                setPos(x(), y() -3);
+            }
+
             isInAir = true;
         }
 
@@ -197,19 +213,21 @@ void Player::flipPlayer()
 
     // change isFlipped
     isFlipped = !isFlipped;
+
     if(game->player_cnt == 1 && this != game->player[1])
     {
-        Trail* trail = new Trail(x()+75,y());
-        QObject::connect(game->timer,SIGNAL(timeout()),trail,SLOT(updatePos()));
+        Trail* trail = new Trail(x() +75, y());
+        QObject::connect(game->timer, SIGNAL(timeout()), trail, SLOT(updatePos()));
         game->scene->addItem(trail);
     }
-
 }
 
 bool Player::isNotColliding(QGraphicsPolygonItem* area)
 {
     if(area->collidingItems().empty())
+    {
         return true;
+    }
 
     /*
      * There is no scoreboard in case of a multiplayer game
@@ -217,16 +235,23 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
     */
 
     if(game->player_cnt == 2)
+    {
         return false;
+    }
 
     // Ignore collisions with the score
     if(area->collidesWithItem(game->scoreUpdater))
+    {
         return true;
+    }
 
     QList<QGraphicsItem*> list = area->collidingItems();
-    for(int i=0; i<list.size(); i++)
+    for(int i = 0; i < list.size(); i++)
     {
-        if(typeid(*list[i]) != typeid(Trail)) return false;
+        if(typeid(*list[i]) != typeid(Trail))
+        {
+            return false;
+        }
     }
 
     return true;

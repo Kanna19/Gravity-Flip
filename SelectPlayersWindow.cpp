@@ -36,6 +36,7 @@ SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent):
         m_playerID[i] = 0;
 
     // Map the signals to the appropriate slots
+    // This is required because we need to send an argument to the appropriate slot
     m_mapper = new QSignalMapper;
 
     /*
@@ -138,11 +139,16 @@ void SelectPlayersWindow::updateDisplay()
 
     for(int i = 0; i < m_imageCount; i++)
     {
+        // Check if this image was already selected (mapped)
         if(i +1 == m_playerID[0])
+        {
             continue;
+        }
 
+        // Display all unselected images
         m_images[i]->show();
 
+        // Reconnect the signals to detect clicks on unselected images
         connect(m_images[i], SIGNAL(released()), m_mapper, SLOT(map()));
         m_mapper->setMapping(m_images[i], i +1);
     }

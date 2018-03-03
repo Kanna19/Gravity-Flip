@@ -36,6 +36,6 @@ void StepSound::exec()
 
 void StepSound::playSound()
 {
-    qWarning() << "Sound Step: "<< this->thread()->currentThreadId();
+    qWarning() << "Sound Step: " << this->thread()->currentThreadId();
     musicPlayer->play();
 }
