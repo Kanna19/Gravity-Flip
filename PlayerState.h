@@ -10,7 +10,9 @@ class PlayerState
 
 public:
 
-    PlayerState(const Player* player, bool topCollision, bool bottomCollision, bool rightCollision);
+    PlayerState();
+    PlayerState(const PlayerState& state);
+    PlayerState(Player* player, bool topCollision, bool bottomCollision, bool rightCollision);
 
     qreal xPos;
     qreal yPos;
@@ -19,7 +21,6 @@ public:
 
     bool isInAir;
     bool isFlipped;
-    QImage displayImage;
 
     bool isNotCollidingWithTop;
     bool isNotCollidingWithBottom;

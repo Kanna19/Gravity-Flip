@@ -1,6 +1,25 @@
 #include "PlayerState.h"
 
-PlayerState::PlayerState(const Player *player, bool topCollision,
+PlayerState::PlayerState()
+{
+}
+
+PlayerState::PlayerState(const PlayerState &state)
+{
+    xPos = state.xPos;
+    yPos = state.yPos;
+
+    pixmapIndex = state.pixmapIndex;
+
+    isInAir = state.isInAir;
+    isFlipped = state.isFlipped;
+
+    isNotCollidingWithTop = state.isNotCollidingWithTop;
+    isNotCollidingWithRight = state.isNotCollidingWithRight;
+    isNotCollidingWithBottom = state.isNotCollidingWithBottom;
+}
+
+PlayerState::PlayerState(Player* player, bool topCollision,
                          bool bottomCollision, bool rightCollision)
 {
     xPos = player->x();
