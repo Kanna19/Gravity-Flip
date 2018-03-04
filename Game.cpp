@@ -14,6 +14,7 @@
 Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
     player_cnt = cnt;
+    isPaused = false;
     isFinished = false;
     playerID = playerIDMapping;
 
@@ -77,7 +78,7 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
 void Game::keyPressEvent(QKeyEvent *event)
 {
     // DONOT flip the player after the game is finished
-    if(isFinished)
+    if(isFinished || isPaused)
     {
         event->accept();
         return;
@@ -307,8 +308,10 @@ void Game::handlePauseGame()
     // hide the pause button
     pauseButton->setVisible(false);
 
-    // disconnect the timer from all objects
-    timer->disconnect();
+    isPaused = true;
+
+    // set the timer to a large value
+    timer->start(10000000);
 
     // show the resume button
     resumeButton->setVisible(true);
@@ -319,24 +322,10 @@ void Game::handleResumeGame()
     // hide the resume button
     resumeButton->setVisible(false);
 
-    // reconnect the timer
-    if(player_cnt == 1)
-    {
-        QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
-        QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-        QObject::connect(timer, SIGNAL(timeout()), set2[0], SLOT(updateObjects()));
-        QObject::connect(timer, SIGNAL(timeout()), set2[1], SLOT(updateObjects()));
-        QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
-        QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
-    }
+    isPaused = false;
 
-    else
-    {
-        QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
-        QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-        QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
-        QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
-    }
+    // reset the timer
+    timer->start(10);
 
     // show the pause button
     pauseButton->setVisible(true);

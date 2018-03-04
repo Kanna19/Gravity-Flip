@@ -42,7 +42,9 @@ public:
     Set1* set1;
     Set2* set2[2];
 
+    bool isPaused;
     bool isFinished;
+
     int player_cnt;
     Player* player[2];
 
