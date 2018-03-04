@@ -42,6 +42,25 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     images[0] = QPixmap(":res/player/" + QString::number(playerID[0]) +"idle1.png");
     images[1] = QPixmap(":res/player/" + QString::number(playerID[1]) +"idle1.png");
 
+    // Set the properties of the pause button
+    pauseButton = new QPushButton(this);
+    pauseButton->setIcon(QIcon(":/res/objects/pausebutton.png"));
+    pauseButton->setIconSize(QSize(50, 50));
+    pauseButton->setGeometry(QRect(QPoint(900, 0), QSize(50, 50)));
+    connect(pauseButton, SIGNAL(released()), this, SLOT(handlePauseGame()));
+
+    // Pause button is visible by default
+    pauseButton->setVisible(true);
+
+    // Set the properties of the resume button
+    resumeButton = new QPushButton(this);
+    resumeButton->setIcon(QIcon(":/res/objects/playbutton.png"));
+    resumeButton->setIconSize(QSize(50, 50));
+    resumeButton->setGeometry(QRect(QPoint(900, 0), QSize(50, 50)));
+    connect(resumeButton, SIGNAL(released()), this, SLOT(handleResumeGame()));
+
+    // Resume button is invisible by default
+    resumeButton->setVisible(false);
 
     qRegisterMetaType < Player > ("Player");
     qRegisterMetaType < PlayerState > ("PlayerState");
@@ -51,6 +70,8 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     backgroundMusic = new BackgroundMusic();
     backgroundMusic->moveToThread(backgroundMusic);
     backgroundMusic->start();
+
+    backgroundUpdater = new BackgroundUpdater;
 }
 
 void Game::keyPressEvent(QKeyEvent *event)
@@ -110,23 +131,20 @@ void Game::closeEvent(QCloseEvent *event)
 
 void Game::startSinglePlayerGame()
 {
-    set[0] = new Set2(0);
-    set[1] = new Set2(1500);
+    set2[0] = new Set2(0);
+    set2[1] = new Set2(1500);
 
-    for(int i = 0; i < set[0]->objects.size(); i++)
+    for(int i = 0; i < set2[0]->objects.size(); i++)
     {
-       scene->addItem(set[0]->objects[i]);
-       set[0]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set2[0]->objects[i]);
+       set2[0]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
-    for(int i = 0; i < set[1]->objects.size(); i++)
+    for(int i = 0; i < set2[1]->objects.size(); i++)
     {
-       scene->addItem(set[1]->objects[i]);
-       set[1]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set2[1]->objects[i]);
+       set2[1]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
-
-    // create backgroundUpdater
-    BackgroundUpdater* backgroundUpdater = new BackgroundUpdater;
 
     // make game focusable
     setFocus();
@@ -182,8 +200,8 @@ void Game::startSinglePlayerGame()
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-    QObject::connect(timer, SIGNAL(timeout()), set[0], SLOT(updateObjects()));
-    QObject::connect(timer, SIGNAL(timeout()), set[1], SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set2[0], SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set2[1], SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
     QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
@@ -204,16 +222,13 @@ void Game::startSinglePlayerGame()
 
 void Game::startMultiPlayerGame()
 {
-    Set1* set = new Set1();
+    set1 = new Set1();
 
-    for(int i = 0; i < set->objects.size(); i++)
+    for(int i = 0; i < set1->objects.size(); i++)
     {
-       scene->addItem(set->objects[i]);
-       set->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set1->objects[i]);
+       set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
-
-    // create backgroundUpdater
-    BackgroundUpdater* backgroundUpdater = new BackgroundUpdater;
 
     // make game focusable
     setFocus();
@@ -264,7 +279,7 @@ void Game::startMultiPlayerGame()
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-    QObject::connect(timer, SIGNAL(timeout()), set, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
 
     timer->start(10);
@@ -275,14 +290,54 @@ void Game::reincarnateSet(int idx)
 {
     int nextIdx = (idx +1) % 2;
     qWarning() << "I am dead";
-    delete set[idx];
-    set[idx] = new Set2(set[nextIdx]->objects[0]->rect().x()+1500);
+    delete set2[idx];
+    set2[idx] = new Set2(set2[nextIdx]->objects[0]->rect().x()+1500);
 
-    for(int i = 0; i < set[idx]->objects.size(); i++)
+    for(int i = 0; i < set2[idx]->objects.size(); i++)
     {
-       scene->addItem(set[idx]->objects[i]);
-       set[idx]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set2[idx]->objects[i]);
+       set2[idx]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
-    QObject::connect(timer, SIGNAL(timeout()), set[idx], SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set2[idx], SLOT(updateObjects()));
+}
+
+void Game::handlePauseGame()
+{
+    // hide the pause button
+    pauseButton->setVisible(false);
+
+    // disconnect the timer from all objects
+    timer->disconnect();
+
+    // show the resume button
+    resumeButton->setVisible(true);
+}
+
+void Game::handleResumeGame()
+{
+    // hide the resume button
+    resumeButton->setVisible(false);
+
+    // reconnect the timer
+    if(player_cnt == 1)
+    {
+        QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
+        QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
+        QObject::connect(timer, SIGNAL(timeout()), set2[0], SLOT(updateObjects()));
+        QObject::connect(timer, SIGNAL(timeout()), set2[1], SLOT(updateObjects()));
+        QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
+        QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
+    }
+
+    else
+    {
+        QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
+        QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
+        QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
+        QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
+    }
+
+    // show the pause button
+    pauseButton->setVisible(true);
 }

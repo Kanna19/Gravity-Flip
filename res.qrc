@@ -58,5 +58,7 @@
         <file>res/player/3dead1.png</file>
         <file>res/player/2dead1.png</file>
         <file>res/player/1dead1.png</file>
+        <file>res/objects/pausebutton.png</file>
+        <file>res/objects/playbutton.png</file>
     </qresource>
 </RCC>

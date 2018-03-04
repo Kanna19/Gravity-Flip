@@ -4,6 +4,7 @@
 #include "Game.h"
 
 extern Game* game;
+
 Set2::Set2(int start_pos)
 {
     objects.append(new QGraphicsRectItem(0, 0, 1200, 40));
@@ -46,7 +47,7 @@ void Set2::updateObjects()
 
     if(objects[1]->x()+objects[1]->rect().width() < 0)
     {
-        if(this == game->set[0])
+        if(this == game->set2[0])
         {
             emit killMe(0);
         }

@@ -11,9 +11,12 @@
 #include <QLabel>
 #include <QCloseEvent>
 #include <QTimer>
+#include "Set1.h"
 #include "Set2.h"
 #include <QThread>
 #include "RunPlayerWorker.h"
+#include <QPushButton>
+#include "BackgroundUpdater.h"
 
 class Game : public QGraphicsView
 {
@@ -34,7 +37,10 @@ public:
     QTimer* timer;
     QGraphicsScene* scene;
     BackgroundMusic* backgroundMusic;
-    Set2* set[2];
+    BackgroundUpdater* backgroundUpdater;
+
+    Set1* set1;
+    Set2* set2[2];
 
     bool isFinished;
     int player_cnt;
@@ -52,9 +58,17 @@ public:
     RunPlayerWorker* workerForPlayer1;
     RunPlayerWorker* workerForPlayer2;
 
+    QPushButton* pauseButton;
+    QPushButton* resumeButton;
+
 public slots:
 
     void reincarnateSet(int);
+
+private slots:
+
+    void handlePauseGame();
+    void handleResumeGame();
 
 signals:
 
