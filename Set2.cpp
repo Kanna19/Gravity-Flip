@@ -47,14 +47,6 @@ void Set2::updateObjects()
 
     if(objects[1]->x()+objects[1]->rect().width() < 0)
     {
-        if(this == game->set2[0])
-        {
-            emit killMe(0);
-        }
-
-        else
-        {
-            emit killMe(1);
-        }
+        emit killMe(2);
     }
 }

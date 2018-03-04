@@ -29,7 +29,6 @@ SOURCES += \
         main.cpp \
     Game.cpp \
     Player.cpp \
-    ObjectCreator.cpp \
     BackgroundUpdater.cpp \
     Set1.cpp \
     MainWindow.cpp \
@@ -46,7 +45,6 @@ SOURCES += \
 HEADERS += \
     Game.h \
     Player.h \
-    ObjectCreator.h \
     BackgroundUpdater.h \
     Set1.h \
     MainWindow.h \

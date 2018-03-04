@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QObject>
 #include <QTimer>
-#include "ObjectCreator.h"
 #include "BackgroundUpdater.h"
 #include "Set1.h"
 #include "Set2.h"
@@ -67,7 +66,8 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     qRegisterMetaType < PlayerState > ("PlayerState");
 
     // Start background music
-    qWarning() << this->thread()->currentThreadId();
+    //qWarning() << this->thread()->currentThreadId();
+
     backgroundMusic = new BackgroundMusic();
     backgroundMusic->moveToThread(backgroundMusic);
     backgroundMusic->start();
@@ -77,7 +77,7 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
-    // DONOT flip the player after the game is finished
+    // DONOT flip the player after the game is finished or paused
     if(isFinished || isPaused)
     {
         event->accept();
@@ -113,8 +113,13 @@ void Game::closeEvent(QCloseEvent *event)
 {
     // Close all running threads
     backgroundMusic->requestInterruption();
+/*
     threadForPlayer1->requestInterruption();
     threadForPlayer2->requestInterruption();
+
+    player[0]->runPlayer();
+    player[1]->runPlayer();
+*/
 
     /*
      * Set the setAccepted variable to true to
@@ -134,19 +139,19 @@ void Game::closeEvent(QCloseEvent *event)
 
 void Game::startSinglePlayerGame()
 {
-    set2[0] = new Set2(0);
-    set2[1] = new Set2(1500);
+    set1 = new Set1(0);
+    set2 = new Set2(set1->endPos);
 
-    for(int i = 0; i < set2[0]->objects.size(); i++)
+    for(int i = 0; i < set1->objects.size(); i++)
     {
-       scene->addItem(set2[0]->objects[i]);
-       set2[0]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set1->objects[i]);
+       set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
-    for(int i = 0; i < set2[1]->objects.size(); i++)
+    for(int i = 0; i < set2->objects.size(); i++)
     {
-       scene->addItem(set2[1]->objects[i]);
-       set2[1]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+       scene->addItem(set2->objects[i]);
+       set2->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
     // make game focusable
@@ -203,8 +208,8 @@ void Game::startSinglePlayerGame()
 
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
-    QObject::connect(timer, SIGNAL(timeout()), set2[0], SLOT(updateObjects()));
-    QObject::connect(timer, SIGNAL(timeout()), set2[1], SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
     QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
@@ -225,12 +230,19 @@ void Game::startSinglePlayerGame()
 
 void Game::startMultiPlayerGame()
 {
-    set1 = new Set1();
+    set1 = new Set1(0);
+    set2 = new Set2(set1->endPos);
 
     for(int i = 0; i < set1->objects.size(); i++)
     {
        scene->addItem(set1->objects[i]);
        set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+    }
+
+    for(int i = 0; i < set2->objects.size(); i++)
+    {
+       scene->addItem(set2->objects[i]);
+       set2->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
     // make game focusable
@@ -283,6 +295,7 @@ void Game::startMultiPlayerGame()
     QObject::connect(timer, SIGNAL(timeout()), player[0], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
     QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
+    QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
 
     timer->start(10);
@@ -291,18 +304,35 @@ void Game::startMultiPlayerGame()
 
 void Game::reincarnateSet(int idx)
 {
-    int nextIdx = (idx +1) % 2;
-    qWarning() << "I am dead";
-    delete set2[idx];
-    set2[idx] = new Set2(set2[nextIdx]->objects[0]->rect().x()+1500);
-
-    for(int i = 0; i < set2[idx]->objects.size(); i++)
+    if(idx == 1)
     {
-       scene->addItem(set2[idx]->objects[i]);
-       set2[idx]->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+        delete set1;
+        qWarning() << "Dead 1";
+        set1 = new Set1(set2->objects[0]->rect().x() +set2->endPos);
+
+        for(int i = 0; i < set1->objects.size(); i++)
+        {
+            scene->addItem(set1->objects[i]);
+            set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+        }
+
+        QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
     }
 
-    QObject::connect(timer, SIGNAL(timeout()), set2[idx], SLOT(updateObjects()));
+    else
+    {
+        delete set2;
+        qWarning() << "dead 2";
+        set2 = new Set2(set1->objects[0]->rect().x() +set1->endPos);
+
+        for(int i = 0; i < set2->objects.size(); i++)
+        {
+            scene->addItem(set2->objects[i]);
+            set2->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+        }
+
+        QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
+    }
 }
 
 void Game::handlePauseGame()

@@ -1,11 +1,12 @@
 #include "Set1.h"
 #include <QList>
 #include <QDebug>
+#include "Game.h"
 
-Set1::Set1()
+extern Game* game;
+
+Set1::Set1(int start_pos)
 {
-    int start_pos = 0;
-
     objects.append(new QGraphicsRectItem(0, 0, 600, 40));
     objects.last()->setPos(start_pos, 460);
 
@@ -32,19 +33,22 @@ Set1::Set1()
     start_pos += objects.last()->rect().width() + 50;
     objects.append(new QGraphicsRectItem(0, 0, 200, 40));
     objects.last()->setPos(start_pos, 460);
+
+    endPos = 1900;
+
+    QObject::connect(this,SIGNAL(killMe(int)),game,SLOT(reincarnateSet(int)));
 }
 
 void Set1::updateObjects()
-{
-    //QMutableListIterator<QGraphicsRectItem*> it(objects);
+{    
     for(int i = 0; i < objects.size(); i++)
     {
         //qWarning() << "Hello " << objects[i]->x();
         objects[i]->setPos(objects[i]->x() -2, objects[i]->y());
-        if(objects[i]->x() + objects[i]->rect().width() < 0)
-        {
-            //qWarning() << "Hello " << objects[i]->x();
-            objects[i]->setPos(1000, objects[i]->y());
-        }
+    }
+
+    if(objects.last()->x()+objects.last()->rect().width() < 0)
+    {
+        emit killMe(1);
     }
 }

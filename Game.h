@@ -40,7 +40,7 @@ public:
     BackgroundUpdater* backgroundUpdater;
 
     Set1* set1;
-    Set2* set2[2];
+    Set2* set2;
 
     bool isPaused;
     bool isFinished;

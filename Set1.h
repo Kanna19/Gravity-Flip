@@ -12,15 +12,20 @@ public:
 
     // member functions
 
-    Set1();
+    Set1(int);
 
     // member variables
 
     QList<QGraphicsRectItem*> objects;
+    int endPos;
 
 public slots:
 
     void updateObjects();
+
+signals:
+
+    void killMe(int);
 };
 
 #endif // SET1_H

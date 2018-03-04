@@ -11,6 +11,14 @@ void RunPlayerWorker::updatePlayerState
  bool isNotCollidingWithBottom, bool isNotCollidingWithRight)
 
 {
+    /*
+    if(thread()->isInterruptionRequested())
+    {
+        qWarning() << "dead";
+        return;
+    }
+    */
+
     // qWarning() << player->x() << ' ' << player->y();
     PlayerState state(player);
     // qWarning() << state.xPos << ' ' << state.yPos;
@@ -102,6 +110,8 @@ void RunPlayerWorker::updatePlayerState
 
 void RunPlayerWorker::updateFlipPlayerState(Player *player/*, bool isNotCollidingWithTop, bool isNotCollidingWithBottom*/)
 {
+    //qWarning() << thread()->currentThreadId();
+
     if(player->isInAir)
     {
         return;
