@@ -44,7 +44,7 @@ void Set1::updateObjects()
     for(int i = 0; i < objects.size(); i++)
     {
         //qWarning() << "Hello " << objects[i]->x();
-        objects[i]->setPos(objects[i]->x() -2, objects[i]->y());
+        objects[i]->setPos(objects[i]->x() -game->xShift, objects[i]->y());
     }
 
     if(objects.last()->x()+objects.last()->rect().width() < 0)

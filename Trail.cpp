@@ -21,6 +21,6 @@ void Trail::updatePos()
 
     else
     {
-        setPos(x() -2, y());
+        setPos(x() -game->xShift, y());
     }
 }

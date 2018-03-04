@@ -11,7 +11,7 @@ BackgroundUpdater::BackgroundUpdater()
 
 void BackgroundUpdater::update()
 {
-    // Shift the background to the left by 2 pixels
-    brush.setTransform(brush.transform().translate(-2, 0));
+    // Shift the background to the left by xShift pixels
+    brush.setTransform(brush.transform().translate(-game->xShift, 0));
     game->setBackgroundBrush(brush);
 }

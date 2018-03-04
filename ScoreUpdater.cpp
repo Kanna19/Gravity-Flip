@@ -6,7 +6,7 @@
 extern Game* game;
 
 ScoreUpdater::ScoreUpdater(QGraphicsItem* parent):
-    QGraphicsTextItem(parent), m_stepSize(1)
+    QGraphicsTextItem(parent), m_stepSize(5)
 {
     m_score = 0;
 
@@ -50,6 +50,12 @@ void ScoreUpdater::updateScore()
 {
     // increase the score by stepsize
     m_score += m_stepSize;
+
+    if(m_score > game->xShift *game->xShift *2000)
+    {
+        game->xShift++;
+        qWarning() << m_score << ' ' << game->xShift;
+    }
 
     // update the text
     setPlainText(QString::number(m_score));

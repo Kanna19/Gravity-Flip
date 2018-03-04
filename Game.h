@@ -63,6 +63,9 @@ public:
     QPushButton* pauseButton;
     QPushButton* resumeButton;
 
+    int xShift;
+    int yShift;
+
 public slots:
 
     void reincarnateSet(int);

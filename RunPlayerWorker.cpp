@@ -8,7 +8,7 @@ RunPlayerWorker::RunPlayerWorker()
 
 void RunPlayerWorker::updatePlayerState
 (Player *player, bool isNotCollidingWithTop,
- bool isNotCollidingWithBottom, bool isNotCollidingWithRight)
+ bool isNotCollidingWithBottom, bool isNotCollidingWithRight, int xShift, int yShift)
 
 {
     /*
@@ -31,13 +31,13 @@ void RunPlayerWorker::updatePlayerState
         {
             if(!isNotCollidingWithRight)
             {
-                state.xPos -= 2;
-                state.yPos += 3;
+                state.xPos -= xShift;
+                state.yPos += yShift;
             }
 
             else
             {
-                state.yPos += 3;
+                state.yPos += yShift;
             }
 
             state.isInAir = true;
@@ -60,7 +60,7 @@ void RunPlayerWorker::updatePlayerState
 
             else
             {
-                state.xPos -= 2;
+                state.xPos -= xShift;
             }
         }
     }
@@ -71,13 +71,13 @@ void RunPlayerWorker::updatePlayerState
         {
             if(!isNotCollidingWithRight)
             {
-                state.xPos -= 2;
-                state.yPos -= 3;
+                state.xPos -= xShift;
+                state.yPos -= yShift;
             }
 
             else
             {
-                state.yPos -= 3;
+                state.yPos -= yShift;
             }
 
             state.isInAir = true;
@@ -100,7 +100,7 @@ void RunPlayerWorker::updatePlayerState
 
             else
             {
-                state.xPos -= 2;
+                state.xPos -= xShift;
             }
         }
     }
@@ -108,7 +108,7 @@ void RunPlayerWorker::updatePlayerState
     emit doneUpdating(state);
 }
 
-void RunPlayerWorker::updateFlipPlayerState(Player *player/*, bool isNotCollidingWithTop, bool isNotCollidingWithBottom*/)
+void RunPlayerWorker::updateFlipPlayerState(Player *player)
 {
     //qWarning() << thread()->currentThreadId();
 

@@ -123,21 +123,22 @@ void Player::runPlayer()
     }
 
     // Check these values
-    if(x() > 900 || x() +100 < 0 || y() > 500 || y() +100 < 0)
+    if(x() > 900 || x() +80 < 0 || y() > 500 || y() +100 < 0)
     {
         game->isFinished = true;
+        game->close();
 
         GameOverWindow* gameOverWindow = new GameOverWindow;
         gameOverWindow->display(playerIndex);
 
-        game->close();
         return;
     }
 
     // Donot emit request until all previous requests were handled
 
     emit requestUpdatePlayerState(this, isNotColliding(topArea),
-                    isNotColliding(bottomArea), isNotColliding(rightArea));
+                    isNotColliding(bottomArea), isNotColliding(rightArea),
+                                  game->xShift, game->yShift);
 
     disconnect(game->timer, SIGNAL(timeout()), this, SLOT(runPlayer()));
 }

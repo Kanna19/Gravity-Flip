@@ -17,6 +17,9 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     isFinished = false;
     playerID = playerIDMapping;
 
+    xShift = 2;
+    yShift = 3;
+
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0, 1000, 500);
     setScene(scene);
@@ -34,7 +37,9 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
 
     else
     {
-        scoreUpdater = NULL;
+        scoreUpdater = new ScoreUpdater;
+        scene->addItem(scoreUpdater);
+        scoreUpdater->setPos(50, 10);
         displayImage = NULL;
     }
 
@@ -170,8 +175,8 @@ void Game::startSinglePlayerGame()
 
     workerForPlayer1->moveToThread(threadForPlayer1);
 
-    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
-            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool,int,int)),
+            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool,int,int)));
 
     QObject::connect(workerForPlayer1, SIGNAL(doneUpdating(PlayerState)), player[0],
             SLOT(doneProcessing(PlayerState)));
@@ -187,8 +192,8 @@ void Game::startSinglePlayerGame()
 
     workerForPlayer2->moveToThread(threadForPlayer2);
 
-    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
-            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool,int,int)),
+            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool,int,int)));
 
     QObject::connect(workerForPlayer2, SIGNAL(doneUpdating(PlayerState)), player[1],
             SLOT(doneProcessing(PlayerState)));
@@ -216,7 +221,7 @@ void Game::startSinglePlayerGame()
     timer->start(10);
 
     // connect scoreUpdater to its timer
-    scoreUpdater->connectStepIncrementTimer();
+    //scoreUpdater->connectStepIncrementTimer();
 
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");
 }
@@ -262,8 +267,8 @@ void Game::startMultiPlayerGame()
 
     workerForPlayer1->moveToThread(threadForPlayer1);
 
-    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
-            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+    QObject::connect(player[0], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool,int,int)),
+            workerForPlayer1, SLOT(updatePlayerState(Player*,bool,bool,bool,int,int)));
     QObject::connect(workerForPlayer1, SIGNAL(doneUpdating(PlayerState)), player[0],
             SLOT(doneProcessing(PlayerState)));
 
@@ -277,8 +282,8 @@ void Game::startMultiPlayerGame()
 
     workerForPlayer2->moveToThread(threadForPlayer2);
 
-    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool)),
-            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool)));
+    QObject::connect(player[1], SIGNAL(requestUpdatePlayerState(Player*,bool,bool,bool,int,int)),
+            workerForPlayer2, SLOT(updatePlayerState(Player*,bool,bool,bool,int,int)));
     QObject::connect(workerForPlayer2, SIGNAL(doneUpdating(PlayerState)), player[1],
             SLOT(doneProcessing(PlayerState)));
 
@@ -297,6 +302,7 @@ void Game::startMultiPlayerGame()
     QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), backgroundUpdater, SLOT(update()));
+    QObject::connect(timer, SIGNAL(timeout()), scoreUpdater, SLOT(updateScore()));
 
     timer->start(10);
     //qWarning(":/player/run" + QString::number(2).toLatin1() + ".png");

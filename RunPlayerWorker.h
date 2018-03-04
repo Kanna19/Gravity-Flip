@@ -17,10 +17,10 @@ public:
 public slots:
 
     void updatePlayerState(Player* player, bool isNotCollidingWithTop,
-                           bool isNotCollidingWithBottom, bool isNotCollidingWithRight);
+                           bool isNotCollidingWithBottom, bool isNotCollidingWithRight,
+                           int xShift, int yShift);
 
-    void updateFlipPlayerState(Player* player/*, bool isNotCollidingWithTop,
-                               bool isNotCollidingWithBottom*/);
+    void updateFlipPlayerState(Player* player);
 
 signals:
 

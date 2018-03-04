@@ -51,7 +51,8 @@ public slots:
 signals:
 
     void requestUpdatePlayerState(Player* player, bool isNotCollidingWithTop,
-                                  bool isNotCollidingWithBottom, bool isNotCollidingWithRight);
+                                  bool isNotCollidingWithBottom, bool isNotCollidingWithRight,
+                                  int xShift, int yShift);
 };
 
 #endif // PLAYER_H
