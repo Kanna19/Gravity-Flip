@@ -113,6 +113,8 @@ void Game::closeEvent(QCloseEvent *event)
 {
     // Close all running threads
     backgroundMusic->requestInterruption();
+    threadForPlayer1->requestInterruption();
+    threadForPlayer2->requestInterruption();
 
     /*
      * Set the setAccepted variable to true to
