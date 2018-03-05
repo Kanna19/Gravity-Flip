@@ -15,17 +15,21 @@ public:
     GameOverWindow(QWidget *parent = 0);
     void display(int loser);
 
-private slots:
-
-    // slots to handle key press event
-
-    void handleExitGame();
+    static int const EXIT_CODE_REBOOT;
 
 private:
 
     // private member variables
 
     QPushButton* m_exitGame;
+    QPushButton* m_restartGame;
+
+private slots:
+
+    // slots to handle key press event
+
+    void handleExitGame();
+    void handleRestartGame();
 };
 
 #endif // GAMEOVERWINDOW_H

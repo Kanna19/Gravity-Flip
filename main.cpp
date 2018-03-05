@@ -1,13 +1,22 @@
 #include <QApplication>
 #include "MainWindow.h"
+#include "GameOverWindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    int exitCode = 0;
 
-    // create and display a main window
-    MainWindow* mainWindow = new MainWindow;
-    mainWindow->display();
+    do
+    {
+        QApplication a(argc, argv);
 
-    return a.exec();
+        // create and display a main window
+        MainWindow* mainWindow = new MainWindow;
+        mainWindow->display();
+
+        exitCode = a.exec();
+
+    } while(exitCode == GameOverWindow::EXIT_CODE_REBOOT);
+
+    return exitCode;
 }
