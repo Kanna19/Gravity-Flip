@@ -14,8 +14,8 @@ GameOverWindow::GameOverWindow(QWidget *parent): QMainWindow(parent)
     m_restartGame = new QPushButton("Restart Game", this);
 
     // set the size and position of the button
-    m_exitGame->setGeometry(QRect(QPoint(350, 325), QSize(200, 50)));
-    m_restartGame->setGeometry(QRect(QPoint(350, 250), QSize(200, 50)));
+    m_exitGame->setGeometry(QRect(QPoint(350, 375), QSize(200, 50)));
+    m_restartGame->setGeometry(QRect(QPoint(350, 300), QSize(200, 50)));
 
     // connect the button to its appropriate slot to handle key press
     connect(m_exitGame, SIGNAL(released()), this, SLOT(handleExitGame()));
@@ -51,6 +51,24 @@ void GameOverWindow::display(int loser)
     displayText->setAlignment(Qt::AlignCenter);
     displayText->setGeometry(QRect(QPoint(450, 100), QSize(75, 100)));
     displayText->show();
+
+    // Display the score if game is singleplayer
+    if(game->player_cnt == 1)
+    {
+        QLabel* gameScoreText1 = new QLabel(this);
+        gameScoreText1->setText("Score: ");
+        gameScoreText1->setStyleSheet("font: 25px; color: blue");
+        gameScoreText1->setAlignment(Qt::AlignCenter);
+        gameScoreText1->setGeometry(QRect(QPoint(350, 225), QSize(100, 50)));
+        gameScoreText1->show();
+
+        QLabel* gameScoreText2 = new QLabel(this);
+        gameScoreText2->setText(QString::number(game->scoreUpdater->getScore()));
+        gameScoreText2->setStyleSheet("font: 25px; color: blue");
+        gameScoreText2->setAlignment(Qt::AlignCenter);
+        gameScoreText2->setGeometry(QRect(QPoint(450, 225), QSize(100, 50)));
+        gameScoreText2->show();
+    }
 
     this->resize(1000, 500);
     this->move(0, 0);
