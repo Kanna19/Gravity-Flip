@@ -32,7 +32,8 @@ void ScoreUpdater::connectStepIncrementTimer()
 void ScoreUpdater::disconnectStepIncrementTimer()
 {
     // disconnect the timer to stop incrementing the step size after game termination
-    QObject::disconnect(m_timerForStepSize, SIGNAL(timeout()), this, SLOT(incrementStepSize()));
+    // QObject::disconnect(m_timerForStepSize, SIGNAL(timeout()), this, SLOT(incrementStepSize()));
+    m_timerForStepSize->disconnect();
 
     // Delete the timer
     delete m_timerForStepSize;

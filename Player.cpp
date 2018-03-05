@@ -126,11 +126,11 @@ void Player::runPlayer()
     if(x() > 900 || x() +80 < 0 || y() > 500 || y() +100 < 0)
     {
         game->isFinished = true;
-        game->close();
 
         GameOverWindow* gameOverWindow = new GameOverWindow;
         gameOverWindow->display(playerIndex);
 
+        game->close();
         return;
     }
 

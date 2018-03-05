@@ -27,6 +27,9 @@ void GameOverWindow::display(int loser)
     // make the game window invisible
     game->setVisible(false);
 
+    // disconnect the timer to stop updating the score and background
+    game->timer->disconnect();
+
     /*
      * 0 is loser -> 1 is winner
      * 1 is loser -> 0 is winner

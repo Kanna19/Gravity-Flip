@@ -27,6 +27,9 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    // Set the alignment to top left corner
+    setAlignment(Qt::AlignLeft|Qt::AlignTop);
+
     // Show score if the game is single player
     if(player_cnt == 1)
     {
