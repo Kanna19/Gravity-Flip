@@ -25,6 +25,7 @@ void MainWindow::display()
     this->move(0, 0);
     this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
     this->show();
+    this->setFixedSize(width(), height());
 }
 
 void MainWindow::handleSinglePlayer()
