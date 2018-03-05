@@ -38,8 +38,8 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     else
     {
         scoreUpdater = new ScoreUpdater;
-        scene->addItem(scoreUpdater);
-        scoreUpdater->setPos(50, 10);
+        //scene->addItem(scoreUpdater);
+        //scoreUpdater->setPos(50, 10);
         displayImage = NULL;
     }
 
@@ -82,6 +82,20 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
+    if(event->key() == Qt::Key_P)
+    {
+       if(!isPaused)
+       {
+            pauseButton->click();
+       }
+       else
+       {
+           resumeButton->click();
+       }
+
+       return;
+    }
+
     // DONOT flip the player after the game is finished or paused
     if(isFinished || isPaused)
     {
