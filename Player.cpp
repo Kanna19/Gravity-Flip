@@ -242,6 +242,15 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
         return true;
     }
 
+    QList<QGraphicsItem*> list = area->collidingItems();
+    for(int i = 0; i < list.size(); i++)
+    {
+        if(typeid(*list[i]) != typeid(Trail))
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 
