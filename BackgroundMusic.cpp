@@ -1,6 +1,4 @@
 #include "BackgroundMusic.h"
-#include <QDebug>
-#include <QThread>
 
 BackgroundMusic::BackgroundMusic(int idx = 1)
 {
@@ -21,13 +19,13 @@ BackgroundMusic::BackgroundMusic(int idx = 1)
 
 void BackgroundMusic::run()
 {
-    // run exec
+    // Run exec
     exec();
 }
 
 void BackgroundMusic::exec()
 {
-    //run event loop till interrupted
+    // Run event loop till it is interrupted
     while(!thread()->isInterruptionRequested())
     {
         if(musicPlayer->state() == QMediaPlayer::StoppedState)

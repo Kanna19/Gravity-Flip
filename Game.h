@@ -4,18 +4,18 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QWidget>
-#include "Player.h"
-#include "BackgroundMusic.h"
-#include <vector>
-#include "ScoreUpdater.h"
+#include <QThread>
 #include <QLabel>
 #include <QCloseEvent>
 #include <QTimer>
+#include <QPushButton>
+#include <vector>
+#include "Player.h"
+#include "BackgroundMusic.h"
+#include "ScoreUpdater.h"
 #include "Set1.h"
 #include "Set2.h"
-#include <QThread>
 #include "RunPlayerWorker.h"
-#include <QPushButton>
 #include "BackgroundUpdater.h"
 #include "GameType.h"
 #include "GameState.h"
@@ -33,6 +33,9 @@ public:
     void closeEvent(QCloseEvent* event);
     void startSinglePlayerGame();
     void startMultiPlayerGame();
+    void connectCommonSignals();
+    void connectSignalsForSinglePlayerGame();
+    void connectSignalsForMultiPlayerGame();
 
     // member variables
 
