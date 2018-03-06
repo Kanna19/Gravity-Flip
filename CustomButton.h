@@ -11,6 +11,7 @@ public:
     CustomButton();
     CustomButton(const QString textValue);
     CustomButton(const QString textValue, QWidget* paren);
+    CustomButton(QWidget* paren);
 
 public slots:
     void changeColor();

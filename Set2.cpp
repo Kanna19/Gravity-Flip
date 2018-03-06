@@ -1,5 +1,4 @@
 #include "Set2.h"
-#include <QList>
 #include <QDebug>
 #include "Game.h"
 
@@ -7,6 +6,7 @@ extern Game* game;
 
 Set2::Set2(int start_pos)
 {
+    // Create objects of set
     objects.append(new QGraphicsRectItem(0, 0, 1200, 40));
     objects.last()->setPos(start_pos, 460);
 
@@ -30,21 +30,23 @@ Set2::Set2(int start_pos)
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
     objects.last()->setPos(start_pos, 240);
 
+    // Total length of set
     endPos = 1500;
 
+    // Connect killMe signal to reincarnateSet slot
     QObject::connect(this,SIGNAL(killMe(int)),game,SLOT(reincarnateSet(int)));
 
 }
 
 void Set2::updateObjects()
 {
-    //QMutableListIterator<QGraphicsRectItem*> it(objects);
+    // Change position of all objects in set
     for(int i = 0; i < objects.size(); i++)
     {
-        //qWarning() << "Hello " << objects[i]->x();
         objects[i]->setPos(objects[i]->x() -game->xShift, objects[i]->y());
     }
 
+    // Send signal to kill this set
     if(objects[0]->x() +endPos < 0)
     {
         emit killMe(2);

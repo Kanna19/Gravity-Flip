@@ -16,6 +16,11 @@ CustomButton::CustomButton(const QString textValue, QWidget *paren)
     this->setParent(paren);
 }
 
+CustomButton::CustomButton(QWidget *paren)
+{
+    this->setParent(paren);
+}
+
 void CustomButton::changeColor()
 {
     QPushButton* pButton = qobject_cast<QPushButton*>(sender());

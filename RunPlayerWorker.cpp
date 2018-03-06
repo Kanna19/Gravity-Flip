@@ -11,30 +11,26 @@ void RunPlayerWorker::updatePlayerState
  bool isNotCollidingWithBottom, bool isNotCollidingWithRight, int xShift, int yShift)
 
 {
-    /*
-    if(thread()->isInterruptionRequested())
-    {
-        qWarning() << "dead";
-        return;
-    }
-    */
-
-    // qWarning() << player->x() << ' ' << player->y();
+    // Create new PlayerState variable
     PlayerState state(player);
-    // qWarning() << state.xPos << ' ' << state.yPos;
 
+    // Increase pixmap index
     state.pixmapIndex++;
 
+    // Player running logic
     if(!state.isFlipped)
     {
+        // If in air
         if(isNotCollidingWithBottom)
         {
+            // Go back if collides with item
             if(!isNotCollidingWithRight)
             {
                 state.xPos -= xShift;
                 state.yPos += yShift;
             }
 
+            // Else just go down
             else
             {
                 state.yPos += yShift;
@@ -45,20 +41,18 @@ void RunPlayerWorker::updatePlayerState
 
         else
         {
+            // Make sound on landing
             if(state.isInAir)
             {
                 player->stepSoundPlayer->play();
             }
 
+            // Allow picture to be changed while running
             state.isInAir = false;
             state.isUpdateToPixMapNeeded = true;
 
-            if(isNotCollidingWithRight)
-            {
-                ;
-            }
-
-            else
+            // Go back if collides with items
+            if(!isNotCollidingWithRight)
             {
                 state.xPos -= xShift;
             }
@@ -67,14 +61,17 @@ void RunPlayerWorker::updatePlayerState
 
     else
     {
+        // If in air
         if(isNotCollidingWithTop)
         {
+            // Go back if collides with item
             if(!isNotCollidingWithRight)
             {
                 state.xPos -= xShift;
                 state.yPos -= yShift;
             }
 
+            // Else just go up
             else
             {
                 state.yPos -= yShift;
@@ -85,40 +82,40 @@ void RunPlayerWorker::updatePlayerState
 
         else
         {
+            // Make sound on landing
             if(state.isInAir)
             {
                 player->stepSoundPlayer->play();
             }
 
+            // Allow picture to be changed while running
             state.isInAir = false;
             state.isUpdateToPixMapNeeded = true;
 
-            if(isNotCollidingWithRight)
-            {
-                ;
-            }
-
-            else
+            // Go back if collides with items
+            if(!isNotCollidingWithRight)
             {
                 state.xPos -= xShift;
             }
         }
     }
 
+    // Send signal to player after state update
     emit doneUpdating(state);
 }
 
 void RunPlayerWorker::updateFlipPlayerState(Player *player)
 {
-    //qWarning() << thread()->currentThreadId();
-
+    // If in air don't flip
     if(player->isInAir)
     {
         return;
     }
 
+    // Else change isFlipped
     PlayerState state(player);
     state.isFlipped = 1 -state.isFlipped;
 
+    // Send signal to player after state update
     emit doneFlipping(state);
 }

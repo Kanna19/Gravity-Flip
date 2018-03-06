@@ -39,15 +39,17 @@ Player::Player(const Player &player) : QObject(), QGraphicsPixmapItem()
 
 Player::Player(int index, QGraphicsItem* parent)
 {
+    // Set index of for players 1 and 2
     playerIndex = index;
     int scaleFactor = 80;
 
+    // Set image of player
     QPixmap image(":res/player/" + QString::number(game->playerID[playerIndex]) +
                          "idle1.png");
-
     setPixmap(image.scaled(scaleFactor,scaleFactor,
                           Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
+    // Initialize variables
     pixmapIndex = 0;
     isFlipped = false;
     isInAir = false;
@@ -59,6 +61,10 @@ Player::Player(int index, QGraphicsItem* parent)
     topRect.append(QPointF(65, 2));
     topRect.append(QPointF(0, 2));
 
+    /* Create polygon items that surround the player
+     * These rectangles are used to check for collisions
+     * in various directions
+     */
     // Add the rectangles to the scene
     topArea = new QGraphicsPolygonItem(topRect, this);
     topArea->setPos(x(), y() -10);
@@ -83,8 +89,7 @@ Player::Player(int index, QGraphicsItem* parent)
                             Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
-    // Start step Sound
-
+    // Initialize step Sound
     stepSoundPlayer = new QMediaPlayer;
     stepSoundPlayer->setMedia(QUrl("qrc:/res/sounds/footsteps.mp3"));
 }
@@ -97,6 +102,11 @@ void Player::runPlayer()
         return;
     }
 
+    /* In single player mode if the computer reaches the
+     * player the player dies and the game ends
+     *
+     * This portion checks if player is caught and ends the game accordingly
+     */
     if(game->gameType== GameType::SINGLEPLAYER)
     {
         // Check if computer catches the player
@@ -114,15 +124,17 @@ void Player::runPlayer()
             // Show the game window for 2 seconds before displaying gameoverwindow
             QTest::qWait(2000);
 
+            // Create new game over window and display it
             GameOverWindow* gameOverWindow = new GameOverWindow;
             gameOverWindow->display(0);
 
+            // Close game (GraphicsView)
             game->close();
             return;
         }
     }
 
-    // Check these values
+    // Check if player crosses bounds
     if(x() > 900 || x() +80 < 0 || y() > 500 || y() +100 < 0)
     {
         game->gameState = GameState::FINISHED;
@@ -134,18 +146,21 @@ void Player::runPlayer()
         return;
     }
 
-    // Donot emit request until all previous requests were handled
-
+    // Emit signal to update player state
     emit requestUpdatePlayerState(this, isNotColliding(topArea),
                     isNotColliding(bottomArea), isNotColliding(rightArea),
                                   game->xShift, game->yShift);
 
+     // Donot emit request until all previous requests were handled
     disconnect(game->timer, SIGNAL(timeout()), this, SLOT(runPlayer()));
 }
 
 void Player::doneProcessing(PlayerState state)
 {
-    // qWarning() << playerIndex << ' ' << state.xPos << ' ' << state.yPos;
+    /* Update all player state variables based on values
+     * returned by runPlayerWorker
+     */
+
     setPos(state.xPos, state.yPos);
     pixmapIndex = state.pixmapIndex;
     isInAir = state.isInAir;
@@ -165,13 +180,22 @@ void Player::doneProcessing(PlayerState state)
         }
     }
 
+    // Reconnect game timer to runPlayer after updating state
     connect(game->timer, SIGNAL(timeout()), this, SLOT(runPlayer()));
 }
 
 void Player::doneFlipping(PlayerState state)
 {
+    // Flip player if flipPlayer state was changed by runPlayerWorker
     setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
     isFlipped = state.isFlipped;
+
+    /* In single player games player leaves a trail which the computer
+     * picks up. This makes the computer flip it's
+     * gravity at the right moments (or wrongs moments depending on player)
+     * Since computer does waste time deciding to flip or press key (react
+     * to the obstacle) it plays better than the player
+     */
 
     if(game->gameType == GameType::SINGLEPLAYER && this != game->player[1])
     {
@@ -184,7 +208,6 @@ void Player::doneFlipping(PlayerState state)
 void Player::flipPlayer()
 {
     // DONOT flip if player is in air
-    //if(topArea->collidingItems().isEmpty() && bottomArea->collidingItems().isEmpty())
     if(isNotColliding(topArea) && isNotColliding(bottomArea))
     {
         return;
@@ -192,15 +215,8 @@ void Player::flipPlayer()
 
     setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
 
-    // change isFlipped
+    // Change isFlipped if not in air
     isFlipped = !isFlipped;
-
-    if(game->gameType == GameType::SINGLEPLAYER && this != game->player[1])
-    {
-        Trail* trail = new Trail(x() +75, y());
-        QObject::connect(game->timer, SIGNAL(timeout()), trail, SLOT(updatePos()));
-        game->scene->addItem(trail);
-    }
 }
 
 bool Player::isNotColliding(QGraphicsPolygonItem* area)
@@ -226,19 +242,9 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
         return true;
     }
 
-    QList<QGraphicsItem*> list = area->collidingItems();
-    for(int i = 0; i < list.size(); i++)
-    {
-        if(typeid(*list[i]) != typeid(Trail))
-        {
-            return false;
-        }
-    }
-
     return true;
 }
 
-// This function will only be called in a single player game
 bool Player::isCaught()
 {
     // Check for collision between player and bot
@@ -252,10 +258,9 @@ bool Player::isCaught()
 
 void Player::killPlayer()
 {
+    // Set the player's image to dead
     QPixmap deadImage(":res/player/" + QString::number(game->playerID[0]) +
                       "dead1.png");
-
-    // Set the player's image to dead
     game->player[0]->setPixmap(deadImage.scaled(70, 70, Qt::KeepAspectRatio,
                                                 Qt::SmoothTransformation));
 

@@ -2,7 +2,7 @@
 #define SELECTPLAYERSWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
+#include "CustomButton.h"
 #include <QLabel>
 #include <QSignalMapper>
 #include <vector>
@@ -36,7 +36,7 @@ private:
 
     const int m_imageCount;
     std::vector <int> m_playerID;
-    std::vector <QPushButton*> m_images;
+    std::vector <CustomButton*> m_images;
 
     QSignalMapper* m_mapper;
 };
