@@ -24,15 +24,15 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     // Display instructions specific to the type of the game
     if(m_type == GameType::SINGLEPLAYER)
     {
-        m_label1->setText("INSTRUCTIONS:\n\nUSE SPACE BAR TO FLIP THE GRAVITY");
+        m_label1->setText("<u>INSTRUCTIONS:</u><br><br>Use space bar to flip the gravity");
     }
 
     else
     {
-        m_label1->setText("INSTRUCTIONS:\n\nUSE M FOR FLIPPING GRAVITY OF PLAYER 1\n USE C FOR FLIPPING GRAVITY OF PLAYER 2");
+        m_label1->setText("INSTRUCTIONS:\n\nUse M for flipping gravity of player 1\n Use C for flipping gravity of player 2");
     }
 
-    m_label1->setStyleSheet("font: 25px; color: blue");
+    m_label1->setStyleSheet("font: 20px; color: white");
     m_label1->setAlignment(Qt::AlignCenter);
     m_label1->setGeometry(QRect(QPoint(175, 25), QSize(600, 150)));
     m_label1->show();
@@ -40,17 +40,17 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
 
     if(m_type == GameType::SINGLEPLAYER)
     {
-        m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
-                          "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n\n2. THE COMPUTER SHOULD NOT CATCH YOU\n");
+        m_label2->setText("<u>RULES</u>:<br><br>1. You should always stay on the track or between<br> "
+                          "while flipping but you should not leave the screen<br><br>2. The computer should not catch you<u>");
     }
 
     else
     {
-        m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
-                          "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n");
+        m_label2->setText("<u>RULES:</u><br><br>You should always stay on the track or between<br> "
+                          "while flipping but you should not leave the screen<br>");
     }
 
-    m_label2->setStyleSheet("font: 25px; color: blue");
+    m_label2->setStyleSheet("font: 20px; color: white");
     m_label2->setAlignment(Qt::AlignCenter);
     m_label2->setGeometry(QRect(QPoint(50, 175), QSize(900, 200)));
     m_label2->show();
@@ -61,7 +61,11 @@ void InstructionWindow::display()
     // Set the position
     this->resize(1000, 500);
     this->move(0, 0);
-    this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
+    //this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
+    QPalette palette;
+    palette.setBrush(QPalette::Button,Qt::gray);
+    palette.setBrush(QPalette::Background, QBrush(QImage(":/res/objects/bgrocks.png").scaled(1000,500)));
+    this->setPalette(palette);
     this->show();
     this->setFixedSize(width(), height());
 }

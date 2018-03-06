@@ -25,10 +25,10 @@ SelectPlayersWindow::SelectPlayersWindow(GameType type, QWidget *parent):
         m_label->setText("Select Player 1");
     }
 
-    m_label->setStyleSheet("font: 25px; color: blue");
+    m_label->setStyleSheet("font: 20px; color: white");
     m_label->setAlignment(Qt::AlignCenter);
     m_label->setGeometry(QRect(QPoint(250, 100), QSize(400, 100)));
-    m_label->show();
+    //m_label->show();
 
     m_playerID.resize(2);
     m_images.resize(m_imageCount);
@@ -69,7 +69,7 @@ SelectPlayersWindow::SelectPlayersWindow(GameType type, QWidget *parent):
 
     for(int i = 0; i < m_imageCount; i++)
     {
-        m_images[i]->show();
+       // m_images[i]->show();
     }
 
     connect(m_mapper, SIGNAL(mapped(int)), this, SLOT(setPlayer1ID(int)));
@@ -80,7 +80,7 @@ void SelectPlayersWindow::display()
     // Set the position
     this->resize(1000, 500);
     this->move(0, 0);
-    this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
+    this->setStyleSheet("background-image:url(:/res/objects/bgrocks2.png);");
     this->show();
     this->setFixedSize(width(), height());
 }

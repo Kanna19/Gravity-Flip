@@ -46,8 +46,8 @@ void GameOverWindow::display(int loser)
 
     // set the properties of the text to be displayed
     QLabel* displayText = new QLabel(this);
-    displayText->setText(" WINS");
-    displayText->setStyleSheet("font: 25px; color: blue");
+    displayText->setText(" <i>Wins</i>");
+    displayText->setStyleSheet("font: 20px; color: white");
     displayText->setAlignment(Qt::AlignCenter);
     displayText->setGeometry(QRect(QPoint(450, 100), QSize(75, 100)));
     displayText->show();
@@ -56,15 +56,15 @@ void GameOverWindow::display(int loser)
     if(game->gameType == GameType::SINGLEPLAYER)
     {
         QLabel* gameScoreText1 = new QLabel(this);
-        gameScoreText1->setText("Score: ");
-        gameScoreText1->setStyleSheet("font: 25px; color: blue");
+        gameScoreText1->setText("<i>Score:</i> ");
+        gameScoreText1->setStyleSheet("font: 24px; color: white");
         gameScoreText1->setAlignment(Qt::AlignCenter);
         gameScoreText1->setGeometry(QRect(QPoint(350, 225), QSize(100, 50)));
         gameScoreText1->show();
 
         QLabel* gameScoreText2 = new QLabel(this);
-        gameScoreText2->setText(QString::number(game->scoreUpdater->getScore()));
-        gameScoreText2->setStyleSheet("font: 25px; color: blue");
+        gameScoreText2->setText("<i>" + QString::number(game->scoreUpdater->getScore()) + "</i>");
+        gameScoreText2->setStyleSheet("font: 20px; color: white");
         gameScoreText2->setAlignment(Qt::AlignCenter);
         gameScoreText2->setGeometry(QRect(QPoint(450, 225), QSize(100, 50)));
         gameScoreText2->show();
@@ -72,7 +72,7 @@ void GameOverWindow::display(int loser)
 
     this->resize(1000, 500);
     this->move(0, 0);
-    this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
+    this->setStyleSheet("background-image:url(:/res/objects/bgrocks2.png); color : white");
     this->show();
     this->setFixedSize(width(), height());
 }

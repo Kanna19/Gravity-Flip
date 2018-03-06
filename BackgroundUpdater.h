@@ -17,6 +17,7 @@ public:
     // member variables
 
     QBrush brush;
+    bool isChanged;
 
 public slots:
 
