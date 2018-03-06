@@ -10,5 +10,5 @@ before_install:
 
 script:
  - qmake -project "QT += widgets multimedia testlib"
- - qmake Gravity_Flip.pro
+ - qmake "CONFIG+=c++14" Gravity_Flip.pro
  - make
