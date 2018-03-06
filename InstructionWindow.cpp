@@ -8,12 +8,13 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     QMainWindow(parent)
 {
     // create the required buttons and set their parent to "this"
-    m_enterGame = new QPushButton("Enter", this);
+    m_enterGame = new CustomButton("Enter", this);
 
     // set the size and position of the buttons
     m_enterGame->setGeometry(QRect(QPoint(400, 400), QSize(200, 50)));
 
     // connect the buttons to the appropriate slots
+    connect(m_enterGame,SIGNAL(pressed()), m_enterGame, SLOT(changeColor()));
     connect(m_enterGame, SIGNAL(released()), this, SLOT(handleEnterGame()));
 
     m_type = type;
@@ -72,6 +73,7 @@ void InstructionWindow::display()
 
 void InstructionWindow::handleEnterGame()
 {
+    m_enterGame->disconnect();
     // close the instruction window
     this->close();
 
