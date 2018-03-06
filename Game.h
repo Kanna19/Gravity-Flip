@@ -17,6 +17,7 @@
 #include "RunPlayerWorker.h"
 #include <QPushButton>
 #include "BackgroundUpdater.h"
+#include "GameType.h"
 
 class Game : public QGraphicsView
 {
@@ -26,7 +27,7 @@ public:
 
     // member functions
 
-    Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent = 0);
+    Game(GameType type, std::vector <int> playerIDMapping, QWidget* parent = 0);
     void keyPressEvent(QKeyEvent* event);
     void closeEvent(QCloseEvent* event);
     void startSinglePlayerGame();
@@ -42,10 +43,11 @@ public:
     Set1* set1;
     Set2* set2;
 
+    GameType gameType;
+
     bool isPaused;
     bool isFinished;
 
-    int player_cnt;
     Player* player[2];
 
     std::vector <int> playerID;

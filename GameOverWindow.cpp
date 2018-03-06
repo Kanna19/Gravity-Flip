@@ -53,7 +53,7 @@ void GameOverWindow::display(int loser)
     displayText->show();
 
     // Display the score if game is singleplayer
-    if(game->player_cnt == 1)
+    if(game->gameType == GameType::SINGLEPLAYER)
     {
         QLabel* gameScoreText1 = new QLabel(this);
         gameScoreText1->setText("Score: ");

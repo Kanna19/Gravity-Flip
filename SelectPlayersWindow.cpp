@@ -5,16 +5,17 @@
 
 Game* game;
 
-SelectPlayersWindow::SelectPlayersWindow(int cnt, QWidget *parent):
+SelectPlayersWindow::SelectPlayersWindow(GameType type, QWidget *parent):
     QMainWindow(parent), m_imageCount (4)
 {
-    // Indicates whether the game is singleplayer or multiplayer
-    m_cnt = cnt;
+    // Set the type of the game
+    m_type = type;
 
     // Set the desired properties of the text to be displayed
     m_label = new QLabel(this);
 
-    if(cnt == 1)
+    // Show text corresponding to the type of the game
+    if(m_type == GameType::SINGLEPLAYER)
     {
         m_label->setText("Select Your Player");
     }
@@ -120,7 +121,7 @@ void SelectPlayersWindow::updateDisplay()
         disconnect(m_images[i], SIGNAL(released()), m_mapper, SLOT(map()));
     }
 
-    if(m_cnt == 1)
+    if(m_type == GameType::SINGLEPLAYER)
     {
         m_label->setText("Select Computer");
     }
@@ -163,10 +164,10 @@ void SelectPlayersWindow::createNewGame()
     this->close();
 
     // Create a new game with the current player to image mappings
-    game = new Game(m_cnt, m_playerID);
+    game = new Game(m_type, m_playerID);
 
     // Start a singleplayer (or) multiplayer game depending on input
-    if(m_cnt == 1)
+    if(m_type == GameType::SINGLEPLAYER)
     {
         game->startSinglePlayerGame();
     }

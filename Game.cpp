@@ -10,9 +10,9 @@
 #include <QLabel>
 #include <QWaitCondition>
 
-Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
+Game::Game(GameType type, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
-    player_cnt = cnt;
+    gameType = type;
     isPaused = false;
     isFinished = false;
     playerID = playerIDMapping;
@@ -30,19 +30,18 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     // Set the alignment to top left corner
     setAlignment(Qt::AlignLeft|Qt::AlignTop);
 
-    // Show score if the game is single player
-    if(player_cnt == 1)
+    // Create a new scoreupdater
+    scoreUpdater = new ScoreUpdater;
+
+    // Show score if the game is singleplayer
+    if(gameType == GameType::SINGLEPLAYER)
     {
-        scoreUpdater = new ScoreUpdater;
         scene->addItem(scoreUpdater);
         scoreUpdater->setPos(50, 10);
     }
 
     else
     {
-        scoreUpdater = new ScoreUpdater;
-        //scene->addItem(scoreUpdater);
-        //scoreUpdater->setPos(50, 10);
         displayImage = NULL;
     }
 
@@ -70,6 +69,7 @@ Game::Game(int cnt, std::vector <int> playerIDMapping, QWidget* parent): QGraphi
     // Resume button is invisible by default
     resumeButton->setVisible(false);
 
+    // Register the types which are to be sent/received via signal/slot mechanism
     qRegisterMetaType < Player > ("Player");
     qRegisterMetaType < PlayerState > ("PlayerState");
 
@@ -107,7 +107,7 @@ void Game::keyPressEvent(QKeyEvent *event)
     }
 
     // The Game Type is Single Player
-    if(player_cnt == 1)
+    if(gameType == GameType::SINGLEPLAYER)
     {
         if(event->key() == Qt::Key_Space)
         {

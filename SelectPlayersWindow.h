@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QSignalMapper>
 #include <vector>
+#include "GameType.h"
 
 class SelectPlayersWindow: public QMainWindow
 {
@@ -15,7 +16,7 @@ public:
 
     // member functions
 
-    SelectPlayersWindow(int cnt, QWidget* parent = 0);
+    SelectPlayersWindow(GameType type, QWidget* parent = 0);
     void display();
 
 private slots:
@@ -30,7 +31,7 @@ private:
 
     // private member variables
 
-    int m_cnt;
+    GameType m_type;
     QLabel* m_label;
 
     const int m_imageCount;

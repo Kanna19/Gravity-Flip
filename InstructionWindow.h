@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
-
+#include "GameType.h"
 
 class InstructionWindow: public QMainWindow
 {
@@ -14,7 +14,7 @@ public:
 
     // member functions
 
-    InstructionWindow(int cnt, QWidget* parent = 0);
+    InstructionWindow(GameType type, QWidget* parent = 0);
     void display();
 
 private slots:
@@ -27,7 +27,7 @@ private:
 
     // private member variables
 
-    int m_cnt;
+    GameType m_type;
     QLabel* m_label1;
     QLabel* m_label2;
 

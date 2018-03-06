@@ -1,5 +1,6 @@
 #include "InstructionWindow.h"
 #include "MainWindow.h"
+#include "GameType.h"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
@@ -34,7 +35,7 @@ void MainWindow::handleSinglePlayer()
     this->close();
 
     // create a new window for instructions
-    InstructionWindow *instructionWindow = new InstructionWindow(1,this);
+    InstructionWindow *instructionWindow = new InstructionWindow(GameType::SINGLEPLAYER, this);
     instructionWindow->display();
 }
 
@@ -44,7 +45,7 @@ void MainWindow::handleMultiPlayer()
     this->close();
 
     // create a new window for instructions
-    InstructionWindow *instructionWindow = new InstructionWindow(2,this);
+    InstructionWindow *instructionWindow = new InstructionWindow(GameType::MULTIPLAYER, this);
     instructionWindow->display();
 }
 
@@ -53,4 +54,3 @@ void MainWindow::handleExitGame()
     // close the main window
     this->close();
 }
-

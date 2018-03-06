@@ -56,7 +56,8 @@ HEADERS += \
     Trail.h \
     Set2.h \
     PlayerState.h \
-    RunPlayerWorker.h
+    RunPlayerWorker.h \
+    GameType.h
 
 RESOURCES += \
     res.qrc

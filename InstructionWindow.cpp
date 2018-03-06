@@ -4,25 +4,25 @@
 #include <QPixmap>
 #include <QDebug>
 
-InstructionWindow::InstructionWindow(int cnt, QWidget *parent):
+InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     QMainWindow(parent)
 {
     // create the required buttons and set their parent to "this"
     m_enterGame = new QPushButton("Enter", this);
 
     // set the size and position of the buttons
-
     m_enterGame->setGeometry(QRect(QPoint(400, 400), QSize(200, 50)));
 
     // connect the buttons to the appropriate slots
-
     connect(m_enterGame, SIGNAL(released()), this, SLOT(handleEnterGame()));
-    m_cnt = cnt;
+
+    m_type = type;
 
     // Set the desired properties of the text to be displayed
     m_label1 = new QLabel(this);
 
-    if(cnt == 1)
+    // Display instructions specific to the type of the game
+    if(m_type == GameType::SINGLEPLAYER)
     {
         m_label1->setText("INSTRUCTIONS:\n\nUSE SPACE BAR TO FLIP THE GRAVITY");
     }
@@ -38,11 +38,12 @@ InstructionWindow::InstructionWindow(int cnt, QWidget *parent):
     m_label1->show();
     m_label2 = new QLabel(this);
 
-    if(cnt==1)
+    if(m_type == GameType::SINGLEPLAYER)
     {
         m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
                           "WHILE FLIPPING BUT YOU SHOULD NOT LEAVE THE SCREEN\n\n2. THE COMPUTER SHOULD NOT CATCH YOU\n");
     }
+
     else
     {
         m_label2->setText("RULES:\n\n1. YOU SHOULD ALWAYS STAY ON THE TRACK OR BETWEEN\n "
@@ -67,22 +68,10 @@ void InstructionWindow::display()
 
 void InstructionWindow::handleEnterGame()
 {
-    if(m_cnt == 1)
-    {
-        // close the main window
-        this->close();
+    // close the instruction window
+    this->close();
 
-        // create a new window to select the players
-        SelectPlayersWindow *selectPlayersWindow = new SelectPlayersWindow(1, this);
-        selectPlayersWindow->display();
-    }
-    else
-    {
-        // close the main window
-        this->close();
-
-        // create a new window to select the players
-        SelectPlayersWindow *selectPlayersWindow = new SelectPlayersWindow(2, this);
-        selectPlayersWindow->display();
-    }
+    // create a new window to select the players
+    SelectPlayersWindow* selectPlayersWindow = new SelectPlayersWindow(m_type, this);
+    selectPlayersWindow->display();
 }

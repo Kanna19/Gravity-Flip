@@ -97,7 +97,7 @@ void Player::runPlayer()
         return;
     }
 
-    if(game->player_cnt == 1)
+    if(game->gameType== GameType::SINGLEPLAYER)
     {
         // Check if computer catches the player
         if(isCaught())
@@ -173,7 +173,7 @@ void Player::doneFlipping(PlayerState state)
     setPixmap(pixmap().transformed(QTransform().rotate(180, Qt::XAxis)));
     isFlipped = state.isFlipped;
 
-    if(game->player_cnt == 1 && this != game->player[1])
+    if(game->gameType == GameType::SINGLEPLAYER && this != game->player[1])
     {
         Trail* trail = new Trail(x() +75, y());
         QObject::connect(game->timer, SIGNAL(timeout()), trail, SLOT(updatePos()));
@@ -195,7 +195,7 @@ void Player::flipPlayer()
     // change isFlipped
     isFlipped = !isFlipped;
 
-    if(game->player_cnt == 1 && this != game->player[1])
+    if(game->gameType == GameType::SINGLEPLAYER && this != game->player[1])
     {
         Trail* trail = new Trail(x() +75, y());
         QObject::connect(game->timer, SIGNAL(timeout()), trail, SLOT(updatePos()));
@@ -215,7 +215,7 @@ bool Player::isNotColliding(QGraphicsPolygonItem* area)
      * hence collision with it is not possible
     */
 
-    if(game->player_cnt == 2)
+    if(game->gameType== GameType::MULTIPLAYER)
     {
         return false;
     }
