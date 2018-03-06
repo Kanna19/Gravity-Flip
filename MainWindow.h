@@ -60,12 +60,12 @@ private:
     /**
      * \brief MultiPlayer Button
     */
-    QPushButton* m_multiPlayer;
+    CustomButton* m_multiPlayer;
 
     /**
      * \brief Exit Game Button
     */
-    QPushButton* m_exitGame;
+    CustomButton* m_exitGame;
 };
 
 #endif // MAINWINDOW_H
