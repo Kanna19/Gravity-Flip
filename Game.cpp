@@ -76,7 +76,7 @@ Game::Game(GameType type, std::vector <int> playerIDMapping, QWidget* parent): Q
     // Start background music
     //qWarning() << this->thread()->currentThreadId();
 
-    backgroundMusic = new BackgroundMusic();
+    backgroundMusic = new BackgroundMusic(1);
     backgroundMusic->moveToThread(backgroundMusic);
     backgroundMusic->start();
 

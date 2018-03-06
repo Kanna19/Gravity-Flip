@@ -86,7 +86,7 @@ Player::Player(int index, QGraphicsItem* parent)
     // Start step Sound
 
     stepSoundPlayer = new QMediaPlayer;
-    stepSoundPlayer->setMedia(QUrl("qrc:/res/sounds/bullet.wav"));
+    stepSoundPlayer->setMedia(QUrl("qrc:/res/sounds/footsteps.mp3"));
 }
 
 void Player::runPlayer()

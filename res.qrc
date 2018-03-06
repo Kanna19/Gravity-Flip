@@ -62,5 +62,8 @@
         <file>res/objects/playbutton.png</file>
         <file>res/objects/bgrocks.png</file>
         <file>res/objects/bgrocks2.png</file>
+        <file>res/sounds/footsteps-4.mp3</file>
+        <file>res/sounds/footsteps.mp3</file>
+        <file>res/sounds/sow.mp3</file>
     </qresource>
 </RCC>

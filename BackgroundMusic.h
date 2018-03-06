@@ -13,7 +13,7 @@ public:
 
     // member functions
 
-    BackgroundMusic();
+    BackgroundMusic(int);
     void run();
     void exec();
 

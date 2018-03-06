@@ -2,10 +2,11 @@
 #include <QDebug>
 #include <QThread>
 
-BackgroundMusic::BackgroundMusic()
+BackgroundMusic::BackgroundMusic(int idx = 1)
 {
     musicPlayer = new QMediaPlayer;
-    musicPlayer->setMedia(QUrl("qrc:/res/sounds/30sec.mp3"));
+    if(idx == 1) musicPlayer->setMedia(QUrl("qrc:/res/sounds/30sec.mp3"));
+    else if(idx == 0) musicPlayer->setMedia(QUrl("qrc:/res/sounds/sow.mp3"));
 }
 
 void BackgroundMusic::run()

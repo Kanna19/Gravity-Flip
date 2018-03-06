@@ -1,9 +1,11 @@
 #include "SelectPlayersWindow.h"
 #include "Game.h"
+#include "BackgroundMusic.h"
 #include <QPixmap>
 #include <QDebug>
 
 Game* game;
+extern BackgroundMusic* musicPlayer;
 
 SelectPlayersWindow::SelectPlayersWindow(GameType type, QWidget *parent):
     QMainWindow(parent), m_imageCount (4)
@@ -165,6 +167,7 @@ void SelectPlayersWindow::createNewGame()
 
     // Create a new game with the current player to image mappings
     game = new Game(m_type, m_playerID);
+    musicPlayer->requestInterruption();
 
     // Start a singleplayer (or) multiplayer game depending on input
     if(m_type == GameType::SINGLEPLAYER)

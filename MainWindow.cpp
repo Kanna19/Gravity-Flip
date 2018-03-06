@@ -1,11 +1,18 @@
 #include "InstructionWindow.h"
 #include "MainWindow.h"
 #include "GameType.h"
+#include "BackgroundMusic.h"
 #include <QLabel>
 #include <QVBoxLayout>
 
+BackgroundMusic* musicPlayer;
+
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
+    musicPlayer = new BackgroundMusic(0);
+    musicPlayer->moveToThread(musicPlayer);
+    musicPlayer->start();
+
     QLabel* mainTitle = new QLabel("Gravity Flip");
     QFont f("Arial", 32, QFont::Bold);
     mainTitle->setStyleSheet("QLabel {color : white; alignment : center}");

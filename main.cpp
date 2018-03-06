@@ -1,6 +1,8 @@
 #include <QApplication>
 #include "MainWindow.h"
 #include "GameOverWindow.h"
+#include "BackgroundMusic.h"
+
 
 int main(int argc, char *argv[])
 {
