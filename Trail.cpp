@@ -5,9 +5,12 @@ extern Game* game;
 
 Trail::Trail(qreal xPos, qreal yPos)
 {
+    // Create a trail for Computer to pickup
     setRect(0, 0, 40, 40);
     setPos(xPos, yPos);
-    //setVisible(false);
+
+    // Make trail invisible
+    setVisible(false);
 }
 
 void Trail::updatePos()

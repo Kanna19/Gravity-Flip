@@ -14,13 +14,10 @@ public:
 
     ScoreUpdater(QGraphicsItem* parent = 0);
     int getScore();
-    void connectStepIncrementTimer();
-    void disconnectStepIncrementTimer();
 
 private slots:
 
     void updateScore();
-    void incrementStepSize();
 
 private:
 
@@ -28,8 +25,6 @@ private:
 
     int m_score;
     int m_stepSize;
-    QTimer* m_timerForStepSize;
-
 };
 
 #endif // SCOREUPDATER_H

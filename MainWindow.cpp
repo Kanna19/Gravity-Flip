@@ -27,11 +27,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     m_multiPlayer = new QPushButton("Multi Player");
     m_exitGame = new QPushButton("Exit");
 
-    // set the size and position of the buttons
-    /*m_singlePlayer->setGeometry(QRect(QPoint(350, 100), QSize(200, 50)));
-    m_multiPlayer->setGeometry(QRect(QPoint(350, 200), QSize(200, 50)));
-    m_exitGame->setGeometry(QRect(QPoint(350, 300), QSize(200, 50)));*/
-
     layout->addWidget(mainTitle);
     layout->addWidget(m_singlePlayer);
     layout->addWidget(m_multiPlayer);
