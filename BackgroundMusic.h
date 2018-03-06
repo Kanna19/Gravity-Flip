@@ -12,16 +12,29 @@ Q_OBJECT
 public:
 
     // member functions
+    /**
+     * \brief Constructor
+     * \param idx used to set the song
+     */
+    BackgroundMusic(int idx);
 
-    BackgroundMusic(int);
+    /**
+     * \brief Executes the exec() function. run is called on starting the thread
+     */
     void run();
+
+    /**
+     * \brief Runs in a loop and restarts song if finished
+     */
     void exec();
 
 private:
 
     // private member variables
 
-    QMediaPlaylist* playlist;
+    /**
+     * \brief QMediaPlayer object that plays music
+     */
     QMediaPlayer* musicPlayer;
 };
 
