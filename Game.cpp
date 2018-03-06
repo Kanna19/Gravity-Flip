@@ -13,8 +13,8 @@
 Game::Game(GameType type, std::vector <int> playerIDMapping, QWidget* parent): QGraphicsView(parent)
 {
     gameType = type;
-    isPaused = false;
-    isFinished = false;
+    gameState = GameState::PLAYING;
+
     playerID = playerIDMapping;
 
     xShift = 2;
@@ -85,12 +85,19 @@ Game::Game(GameType type, std::vector <int> playerIDMapping, QWidget* parent): Q
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
+    if(gameState == GameState::FINISHED)
+    {
+        event->accept();
+        return;
+    }
+
     if(event->key() == Qt::Key_P)
     {
-       if(!isPaused)
+       if(gameState != GameState::PAUSED)
        {
             pauseButton->click();
        }
+
        else
        {
            resumeButton->click();
@@ -99,8 +106,8 @@ void Game::keyPressEvent(QKeyEvent *event)
        return;
     }
 
-    // DONOT flip the player after the game is finished or paused
-    if(isFinished || isPaused)
+    // DONOT flip the player after the game is paused
+    if(gameState == GameState::PAUSED)
     {
         event->accept();
         return;
@@ -363,7 +370,7 @@ void Game::handlePauseGame()
     // hide the pause button
     pauseButton->setVisible(false);
 
-    isPaused = true;
+    gameState = GameState::PAUSED;
 
     // set the timer to a large value
     timer->start(10000000);
@@ -377,7 +384,7 @@ void Game::handleResumeGame()
     // hide the resume button
     resumeButton->setVisible(false);
 
-    isPaused = false;
+    gameState = GameState::PLAYING;
 
     // reset the timer
     timer->start(10);

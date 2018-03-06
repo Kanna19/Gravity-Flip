@@ -57,7 +57,8 @@ HEADERS += \
     Set2.h \
     PlayerState.h \
     RunPlayerWorker.h \
-    GameType.h
+    GameType.h \
+    GameState.h
 
 RESOURCES += \
     res.qrc

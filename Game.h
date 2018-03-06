@@ -18,6 +18,7 @@
 #include <QPushButton>
 #include "BackgroundUpdater.h"
 #include "GameType.h"
+#include "GameState.h"
 
 class Game : public QGraphicsView
 {
@@ -44,9 +45,7 @@ public:
     Set2* set2;
 
     GameType gameType;
-
-    bool isPaused;
-    bool isFinished;
+    GameState gameState;
 
     Player* player[2];
 

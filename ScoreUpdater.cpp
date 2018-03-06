@@ -65,7 +65,7 @@ void ScoreUpdater::updateScore()
 void ScoreUpdater::incrementStepSize()
 {
     // Disconnect the step increment timer if game has finished
-    if(game->isFinished)
+    if(game->gameState == GameState::FINISHED)
     {
         disconnectStepIncrementTimer();
         return;

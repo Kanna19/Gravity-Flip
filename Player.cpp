@@ -92,7 +92,7 @@ Player::Player(int index, QGraphicsItem* parent)
 void Player::runPlayer()
 {
     // Do nothing if game is already over
-    if(game->isFinished)
+    if(game->gameState == GameState::FINISHED)
     {
         return;
     }
@@ -103,7 +103,7 @@ void Player::runPlayer()
         if(isCaught())
         {
             // Player was caught, game over.
-            game->isFinished = true;
+            game->gameState = GameState::FINISHED;
 
             // Disconnect the timer from players, sets, backgroundupdater, score
             game->timer->disconnect();
@@ -125,7 +125,7 @@ void Player::runPlayer()
     // Check these values
     if(x() > 900 || x() +80 < 0 || y() > 500 || y() +100 < 0)
     {
-        game->isFinished = true;
+        game->gameState = GameState::FINISHED;
 
         GameOverWindow* gameOverWindow = new GameOverWindow;
         gameOverWindow->display(playerIndex);
