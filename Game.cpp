@@ -336,9 +336,14 @@ void Game::reincarnateSet(int idx)
 {
     if(idx == 1)
     {
+        for(int i = 0; i < set1->objects.size(); i++)
+        {
+            scene->removeItem(set1->objects[i]);
+        }
+
         delete set1;
         qWarning() << "Dead 1";
-        set1 = new Set1(set2->objects[0]->rect().x() +set2->endPos);
+        set1 = new Set1(set2->objects[0]->x() +set2->endPos);
 
         for(int i = 0; i < set1->objects.size(); i++)
         {
@@ -351,9 +356,14 @@ void Game::reincarnateSet(int idx)
 
     else
     {
+        for(int i = 0; i < set2->objects.size(); i++)
+        {
+            scene->removeItem(set2->objects[i]);
+        }
+
         delete set2;
         qWarning() << "dead 2";
-        set2 = new Set2(set1->objects[0]->rect().x() +set1->endPos);
+        set2 = new Set2(set1->objects[0]->x() +set1->endPos);
 
         for(int i = 0; i < set2->objects.size(); i++)
         {

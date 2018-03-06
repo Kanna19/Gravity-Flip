@@ -18,6 +18,7 @@ void BackgroundUpdater::update()
         brush = QBrush(QImage(":/res/objects/bgrocks2.png").scaled(1000,500));
         isChanged = true;
     }
+
     brush.setTransform(brush.transform().translate(-game->xShift, 0));
     game->setBackgroundBrush(brush);
 }

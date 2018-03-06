@@ -47,7 +47,7 @@ void Set1::updateObjects()
         objects[i]->setPos(objects[i]->x() -game->xShift, objects[i]->y());
     }
 
-    if(objects.last()->x()+objects.last()->rect().width() < 0)
+    if(objects[0]->x() +endPos < 0)
     {
         emit killMe(1);
     }
