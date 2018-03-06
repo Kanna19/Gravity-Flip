@@ -23,9 +23,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     QVBoxLayout* layout = new QVBoxLayout();
 
     // create the required buttons and set their parent to "this"
-    m_singlePlayer = new QPushButton("Single Player");
-    m_multiPlayer = new QPushButton("Multi Player");
-    m_exitGame = new QPushButton("Exit");
+    m_singlePlayer = new CustomButton("Single Player");
+    m_multiPlayer = new CustomButton("Multi Player");
+    m_exitGame = new CustomButton("Exit");
 
     layout->addWidget(mainTitle);
     layout->addWidget(m_singlePlayer);
@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     wid->setLayout(layout);
 
     // connect the buttons to the appropriate slots
+    connect(m_singlePlayer,SIGNAL(pressed()),m_singlePlayer,SLOT(changeColor()));
+    connect(m_multiPlayer,SIGNAL(pressed()),this,SLOT(changeColor()));
+    connect(m_exitGame,SIGNAL(pressed()),this,SLOT(changeColor()));
     connect(m_singlePlayer, SIGNAL(released()), this, SLOT(handleSinglePlayer()));
     connect(m_multiPlayer, SIGNAL(released()), this, SLOT(handleMultiPlayer()));
     connect(m_exitGame, SIGNAL(released()), this, SLOT(handleExitGame()));
@@ -63,6 +66,11 @@ void MainWindow::display()
 
 void MainWindow::handleSinglePlayer()
 {
+    // Disconnect all button signals
+    m_singlePlayer->disconnect();
+    m_multiPlayer->disconnect();
+    m_exitGame->disconnect();
+
     // close the main window
     this->close();
 
@@ -73,6 +81,11 @@ void MainWindow::handleSinglePlayer()
 
 void MainWindow::handleMultiPlayer()
 {
+    // Disconnect all button signals
+    m_singlePlayer->disconnect();
+    m_multiPlayer->disconnect();
+    m_exitGame->disconnect();
+
     // close the main window
     this->close();
 
@@ -85,4 +98,12 @@ void MainWindow::handleExitGame()
 {
     // close the main window
     this->close();
+}
+
+void MainWindow::changeColor()
+{
+    QPushButton* pButton = qobject_cast<QPushButton*>(sender());
+    QPalette p = pButton->palette();
+    p.setColor(QPalette::Button, Qt::yellow);
+    pButton->setPalette(p);
 }

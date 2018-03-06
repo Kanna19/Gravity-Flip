@@ -2,7 +2,7 @@
 #define GAMEOVERWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
+#include "CustomButton.h"
 
 class GameOverWindow: public QMainWindow
 {
@@ -21,8 +21,8 @@ private:
 
     // private member variables
 
-    QPushButton* m_exitGame;
-    QPushButton* m_restartGame;
+    CustomButton* m_exitGame;
+    CustomButton* m_restartGame;
 
 private slots:
 

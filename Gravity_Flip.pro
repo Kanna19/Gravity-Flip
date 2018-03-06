@@ -43,7 +43,8 @@ SOURCES += \
     Trail.cpp \
     Set2.cpp \
     PlayerState.cpp \
-    RunPlayerWorker.cpp
+    RunPlayerWorker.cpp \
+    CustomButton.cpp
 
 HEADERS += \
     Game.h \
@@ -61,7 +62,8 @@ HEADERS += \
     PlayerState.h \
     RunPlayerWorker.h \
     GameType.h \
-    GameState.h
+    GameState.h \
+    CustomButton.h
 
 RESOURCES += \
     res.qrc

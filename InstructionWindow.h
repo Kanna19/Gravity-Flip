@@ -2,7 +2,7 @@
 #define INSTRUCTIONWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
+#include "CustomButton.h"
 #include <QLabel>
 #include "GameType.h"
 
@@ -31,7 +31,7 @@ private:
     QLabel* m_label1;
     QLabel* m_label2;
 
-    QPushButton* m_enterGame;
+    CustomButton* m_enterGame;
 };
 
 #endif // INSTRUCTIONWINDOW_H

@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
+#include "CustomButton.h"
 
 class MainWindow: public QMainWindow
 {
@@ -22,12 +22,13 @@ private slots:
     void handleSinglePlayer();
     void handleMultiPlayer();
     void handleExitGame();
+    void changeColor();
 
 private:
 
     // private member variables
 
-    QPushButton* m_singlePlayer;
+    CustomButton* m_singlePlayer;
     QPushButton* m_multiPlayer;
     QPushButton* m_exitGame;
 };

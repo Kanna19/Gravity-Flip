@@ -10,14 +10,16 @@ const int GameOverWindow::EXIT_CODE_REBOOT = 10000;
 GameOverWindow::GameOverWindow(QWidget *parent): QMainWindow(parent)
 {
     // create the Exit Game Button and set its parent
-    m_exitGame = new QPushButton("Exit Game", this);
-    m_restartGame = new QPushButton("Restart Game", this);
+    m_exitGame = new CustomButton("Exit Game", this);
+    m_restartGame = new CustomButton("Restart Game", this);
 
     // set the size and position of the button
     m_exitGame->setGeometry(QRect(QPoint(350, 375), QSize(200, 50)));
     m_restartGame->setGeometry(QRect(QPoint(350, 300), QSize(200, 50)));
 
     // connect the button to its appropriate slot to handle key press
+    connect(m_exitGame, SIGNAL(pressed()), m_exitGame, SLOT(changeColor()));
+    connect(m_restartGame, SIGNAL(pressed()), m_restartGame, SLOT(changeColor()));
     connect(m_exitGame, SIGNAL(released()), this, SLOT(handleExitGame()));
     connect(m_restartGame, SIGNAL(released()), this, SLOT(handleRestartGame()));
 }
@@ -84,6 +86,8 @@ void GameOverWindow::handleExitGame()
 
 void GameOverWindow::handleRestartGame()
 {
+    m_restartGame->disconnect();
+    m_exitGame->disconnect();
     qWarning() << "Restarting...";
     qApp->exit(GameOverWindow::EXIT_CODE_REBOOT);
 }
