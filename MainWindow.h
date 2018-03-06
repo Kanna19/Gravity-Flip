@@ -22,7 +22,6 @@ private slots:
     void handleSinglePlayer();
     void handleMultiPlayer();
     void handleExitGame();
-    void changeColor();
 
 private:
 
