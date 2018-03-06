@@ -12,14 +12,25 @@ Q_OBJECT
 
 public:
 
+    /**
+     * \brief Constructor
+    */
     RunPlayerWorker();
 
 public slots:
 
+    /**
+     * \brief Update Player State
+     * Slot to handle updates of player state
+    */
     void updatePlayerState(Player* player, bool isNotCollidingWithTop,
                            bool isNotCollidingWithBottom, bool isNotCollidingWithRight,
                            int xShift, int yShift);
 
+    /**
+     * \brief Flip Player
+     * Slot to handle flipping of the player
+    */
     void updateFlipPlayerState(Player* player);
 
 signals:
