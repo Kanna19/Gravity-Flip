@@ -42,12 +42,6 @@ private slots:
     */
     void handleExitGame();
 
-    /**
-     * \brief Change the color
-     * Change the color of the button on pressing
-    */
-    void changeColor();
-
 private:
 
     // private member variables

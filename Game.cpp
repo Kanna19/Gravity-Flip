@@ -158,8 +158,15 @@ void Game::closeEvent(QCloseEvent *event)
 void Game::startSinglePlayerGame()
 {
     // Create new sets
-    set1 = new Set1(0);
-    set2 = new Set2(set1->endPos);
+    noobSet = new NoobSet(150);
+    set1 = new Set1(noobSet->endPos +150);
+    set2 = new Set2(set1->endPos +noobSet->endPos +150);
+
+    for(int i = 0; i < noobSet->objects.size(); i++)
+    {
+       scene->addItem(noobSet->objects[i]);
+      noobSet->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+    }
 
     for(int i = 0; i < set1->objects.size(); i++)
     {
@@ -181,12 +188,12 @@ void Game::startSinglePlayerGame()
     // Create and add player 1 to the scene
     player[0] = new Player(0);
     scene->addItem(player[0]);
-    player[0]->setPos(200, scene->height() -50 -120 +40);
+    player[0]->setPos(400, scene->height() -50 -120 +40);
 
     // Create and add computer to the scene
     player[1] = new Player(1);
     scene->addItem(player[1]);
-    player[1]->setPos(50, scene->height() -50 -120 +40);
+    player[1]->setPos(200, scene->height() -50 -120 +40);
 
     /*
      * Create the required thread objects
@@ -236,20 +243,27 @@ void Game::startSinglePlayerGame()
 void Game::startMultiPlayerGame()
 {
     // Create new sets
-    set1 = new Set1(0);
-    set2 = new Set2(set1->endPos);
+    noobSet = new NoobSet(150);
+    set1 = new Set1(noobSet->endPos +150);
+    set2 = new Set2(set1->endPos + noobSet->endPos + 150);
 
     // Set the properties of the objects and add them to the scene
+    for(int i = 0; i < noobSet->objects.size(); i++)
+    {
+        scene->addItem(noobSet->objects[i]);
+        noobSet->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+    }
+
     for(int i = 0; i < set1->objects.size(); i++)
     {
-       scene->addItem(set1->objects[i]);
-       set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+        scene->addItem(set1->objects[i]);
+        set1->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
     for(int i = 0; i < set2->objects.size(); i++)
     {
-       scene->addItem(set2->objects[i]);
-       set2->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
+        scene->addItem(set2->objects[i]);
+        set2->objects[i]->setBrush(QBrush(QImage(":/res/objects/tile2.png").scaled(40, 40)));
     }
 
     // Make game focusable
@@ -260,12 +274,12 @@ void Game::startMultiPlayerGame()
     // Create Player 1 and add to the scene
     player[0] = new Player(0);
     scene->addItem(player[0]);
-    player[0]->setPos(200, scene->height() -50 -120 +40);
+    player[0]->setPos(400, scene->height() -50 -120 +40);
 
     // Create Player 2 and add to the scene
     player[1] = new Player(1);
     scene->addItem(player[1]);
-    player[1]->setPos(50, scene->height() -50 -120 +40);
+    player[1]->setPos(300, scene->height() -50 -120 +40);
 
     /*
      * Create the required thread objects
@@ -411,6 +425,7 @@ void Game::connectCommonSignals()
     QObject::connect(timer, SIGNAL(timeout()), player[1], SLOT(runPlayer()));
 
     // Connect the timeout signal of timer to the updateObjects slots of the sets
+    QObject::connect(timer, SIGNAL(timeout()), noobSet, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), set1, SLOT(updateObjects()));
     QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
 
@@ -454,7 +469,7 @@ void Game::reincarnateSet(int idx)
     }
 
     // If set 2 was deleted then create new set 2 and add it to the scene
-    else
+    else if(idx == 2)
     {
         // Remove the existing items of set2 from the screen to prevent collisions
         for(int i = 0; i < set2->objects.size(); i++)
@@ -478,6 +493,18 @@ void Game::reincarnateSet(int idx)
         // Connect the timeout signal of the timer to this newly created set
         // The previously existing connection would have been deleted
         QObject::connect(timer, SIGNAL(timeout()), set2, SLOT(updateObjects()));
+    }
+
+    else if(idx == 0)
+    {
+        // Remove the existing items of set2 from the screen to prevent collisions
+        for(int i = 0; i < noobSet->objects.size(); i++)
+        {
+            scene->removeItem(noobSet->objects[i]);
+        }
+
+        // Delete the set
+        delete noobSet;
     }
 }
 

@@ -8,10 +8,10 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     QMainWindow(parent)
 {
     // create the required buttons and set their parent to "this"
-    m_enterGame = new CustomButton("Enter", this);
+    m_enterGame = new CustomButton("Continue", this);
 
     // set the size and position of the buttons
-    m_enterGame->setGeometry(QRect(QPoint(400, 400), QSize(200, 50)));
+    m_enterGame->setGeometry(QRect(QPoint(400, 420), QSize(200, 50)));
 
     // connect the buttons to the appropriate slots
     connect(m_enterGame,SIGNAL(pressed()), m_enterGame, SLOT(changeColor()));
@@ -25,35 +25,43 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     // Display instructions specific to the type of the game
     if(m_type == GameType::SINGLEPLAYER)
     {
-        m_label1->setText("<u>INSTRUCTIONS:</u><br><br>Use space bar to flip the gravity");
+        m_label1->setText("<u>INSTRUCTIONS:</u><br><br>Use space bar to flip the gravity<br><br>"
+                          "Clicking the pause button in the top right corner or <br>pressing 'P' "
+                          "pauses the game");
     }
 
     else
     {
-        m_label1->setText("INSTRUCTIONS:\n\nUse M for flipping gravity of player 1\n Use C for flipping gravity of player 2");
+        m_label1->setText("<u>INSTRUCTIONS:</u><br><br>Use M for flipping gravity of player 1<br>"
+                          " Use C for flipping gravity of player 2<br><br>"
+                          "Clicking the pause button in the top right corner or <br>pressing 'P' "
+                          "pauses the game");
     }
 
     m_label1->setStyleSheet("font: 20px; color: white");
     m_label1->setAlignment(Qt::AlignCenter);
-    m_label1->setGeometry(QRect(QPoint(175, 25), QSize(600, 150)));
+    m_label1->setGeometry(QRect(QPoint(195, 25), QSize(600, 180)));
     m_label1->show();
     m_label2 = new QLabel(this);
 
     if(m_type == GameType::SINGLEPLAYER)
     {
-        m_label2->setText("<u>RULES</u>:<br><br>1. You should always stay on the track or between<br> "
-                          "while flipping but you should not leave the screen<br><br>2. The computer should not catch you<u>");
+        m_label2->setText("<u>RULES</u>:<br><br>1. Players gravity cannot be flipped while in air<br><br>"
+                          "while flipping but you should not leave the screen<br><br>"
+                          "2. Going out of screen will result in your immediate death<br><br>"
+                          "3. Don't let the computer catch you");
     }
 
     else
     {
-        m_label2->setText("<u>RULES:</u><br><br>You should always stay on the track or between<br> "
-                          "while flipping but you should not leave the screen<br>");
+        m_label2->setText("<u>RULES:</u><br><br>1. Players gravity cannot be flipped while in air<br><br>"
+                          "2. Going out of screen will result in your immediate death<br><br>"
+                          "3. Player who stays alive the longest wins");
     }
 
     m_label2->setStyleSheet("font: 20px; color: white");
     m_label2->setAlignment(Qt::AlignCenter);
-    m_label2->setGeometry(QRect(QPoint(50, 175), QSize(900, 200)));
+    m_label2->setGeometry(QRect(QPoint(50, 175), QSize(900, 250)));
     m_label2->show();
 }
 

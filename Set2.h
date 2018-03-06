@@ -11,21 +11,37 @@ Q_OBJECT
 public:
 
     // member functions
-
-    Set2(int);
+    /**
+     * \brief Constructor
+     * \param start_pos To set the starting position of set
+     */
+    Set2(int start_pos);
 
     // member variables
-
+    /**
+     * \brief List of all objects in the set
+     */
     QList<QGraphicsRectItem*> objects;
+
+    /**
+     * \brief Total length of the set
+     */
     int endPos;
 
 public slots:
 
+    /**
+     * \brief Move objects based on game->xShift
+     */
     void updateObjects();
 
 signals:
 
-    void killMe(int);
+    /**
+     * \brief Sends signal to game to destroy this set
+     * \param idx Type of set to be destroyed
+     */
+    void killMe(int idx);
 };
 
 #endif // SET2_H

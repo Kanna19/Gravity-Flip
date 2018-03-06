@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "BackgroundMusic.h"
 #include "ScoreUpdater.h"
+#include "NoobSet.h"
 #include "Set1.h"
 #include "Set2.h"
 #include "RunPlayerWorker.h"
@@ -94,6 +95,11 @@ public:
      * Object which is called by timer to update the background
     */
     BackgroundUpdater* backgroundUpdater;
+
+    /**
+     * \brief Noob Set
+    */
+    NoobSet* noobSet;
 
     /**
      * \brief Set 1

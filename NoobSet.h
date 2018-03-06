@@ -1,10 +1,10 @@
-#ifndef SET1_H
-#define SET1_H
+#ifndef NOOBSET_H
+#define NOOBSET_H
 
 #include <QGraphicsRectItem>
 #include <QObject>
 
-class Set1: public QObject
+class NoobSet: public QObject
 {
 Q_OBJECT
 
@@ -15,7 +15,7 @@ public:
      * \brief Constructor
      * \param start_pos To set the starting position of set
      */
-    Set1(int);
+    NoobSet(int start_pos);
 
     // member variables
     /**
@@ -44,4 +44,4 @@ signals:
     void killMe(int idx);
 };
 
-#endif // SET1_H
+#endif // NOOBSET_H
