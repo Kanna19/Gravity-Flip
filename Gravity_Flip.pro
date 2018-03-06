@@ -44,7 +44,8 @@ SOURCES += \
     Set2.cpp \
     PlayerState.cpp \
     RunPlayerWorker.cpp \
-    CustomButton.cpp
+    CustomButton.cpp \
+    NoobSet.cpp
 
 HEADERS += \
     Game.h \
@@ -63,7 +64,8 @@ HEADERS += \
     RunPlayerWorker.h \
     GameType.h \
     GameState.h \
-    CustomButton.h
+    CustomButton.h \
+    NoobSet.h
 
 RESOURCES += \
     res.qrc

@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "BackgroundMusic.h"
 #include "ScoreUpdater.h"
+#include "NoobSet.h"
 #include "Set1.h"
 #include "Set2.h"
 #include "RunPlayerWorker.h"
@@ -44,6 +45,7 @@ public:
     BackgroundMusic* backgroundMusic;
     BackgroundUpdater* backgroundUpdater;
 
+    NoobSet* noobSet;
     Set1* set1;
     Set2* set2;
 
