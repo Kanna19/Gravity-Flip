@@ -2,7 +2,6 @@
 #include "SelectPlayersWindow.h"
 #include <QLabel>
 #include <QPixmap>
-#include <QDebug>
 
 InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
     QMainWindow(parent)
@@ -67,10 +66,12 @@ InstructionWindow::InstructionWindow(GameType type, QWidget *parent):
 
 void InstructionWindow::display()
 {
-    // Set the position
+    // Set the size of the instruction window
     this->resize(1000, 500);
+
+    // Set the position of the instruction window
     this->move(0, 0);
-    //this->setStyleSheet("background-image:url(:/res/objects/acid2.png);");
+
     QPalette palette;
     palette.setBrush(QPalette::Button,Qt::gray);
     palette.setBrush(QPalette::Background, QBrush(QImage(":/res/objects/bgrocks.png").scaled(1000,500)));
@@ -81,8 +82,9 @@ void InstructionWindow::display()
 
 void InstructionWindow::handleEnterGame()
 {
+    // Disconnect all the signals (This prevents double clicking a button)
     m_enterGame->disconnect();
-    // close the instruction window
+    // Close the instruction window
     this->close();
 
     // create a new window to select the players

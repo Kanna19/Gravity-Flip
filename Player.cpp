@@ -4,7 +4,6 @@
 #include <QPointF>
 #include <QGraphicsScene>
 #include <Game.h>
-#include <QDebug>
 #include <QWaitCondition>
 #include <QMutex>
 #include "GameOverWindow.h"

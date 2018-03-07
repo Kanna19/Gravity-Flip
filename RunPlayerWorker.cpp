@@ -1,5 +1,4 @@
 #include "RunPlayerWorker.h"
-#include <QDebug>
 
 RunPlayerWorker::RunPlayerWorker()
 {

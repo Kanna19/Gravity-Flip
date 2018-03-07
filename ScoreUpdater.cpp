@@ -1,7 +1,6 @@
 #include "ScoreUpdater.h"
 #include "Game.h"
 #include <QFont>
-#include <QDebug>
 
 extern Game* game;
 
@@ -32,7 +31,6 @@ void ScoreUpdater::updateScore()
     {
         game->xShift++;
         game->yShift++;
-        qWarning() << m_score << ' ' << game->xShift;
     }
 
     // Update the text

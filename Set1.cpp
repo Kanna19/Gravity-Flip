@@ -1,5 +1,4 @@
 #include "Set1.h"
-#include <QDebug>
 #include "Game.h"
 
 extern Game* game;
@@ -46,7 +45,6 @@ void Set1::updateObjects()
     // Change position of all objects in set
     for(int i = 0; i < objects.size(); i++)
     {
-        //qWarning() << "Hello " << objects[i]->x();
         objects[i]->setPos(objects[i]->x() -game->xShift, objects[i]->y());
     }
 

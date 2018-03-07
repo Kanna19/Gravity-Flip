@@ -2,7 +2,6 @@
 #include "Game.h"
 #include <QCoreApplication>
 #include <QLabel>
-#include <QDebug>
 
 extern Game* game;
 const int GameOverWindow::EXIT_CODE_REBOOT = 10000;
@@ -88,6 +87,5 @@ void GameOverWindow::handleRestartGame()
 {
     m_restartGame->disconnect();
     m_exitGame->disconnect();
-    qWarning() << "Restarting...";
     qApp->exit(GameOverWindow::EXIT_CODE_REBOOT);
 }

@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "BackgroundMusic.h"
 #include <QPixmap>
-#include <QDebug>
 
 Game* game;
 extern BackgroundMusic* musicPlayer;
