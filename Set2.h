@@ -13,9 +13,9 @@ public:
     // member functions
     /**
      * \brief Constructor
-     * \param start_pos To set the starting position of set
+     * \param startPos To set the starting position of set
      */
-    Set2(int start_pos);
+    Set2(int startPos);
 
     // member variables
     /**

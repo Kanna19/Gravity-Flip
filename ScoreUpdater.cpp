@@ -36,4 +36,3 @@ void ScoreUpdater::updateScore()
     // Update the text
     setPlainText(QString::number(m_score));
 }
-

@@ -3,31 +3,31 @@
 
 extern Game* game;
 
-Set2::Set2(int start_pos)
+Set2::Set2(int startPos)
 {
     // Create objects of set
     objects.append(new QGraphicsRectItem(0, 0, 1200, 40));
-    objects.last()->setPos(start_pos, 460);
+    objects.last()->setPos(startPos, 460);
 
-    start_pos += 300;
+    startPos += 300;
     objects.append(new QGraphicsRectItem(0, 0, 1200, 140));
-    objects.last()->setPos(start_pos, 100);
+    objects.last()->setPos(startPos, 100);
 
-    start_pos +=100;
+    startPos +=100;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 420);
+    objects.last()->setPos(startPos, 420);
 
-    start_pos += objects.last()->rect().width() + 100;
+    startPos += objects.last()->rect().width() + 100;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 240);
+    objects.last()->setPos(startPos, 240);
 
-    start_pos += objects.last()->rect().width() + 100;
+    startPos += objects.last()->rect().width() + 100;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 420);
+    objects.last()->setPos(startPos, 420);
 
-    start_pos += objects.last()->rect().width() + 100;
+    startPos += objects.last()->rect().width() + 100;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 240);
+    objects.last()->setPos(startPos, 240);
 
     // Total length of set
     endPos = 1500;

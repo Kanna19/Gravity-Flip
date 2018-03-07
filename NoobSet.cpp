@@ -3,22 +3,22 @@
 
 extern Game* game;
 
-NoobSet::NoobSet(int start_pos)
+NoobSet::NoobSet(int startPos)
 {
     // Create objects of set
     objects.append(new QGraphicsRectItem(0, 0, 1400, 40));
-    objects.last()->setPos(start_pos, 460);
+    objects.last()->setPos(startPos, 460);
 
     objects.append(new QGraphicsRectItem(0, 0, 1550, 40));
-    objects.last()->setPos(start_pos, 160);
+    objects.last()->setPos(startPos, 160);
 
-    start_pos += 500;
+    startPos += 500;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 420);
+    objects.last()->setPos(startPos, 420);
 
-    start_pos += 500;
+    startPos += 500;
     objects.append(new QGraphicsRectItem(0, 0, 40, 40));
-    objects.last()->setPos(start_pos, 200);
+    objects.last()->setPos(startPos, 200);
 
     // Total length of set
     endPos = 1550;
