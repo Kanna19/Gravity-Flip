@@ -2,3 +2,4 @@
 # ignore qtcreator generated files
 
 *.pro.user*
+*.conf*
